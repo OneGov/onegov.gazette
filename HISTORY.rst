@@ -1,5 +1,7 @@
 Changelog
 ---------
+1.9.0 (2017-10-24)
+~~~~~~~~~~~~~~~~~~~
 
 - Allows to manage categories.
   [msom]
@@ -8,6 +10,9 @@ Changelog
   [msom]
 
 - Adds a configurable help link.
+  [msom]
+
+- Updates the subject of the publish mail.
   [msom]
 
 - Updates RavenJs to 3.19.1.
