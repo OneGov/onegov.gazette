@@ -66,15 +66,11 @@ class Layout(ChameleonLayout):
         return self.request.link(self.principal)
 
     @cached_property
-    def manage_link(self):
-        return self.request.link(self.principal)
-
-    @cached_property
     def manage_users_link(self):
         return self.request.link(UserCollection(self.app.session()))
 
     @cached_property
-    def manage_user_groups_link(self):
+    def manage_groups_link(self):
         return self.request.link(UserGroupCollection(self.app.session()))
 
     @cached_property
@@ -84,21 +80,14 @@ class Layout(ChameleonLayout):
         )
 
     @cached_property
-    def manage_accepted_notices_link(self):
-        return self.request.link(
-            GazetteNoticeCollection(self.app.session(), state='accepted')
-        )
-
-    @cached_property
-    def manage_statistics_link(self):
-        return self.request.link(
-            GazetteNoticeCollection(self.app.session(), state='accepted'),
-            name='statistics'
-        )
-
-    @cached_property
     def dashboard_link(self):
         return self.request.link(self.principal, name='dashboard')
+
+    @property
+    def dashboard_or_notices_link(self):
+        if self.request.is_secret(self.model):
+            return self.manage_notices_link
+        return self.dashboard_link
 
     @cached_property
     def login_link(self):
@@ -122,12 +111,16 @@ class Layout(ChameleonLayout):
         if self.request.is_secret(self.model):
             active = isinstance(self.model, UserCollection)
             result.append((
-                _("Users"), self.manage_users_link, active
+                _("Users"),
+                self.manage_users_link,
+                active
             ))
 
             active = isinstance(self.model, UserGroupCollection)
             result.append((
-                _("Groups"), self.manage_user_groups_link, active
+                _("Groups"),
+                self.manage_groups_link,
+                active
             ))
 
         if self.request.is_private(self.model):
@@ -136,7 +129,8 @@ class Layout(ChameleonLayout):
                 'statistics' not in self.request.url
             )
             result.append((
-                _("Official Notices"), self.manage_notices_link,
+                _("Official Notices"),
+                self.manage_notices_link,
                 active
             ))
 
@@ -144,9 +138,13 @@ class Layout(ChameleonLayout):
                 isinstance(self.model, GazetteNoticeCollection) and
                 'statistics' in self.request.url
             )
+            link = self.request.link(
+                GazetteNoticeCollection(self.app.session(), state='accepted'),
+                name='statistics'
+            )
             result.append((
                 _("Statistics"),
-                self.manage_statistics_link,
+                link,
                 active
             ))
 
@@ -159,9 +157,12 @@ class Layout(ChameleonLayout):
             ))
 
             active = isinstance(self.model, GazetteNoticeCollection)
+            link = self.request.link(
+                GazetteNoticeCollection(self.app.session(), state='accepted')
+            )
             result.append((
                 _("My Accepted Official Notices"),
-                self.manage_accepted_notices_link,
+                link,
                 active
             ))
 
