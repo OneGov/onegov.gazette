@@ -31,13 +31,16 @@ def test_category(session):
     assert category.name == '100'
     assert category.title == 'Election'
     assert category.active == True
-    assert category.in_use(session) == False
 
-    # Test in use
-    assert category.in_use(session) == False
+    # Test helpers
+    assert len(category.notices().all()) == 0
+    assert category.in_use == False
+
     session.add(GazetteNotice(title='notice', category_id=category.name))
     session.flush()
-    assert category.in_use(session) == True
+
+    assert len(category.notices().all()) == 1
+    assert category.in_use == True
 
     # Test title observer
     category.title = 'Vote'
@@ -59,7 +62,6 @@ def test_organization(session):
     assert parent.name == '100'
     assert parent.title == 'State Chancellery'
     assert parent.active == True
-    assert parent.in_use(session) == False
 
     # Test in use
     session.add(
@@ -73,16 +75,20 @@ def test_organization(session):
     session.flush()
     child = session.query(Organization).filter_by(name='101').one()
 
-    assert parent.in_use(session) == False
-    assert child.in_use(session) == False
+    assert len(parent.notices().all()) == 0
+    assert len(child.notices().all()) == 0
+    assert parent.in_use == False
+    assert child.in_use == False
 
     session.add(
         GazetteNotice(title='notice', organization_id='101')
     )
     session.flush()
 
-    assert parent.in_use(session) == False
-    assert child.in_use(session) == True
+    assert len(parent.notices().all()) == 0
+    assert len(child.notices().all()) == 1
+    assert parent.in_use == False
+    assert child.in_use == True
 
     # Test title observer
     child.title = 'Administrations'
@@ -144,7 +150,7 @@ def test_issue(session):
     session.add(
         Issue(
             id=0,
-            name='2018-07',
+            name='2018-7',
             number=7,
             date=date(2017, 7, 1),
             deadline=standardize_date(datetime(2017, 6, 25, 12, 0), 'UTC')
@@ -154,23 +160,34 @@ def test_issue(session):
     issue = session.query(Issue).one()
 
     assert issue.id == 0
-    assert issue.name == '2018-07'
+    assert issue.name == '2018-7'
     assert issue.number == 7
     assert issue.date == date(2017, 7, 1)
     assert issue.deadline == standardize_date(
         datetime(2017, 6, 25, 12, 0), 'UTC'
     )
 
-    # Test in use
-    assert issue.in_use(session) == False
-    session.add(GazetteNotice(title='notice', issues=[issue.name]))
+    # Test query etc
+    assert len(issue.notices().all()) == 0
+    assert issue.in_use == False
+
+    issues = [issue.name]
+    session.add(GazetteNotice(title='d', issues=issues))
+    session.add(GazetteNotice(title='a', state='accepted', issues=issues))
+    session.add(GazetteNotice(title='s', state='submitted', issues=issues))
+    session.add(GazetteNotice(title='s', issues=['2018-1']))
+    session.add(GazetteNotice(title='s', issues=['2018-1', issue.name]))
     session.flush()
-    assert issue.in_use(session) == True
+
+    assert len(issue.notices().all()) == 4
+    assert issue.in_use == True
 
     # Test date observer
     issue.date = date(2017, 7, 2)
     session.flush()
-    assert session.query(GazetteNotice).one().first_issue.date() == issue.date
+    dates = [i.first_issue for i in session.query(GazetteNotice)]
+    dates = [d.date() for d in dates if d]
+    assert set(dates) == set([issue.date])
 
 
 def test_principal():

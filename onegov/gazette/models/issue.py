@@ -49,14 +49,23 @@ class Issue(Base, TimestampMixin):
     # The deadline of this issue.
     deadline = Column(UTCDateTime, nullable=True)
 
-    def in_use(self, session):
-        """ True, if the issued is used by any notice. """
+    def notices(self):
+        """ Returns a query to get all notices related to this issue. """
 
         from onegov.gazette.models.notice import GazetteNotice  # circular
 
-        query = session.query(GazetteNotice._issues)
-        query = query.filter(GazetteNotice._issues.has_key(self.name))  # noqa
-        if query.first():
+        notices = object_session(self).query(GazetteNotice)
+        notices = notices.filter(
+            GazetteNotice._issues.has_key(self.name)  # noqa
+        )
+
+        return notices
+
+    @property
+    def in_use(self):
+        """ True, if the issued is used by any notice. """
+
+        if self.notices().first():
             return True
 
         return False
@@ -71,13 +80,11 @@ class Issue(Base, TimestampMixin):
         from onegov.gazette.models.notice import GazetteNotice  # circular
 
         date_time = standardize_date(as_datetime(date_), 'UTC')
-        query = object_session(self).query(GazetteNotice)
-        query = query.filter(
-            GazetteNotice._issues.has_key(self.name),  # noqa
+        notices = self.notices().filter(
             or_(
                 GazetteNotice.first_issue.is_(None),
                 GazetteNotice.first_issue != date_time
             )
         )
-        for notice in query:
+        for notice in notices:
             notice.first_issue = date_time
