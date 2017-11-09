@@ -496,6 +496,9 @@ msgstr "bearbeitet"
 msgid "This official notice has already been accepted!"
 msgstr "Diese Meldung wurde bereits angenommen!"
 
+msgid "Official notice modified."
+msgstr "Meldung geändert."
+
 msgid "Official notice deleted."
 msgstr "Meldung gelöscht."
 

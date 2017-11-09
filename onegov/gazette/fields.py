@@ -8,9 +8,9 @@ class SelectField(SelectFieldBase):
     """ A select field with chosen support. """
 
     def __init__(self, *args, **kwargs):
-        if 'render_kw' not in kwargs or not kwargs['render_kw'].get('class_'):
-            kwargs['render_kw'] = kwargs.get('render_kw', {})
-            kwargs['render_kw']['class_'] = 'chosen-select'
+        render_kw = kwargs.pop('render_kw', {})
+        render_kw['class_'] = 'chosen-select'
+        kwargs['render_kw'] = render_kw
 
         super().__init__(*args, **kwargs)
 
@@ -20,11 +20,11 @@ class MultiCheckboxField(MultiCheckboxFieldBase):
     the the rest can be shown when needed. """
 
     def __init__(self, *args, **kwargs):
-        if 'render_kw' not in kwargs or not kwargs['render_kw'].get('class_'):
-            kwargs['render_kw'] = kwargs.get('render_kw', {})
-            kwargs['render_kw']['data-limit'] = str(kwargs.pop('limit', 10))
-            kwargs['render_kw']['data-expand-title'] = _("Show all")
-            kwargs['render_kw']['data-fold-title'] = _("Show less")
+        render_kw = kwargs.pop('render_kw', {})
+        render_kw['data-limit'] = str(kwargs.pop('limit', 10))
+        render_kw['data-expand-title'] = _("Show all")
+        render_kw['data-fold-title'] = _("Show less")
+        kwargs['render_kw'] = render_kw
 
         super().__init__(*args, **kwargs)
 
