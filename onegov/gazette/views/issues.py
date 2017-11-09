@@ -1,3 +1,4 @@
+from datetime import date
 from morepath import redirect
 from onegov.core.security import Secret
 from onegov.gazette import _
@@ -22,9 +23,15 @@ def view_issues(self, request):
     """
     layout = Layout(self, request)
 
+    today = date.today()
+    past_issues = self.query().filter(Issue.date < today)
+    past_issues = past_issues.order_by(None).order_by(Issue.date.desc())
+    next_issues = self.query().filter(Issue.date >= today)
+
     return {
         'layout': layout,
-        'issues': self.query().all(),
+        'past_issues': past_issues,
+        'next_issues': next_issues,
         'new_issue': request.link(self, name='new-issue')
     }
 
