@@ -1,5 +1,7 @@
 Changelog
 ---------
+1.10.0 (2017-11-09)
+~~~~~~~~~~~~~~~~~~~
 
 - Allows to manage categories, organizations and issues.
   [msom]
