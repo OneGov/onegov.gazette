@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-23 12:35+0200\n"
-"PO-Revision-Date: 2017-10-26 14:06+0200\n"
+"POT-Creation-Date: 2017-11-09 08:58+0100\n"
+"PO-Revision-Date: 2017-11-09 08:54+0100\n"
 "Last-Translator: Marc Sommerhalder <marc.sommerhalder@seantis.ch>\n"
 "Language-Team: German\n"
 "Language: de_CH\n"
@@ -409,6 +409,9 @@ msgstr "Bitte Ausgaben neu wählen."
 msgid "edited"
 msgstr "bearbeitet"
 
+msgid "Official notice modified."
+msgstr "Meldung geändert."
+
 msgid "Official notice deleted."
 msgstr "Meldung gelöscht."
 
@@ -459,10 +462,6 @@ msgstr "Annehmen"
 
 msgid "Reject"
 msgstr "Zurückweisen"
-
-#, python-format
-msgid "Publish Official Notice ${id}"
-msgstr "Publikation für den amtlichen Teil ${id}"
 
 #, python-format
 msgid "Official Notice Rejected ${id}"
