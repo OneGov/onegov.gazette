@@ -71,10 +71,10 @@ def test_layout_menu():
 
     request._is_secret = True
     assert layout.menu == [
-        ('Users', '/UserCollection/', False),
-        ('Groups', '/UserGroupCollection/', False),
         ('Official Notices', '/GazetteNoticeCollection/', False),
-        ('Statistics', '/GazetteNoticeCollection/statistics/', False)
+        ('Statistics', '/GazetteNoticeCollection/statistics/', False),
+        ('Users', '/UserCollection/', False),
+        ('Groups', '/UserGroupCollection/', False)
     ]
 
 
