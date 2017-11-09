@@ -4,7 +4,7 @@ name = 'onegov.gazette'
 description = (
     'OneGov official notices website.'
 )
-version = '1.9.2'
+version = '1.9.3'
 
 
 def get_long_description():
@@ -40,7 +40,7 @@ setup(
         'onegov.form',
         'onegov.foundation',
         'onegov.notice>=0.3.0',
-        'onegov.quill>=0.2.0',
+        'onegov.quill>=0.2.3',
         'onegov.shared',
         'onegov.user>=0.17.0',
         'python-dateutil',
