@@ -1,5 +1,6 @@
 from onegov.form import Form
 from onegov.gazette import _
+from onegov.gazette.fields import SelectField
 from onegov.gazette.models import GazetteNotice
 from onegov.gazette.models import Organization
 from onegov.gazette.validators import UniqueColumnValue
@@ -7,7 +8,6 @@ from onegov.gazette.validators import UnusedColumnKeyValue
 from sqlalchemy import cast
 from sqlalchemy import String
 from wtforms import BooleanField
-from wtforms import SelectField
 from wtforms import StringField
 from wtforms.validators import InputRequired
 
@@ -40,6 +40,10 @@ class OrganizationForm(Form):
         ]
     )
 
+    external_name = StringField(
+        label=_("External ID"),
+    )
+
     def on_request(self):
         session = self.request.app.session()
         query = session.query(
@@ -58,11 +62,13 @@ class OrganizationForm(Form):
         model.parent_id = self.parent.data or None
         if self.name.data:
             model.name = self.name.data
+        model.external_name = self.external_name.data
 
     def apply_model(self, model):
         self.title.data = model.title
         self.active.data = model.active
         self.name.data = model.name
+        self.external_name.data = model.external_name
         self.parent.data = str(model.parent_id or '')
         if model.in_use:
             self.name.render_kw = {'readonly': True}
