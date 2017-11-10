@@ -1,5 +1,17 @@
 Changelog
 ---------
+1.10.2 (2017-11-10)
+~~~~~~~~~~~~~~~~~~~
+
+- Order parents in organization form by their order.
+  [msom]
+
+- Fixes setting the initial external ID of an organization.
+  [msom]
+
+- Fixes sorting of sub-organizations.
+  [msom]
+
 1.10.1 (2017-11-10)
 ~~~~~~~~~~~~~~~~~~~
 
