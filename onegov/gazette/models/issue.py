@@ -125,11 +125,3 @@ class Issue(Base, TimestampMixin, AssociatedFiles):
 
         for notice in self.notices('accepted'):
             notice.publish(request)
-
-    def generate_pdf(self):
-        """ Generates the PDF. """
-        raise NotImplementedError()
-
-    def sign_pdf(self):
-        """ Signs the PDF. """
-        raise NotImplementedError()
