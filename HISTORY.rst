@@ -1,5 +1,11 @@
 Changelog
 ---------
+1.10.4 (2017-11-16)
+~~~~~~~~~~~~~~~~~~~
+
+- Allows publishers to manage organizations and categories.
+  [msom]
+
 1.10.3 (2017-11-16)
 ~~~~~~~~~~~~~~~~~~~
 
