@@ -1,5 +1,6 @@
 Changelog
 ---------
+
 1.10.2 (2017-11-10)
 ~~~~~~~~~~~~~~~~~~~
 
@@ -39,6 +40,18 @@ Changelog
 
 - Adds an unrestricted edit view for admins.
   [msom]
+
+1.9.5 (2017-11-16)
+~~~~~~~~~~~~~~~~~~~
+
+- Fixes failing test.
+  [msom]
+
+1.9.4 (2017-11-15)
+~~~~~~~~~~~~~~~~~~~
+
+- Skips failing test.
+  [href]
 
 1.9.3 (2017-11-09)
 ~~~~~~~~~~~~~~~~~~~
