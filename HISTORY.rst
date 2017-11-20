@@ -1,5 +1,9 @@
 Changelog
 ---------
+
+- Adds missing title slot.
+  [msom]
+
 1.9.5 (2017-11-16)
 ~~~~~~~~~~~~~~~~~~~
 
