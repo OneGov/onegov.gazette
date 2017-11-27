@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+- Updates translation.
+  [msom]
+
+- Uses a bigger reject comment field.
+  [msom]
+
 - Adds missing title slot.
   [msom]
 
