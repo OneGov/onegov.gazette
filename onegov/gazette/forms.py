@@ -14,6 +14,7 @@ from wtforms import BooleanField
 from wtforms import HiddenField
 from wtforms import RadioField
 from wtforms import StringField
+from wtforms import TextAreaField
 from wtforms.validators import Email
 from wtforms.validators import InputRequired
 
@@ -185,9 +186,10 @@ class NoticeForm(Form):
 
 class RejectForm(Form):
 
-    comment = StringField(
+    comment = TextAreaField(
         label=_("Comment"),
         validators=[
             InputRequired()
-        ]
+        ],
+        render_kw={'rows': 4}
     )
