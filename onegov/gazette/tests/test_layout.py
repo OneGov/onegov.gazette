@@ -150,3 +150,7 @@ def test_layout_format(session, principal):
         Issue(name='2017-1', number=1, date=date(2017, 1, 2)),
         notice=GazetteNotice(_issues={'2017-1': 10})
     ) == 'No. 1, 02.01.2017 / 10'
+
+    # Text
+    assert layout.format_text('abc') == 'abc'
+    assert layout.format_text('a\nb\r\nc') == 'a<br>b<br>c'
