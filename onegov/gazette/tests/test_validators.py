@@ -1,5 +1,10 @@
+from onegov.gazette.collections import CategoryCollection
+from onegov.gazette.validators import UniqueColumnValue
+from onegov.gazette.validators import UnusedColumnKeyValue
+from onegov.notice import OfficialNotice
+from onegov.notice import OfficialNoticeCollection
+from onegov.user import User
 from onegov.user import UserCollection
-from onegov.gazette.validators import UniqueUsername
 from pytest import raises
 from wtforms.validators import ValidationError
 
@@ -23,20 +28,40 @@ class DummyForm(object):
 
 
 class DummyField(object):
-    def __init__(self, data):
+    def __init__(self, name, data):
+        self.name = name
         self.data = data
 
 
-def test_unique_username_validator(session):
+def test_unique_column_value_validator(session):
+    # new item
     form = DummyForm(session)
-    field = DummyField('a@example.org')
-    validator = UniqueUsername()
-
+    field = DummyField('username', 'a@example.org')
+    validator = UniqueColumnValue(User)
     validator(form, field)
 
-    UserCollection(session).add('a@example.org', 'pwd', 'editor')
-    with raises(ValidationError):
+    # existing value
+    user = UserCollection(session).add('a@example.org', 'pwd', 'editor')
+    with raises(ValidationError) as excinfo:
         validator(form, field)
+    assert str(excinfo.value) == 'This value already exists.'
 
-    form.default_field = DummyField('a@example.org')
-    validator = UniqueUsername(default_field='default_field')
+    # provide a default
+    form.model = user
+    validator(form, field)
+
+
+def test_unused_column_key_value_validator(session):
+    # new item
+    form = DummyForm(session)
+    field = DummyField('name', 'XXX')
+    validator = UnusedColumnKeyValue(OfficialNotice._categories)
+    validator(form, field)
+
+    # used value
+    OfficialNoticeCollection(session).add('title', 'text', categories=['1'])
+    form.model = CategoryCollection(session).add_root(title='XXX')
+    assert form.model.name == '1'
+    with raises(ValidationError) as excinfo:
+        validator(form, field)
+    assert str(excinfo.value) == 'This value is in use.'

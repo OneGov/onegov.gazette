@@ -1,26 +1,56 @@
 from wtforms.validators import ValidationError
-from onegov.user import User
 from onegov.gazette import _
 
 
-class UniqueUsername(object):
-    """ Test if the email is not already used as a username.
+class UniqueColumnValue(object):
+    """ Test if value is not already present in the given table column.
 
-    A form field name can be provided to allow a default value.
+    We assume that we can look up the old value of the field with the given
+    name through the form's model when editing. If the values matches, no
+    check is done.
+
+    If we can't look up the old value we assume we are creating a new item and
+    therefore the check is done.
 
     """
 
-    def __init__(self, default_field=None):
-        self.default_field = default_field
+    def __init__(self, table, message=None):
+        self.table = table
 
     def __call__(self, form, field):
-        query = form.request.app.session().query(User.username)
-        query = query.filter(User.username == field.data)
-        if self.default_field and hasattr(form, self.default_field):
-            query = query.filter(
-                User.username != getattr(form, self.default_field).data
-            )
+        if hasattr(form, 'model'):
+            if hasattr(form.model, field.name):
+                if getattr(form.model, field.name) == field.data:
+                    return
+
+        column = getattr(self.table, field.name)
+        query = form.request.app.session().query(column)
+        query = query.filter(column == field.data)
         if query.first():
-            raise ValidationError(_(
-                "A user with this e-mail address already exists."
-            ))
+            raise ValidationError(_("This value already exists."))
+
+
+class UnusedColumnKeyValue(object):
+    """ Test if the value is not used as a key in the given column.
+
+    We assume that we can look up the old value of the field with the given
+    name through the form's model when editing. If the values matches, no
+    check is done.
+
+    If we can't look up the old value we assume we are creating a new item and
+    therefore the check is not done.
+
+    """
+
+    def __init__(self, column):
+        self.column = column
+
+    def __call__(self, form, field):
+        if hasattr(form, 'model'):
+            if hasattr(form.model, field.name):
+                data = getattr(form.model, field.name)
+                if data != field.data:
+                    query = form.request.app.session().query(self.column)
+                    query = query.filter(self.column.has_key(data))  # noqa
+                    if query.first():
+                        raise ValidationError(_("This value is in use."))

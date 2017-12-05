@@ -1,7 +1,10 @@
 from datetime import date
 from datetime import datetime
+from freezegun import freeze_time
+from onegov.gazette.collections import CategoryCollection
 from onegov.gazette.collections import GazetteNoticeCollection
-from onegov.gazette.models import Principal
+from onegov.gazette.collections import IssueCollection
+from onegov.gazette.collections import OrganizationCollection
 from onegov.user import UserCollection
 from onegov.user import UserGroupCollection
 from sedate import standardize_date
@@ -17,7 +20,81 @@ class DummyRequest(object):
         self.app = DummyApp(principal)
 
 
-def test_notice_collection(session, principal):
+def test_category_collection(session):
+    collection = CategoryCollection(session)
+
+    collection.add_root(title='First', active=True)
+    collection.add_root(title='Second', active=False)
+    collection.add_root(title='Third')
+    collection.add_root(title='Fourth', active=True)
+
+    categories = collection.query().all()
+    assert categories[0].title == 'First'
+    assert categories[0].name == '1'
+
+    assert categories[1].title == 'Fourth'
+    assert categories[1].name == '4'
+
+    assert categories[2].title == 'Second'
+    assert categories[2].name == '2'
+
+    assert categories[3].title == 'Third'
+    assert categories[3].name == '3'
+
+
+def test_organization_collection(session):
+    collection = OrganizationCollection(session)
+
+    collection.add_root(title='First', active=True)
+    collection.add_root(title='Second', active=False)
+    collection.add_root(title='Third')
+    collection.add_root(title='Fourth', active=True)
+
+    categories = collection.query().all()
+    assert categories[0].title == 'First'
+    assert categories[0].name == '1'
+
+    assert categories[1].title == 'Fourth'
+    assert categories[1].name == '4'
+
+    assert categories[2].title == 'Second'
+    assert categories[2].name == '2'
+
+    assert categories[3].title == 'Third'
+    assert categories[3].name == '3'
+
+
+def test_issue_collection(session):
+    collection = IssueCollection(session)
+
+    issue_1 = collection.add(
+        name='2017-1', number=1, date=date(2017, 1, 2),
+        deadline=standardize_date(datetime(2017, 1, 1, 12, 0), 'UTC')
+    )
+    issue_3 = collection.add(
+        name='2017-3', number=3, date=date(2017, 3, 2),
+        deadline=standardize_date(datetime(2017, 3, 1, 12, 0), 'UTC')
+    )
+    issue_2 = collection.add(
+        name='2017-2', number=2, date=date(2017, 2, 2),
+        deadline=standardize_date(datetime(2017, 2, 1, 12, 0), 'UTC')
+    )
+
+    assert [issue.name for issue in collection.query()] == [
+        '2017-1', '2017-2', '2017-3'
+    ]
+
+    with freeze_time("2017-01-01 11:00"):
+        assert collection.current_issue == issue_1
+    with freeze_time("2017-01-01 13:00"):
+        assert collection.current_issue == issue_2
+    with freeze_time("2017-02-10 13:00"):
+        assert collection.current_issue == issue_3
+    with freeze_time("2017-04-10 13:00"):
+        assert collection.current_issue is None
+
+
+def test_notice_collection(session, organizations, categories, issues):
     user = UserCollection(session).add(
         username='a@a.a', password='a', role='admin'
     )
@@ -29,8 +106,7 @@ def test_notice_collection(session, principal):
         organization_id='100',
         category_id='11',
         issues=['2017-46', '2017-47'],
-        user=user,
-        principal=principal
+        user=user
     )
     collection.add(
         title='Notice B',
@@ -38,8 +114,7 @@ def test_notice_collection(session, principal):
         organization_id='200',
         category_id='13',
         issues={'2017-47', '2017-48'},
-        user=user,
-        principal=principal
+        user=user
     )
 
     notice = collection.for_term('Notice A').query().one()
@@ -73,13 +148,11 @@ def test_notice_collection(session, principal):
     assert notice.changes.one().user == user
 
 
-def test_notice_collection_on_request(session, principal):
+def test_notice_collection_issues(session, issues):
     collection = GazetteNoticeCollection(session)
     assert collection.from_date is None
     assert collection.to_date is None
     assert collection.issues is None
-
-    collection.on_request(DummyRequest(principal))
     assert collection.issues is None
 
     for start, end, length in (
@@ -94,11 +167,9 @@ def test_notice_collection_on_request(session, principal):
         (date(2017, 10, 1), date(2017, 9, 1), 0),
     ):
         collection = collection.for_dates(start, end)
-        collection.on_request(DummyRequest(principal))
         assert len(collection.issues) == length
 
     collection = collection.for_dates(date(2017, 12, 1), date(2017, 12, 10))
-    collection.on_request(DummyRequest(principal))
     assert sorted(collection.issues) == ['2017-48', '2017-49']
 
 
@@ -106,7 +177,10 @@ def test_notice_collection_count_by_organization(session):
     collection = GazetteNoticeCollection(session)
     assert collection.count_by_organization() == []
 
-    principal = Principal(organizations=[{'1': 'A'}, {'2': 'B'}, {'3': 'C'}])
+    organizations = OrganizationCollection(session)
+    organizations.add_root(name='1', title='A')
+    organizations.add_root(name='2', title='B')
+    organizations.add_root(name='3', title='C')
     for organization, count in (('1', 2), ('2', 4), ('3', 10)):
         for x in range(count):
             collection.add(
@@ -115,11 +189,8 @@ def test_notice_collection_count_by_organization(session):
                 organization_id=organization,
                 category_id='',
                 issues=['2017-{}'.format(y) for y in range(x)],
-                user=None,
-                principal=principal
+                user=None
             )
-    # for x in collection.query(): x.organization, x.issues
-
     assert collection.count_by_organization() == [
         ('A', 1), ('B', 6), ('C', 45),
     ]
@@ -135,7 +206,10 @@ def test_notice_collection_count_by_category(session):
     collection = GazetteNoticeCollection(session)
     assert collection.count_by_category() == []
 
-    principal = Principal(categories=[{'1': 'A'}, {'2': 'B'}, {'3': 'C'}])
+    categories = CategoryCollection(session)
+    categories.add_root(name='1', title='A')
+    categories.add_root(name='2', title='B')
+    categories.add_root(name='3', title='C')
     for category, count in (('1', 2), ('2', 4), ('3', 1)):
         for x in range(count):
             collection.add(
@@ -144,8 +218,7 @@ def test_notice_collection_count_by_category(session):
                 organization_id=None,
                 category_id=category,
                 issues=['2017-{}'.format(y) for y in range(x)],
-                user=None,
-                principal=principal
+                user=None
             )
     assert collection.count_by_category() == [('A', 1), ('B', 6)]
 
@@ -156,7 +229,7 @@ def test_notice_collection_count_by_category(session):
     assert collection.count_by_category() == [('A', 1), ('B', 4)]
 
 
-def test_notice_collection_count_by_group(session, principal):
+def test_notice_collection_count_by_group(session):
     collection = GazetteNoticeCollection(session)
     assert collection.count_by_group() == []
 
@@ -192,8 +265,7 @@ def test_notice_collection_count_by_group(session, principal):
                 organization_id='',
                 category_id='',
                 issues=['2017-{}'.format(y) for y in range(x)],
-                user=user,
-                principal=principal
+                user=user
             )
     assert collection.count_by_group() == [
         ('A', 7), ('B', 1)

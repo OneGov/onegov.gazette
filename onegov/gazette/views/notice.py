@@ -1,6 +1,7 @@
 from morepath import redirect
 from onegov.core.security import Personal
 from onegov.core.security import Private
+from onegov.core.security import Secret
 from onegov.core.templates import render_template
 from onegov.gazette import _
 from onegov.gazette import GazetteApp
@@ -8,12 +9,24 @@ from onegov.gazette.collections import GazetteNoticeCollection
 from onegov.gazette.forms import EmptyForm
 from onegov.gazette.forms import NoticeForm
 from onegov.gazette.forms import RejectForm
+from onegov.gazette.forms import UnrestrictedNoticeForm
 from onegov.gazette.layout import Layout
 from onegov.gazette.layout import MailLayout
 from onegov.gazette.models import GazetteNotice
-from onegov.gazette.models import Issue
 from onegov.gazette.views import get_user_and_group
 from webob.exc import HTTPForbidden
+
+
+def construct_subject(notice):
+    """ Construct the subject of the publish email. """
+    issues = notice.issue_objects
+    number = issues[0].number if issues else ''
+
+    organization = notice.organization_object
+    parent = organization.parent if organization else None
+    parent_id = (parent.external_name or '') if parent else ''
+
+    return "{} {} {} {}".format(number, parent_id, notice.title, notice.id)
 
 
 @GazetteApp.html(
@@ -36,6 +49,7 @@ def view_notice(self, request):
     user_ids, group_ids = get_user_and_group(request)
     editor = request.is_personal(self)
     publisher = request.is_private(self)
+    admin = request.is_secret(self)
     owner = self.user_id in user_ids
     same_group = self.group_id in group_ids
 
@@ -80,6 +94,13 @@ def view_notice(self, request):
                 'alert right',
                 '_self'
             ))
+            if admin:
+                actions.append((
+                    _("Delete"),
+                    request.link(self, 'delete'),
+                    'alert right',
+                    '_self'
+                ))
 
     if self.state == 'accepted':
         actions.append((
@@ -94,6 +115,19 @@ def view_notice(self, request):
             'secondary',
             '_self'
         ))
+        if admin:
+            actions.append((
+                _("Edit"),
+                request.link(self, 'edit_unrestricted'),
+                'secondary',
+                '_self'
+            ))
+            actions.append((
+                _("Delete"),
+                request.link(self, 'delete'),
+                'alert right',
+                '_self'
+            ))
 
     actions.append((
         _("Preview"),
@@ -136,15 +170,17 @@ def view_notice_preview(self, request):
 def edit_notice(self, request, form):
     """ Edit a notice.
 
-    The issue can not be changed. This view is used by the editors and
-    publishers. Editors may only edit their own notices, publishers may edit
-    any notice.
+    This view is used by the editors and publishers. Editors may only edit
+    their own notices, publishers may edit any notice. It's not possible to
+    change already accepted or published notices (although you can use the
+    unrestricted view for this).
 
     """
 
     layout = Layout(self, request)
+    is_private = request.is_private(self)
 
-    if not request.is_private(self):
+    if not is_private:
         user_ids, group_ids = get_user_and_group(request)
         if not ((self.group_id in group_ids) or (self.user_id in user_ids)):
             raise HTTPForbidden()
@@ -160,21 +196,34 @@ def edit_notice(self, request, form):
             'show_form': False
         }
 
-    if self.expired_issues(request.app.principal):
+    if self.expired_issues:
         request.message(
             _(
                 "The official notice has past issue. Please re-select issues."
             ),
             'warning'
         )
-    elif (
-        self.overdue_issues(request.app.principal) and
-        not request.is_private(self)
-    ):
+    elif self.overdue_issues and not is_private:
         request.message(
             _(
                 "The official notice has issues for which the deadlines are "
                 "reached. Please re-select valid issues."
+            ),
+            'warning'
+        )
+    if self.invalid_category:
+        request.message(
+            _(
+                "The official notice has an invalid category. "
+                "Please re-select the category."
+            ),
+            'warning'
+        )
+    if self.invalid_organization:
+        request.message(
+            _(
+                "The official notice has an invalid organization. "
+                "Please re-select the organization."
             ),
             'warning'
         )
@@ -195,7 +244,51 @@ def edit_notice(self, request, form):
         'subtitle': _("Edit Official Notice"),
         'button_text': _("Save"),
         'cancel': request.link(self),
-        'current_issue': request.app.principal.current_issue
+        'current_issue': layout.current_issue
+    }
+
+
+@GazetteApp.form(
+    model=GazetteNotice,
+    name='edit_unrestricted',
+    template='form.pt',
+    permission=Secret,
+    form=UnrestrictedNoticeForm
+)
+def edit_notice_unrestricted(self, request, form):
+    """ Edit a notice without restrictions.
+
+    This view is only usable by publishers.
+
+    """
+
+    layout = Layout(self, request)
+
+    if self.state == 'accepted':
+        request.message(
+            _("This official notice has already been accepted!"), 'warning'
+        )
+    elif self.state == 'published':
+        request.message(
+            _("This official notice has already been published!"), 'warning'
+        )
+
+    if form.submitted(request):
+        form.update_model(self)
+        self.add_change(request, _("edited"))
+        request.message(_("Official notice modified."), 'success')
+        return redirect(request.link(self))
+
+    if not form.errors:
+        form.apply_model(self)
+
+    return {
+        'layout': layout,
+        'form': form,
+        'title': self.title,
+        'subtitle': _("Edit Official Notice"),
+        'button_text': _("Save"),
+        'cancel': request.link(self)
     }
 
 
@@ -213,39 +306,38 @@ def delete_notice(self, request, form):
     Editors may only delete their own notices, publishers may delete any
     notice.
 
-    It is possible for admins to delete accepted/published and drafted notices
-    too, although the action is not linked anywhere.
+    It is possible for admins to delete submitted and accepted notices too.
 
     """
     layout = Layout(self, request)
+    is_admin = request.is_secret(self)
 
     if not request.is_private(self):
         user_ids, group_ids = get_user_and_group(request)
         if not ((self.group_id in group_ids) or (self.user_id in user_ids)):
             raise HTTPForbidden()
 
-    if self.state != 'drafted' and self.state != 'rejected':
-        if request.is_secret(self):
-            request.message(
-                _(
-                    "It's probably not a good idea to delete this official "
-                    "notice!"
-                ),
-                'warning'
-            )
-        else:
-            request.message(
-                _(
-                    "Only drafted or rejected official notices may be deleted."
-                ),
-                'alert'
-            )
-            return {
-                'layout': layout,
-                'title': self.title,
-                'subtitle': _("Delete Official Notice"),
-                'show_form': False
-            }
+    if (
+        self.state == 'published' or
+        (self.state in ('submitted', 'accepted') and not is_admin)
+    ):
+        request.message(
+            _(
+                "Only drafted or rejected official notices may be deleted."
+            ),
+            'alert'
+        )
+        return {
+            'layout': layout,
+            'title': self.title,
+            'subtitle': _("Delete Official Notice"),
+            'show_form': False
+        }
+
+    if self.state == 'accepted':
+        request.message(
+            _("This official notice has already been accepted!"), 'warning'
+        )
 
     if form.submitted(request):
         collection = GazetteNoticeCollection(request.app.session())
@@ -284,14 +376,15 @@ def submit_notice(self, request, form):
     Only drafted notices may be submitted. Editors may only submit their own
     notices (publishers may submit any notice).
 
-    If a notice has invalid/past issues, the user is redirected to the edit
-    view to select new issues.
+    If a notice has invalid/past issues or an invalid/inactive
+    category/organization, the user is redirected to the edit view.
 
     """
 
     layout = Layout(self, request)
+    is_private = request.is_private(self)
 
-    if not request.is_private(self):
+    if not is_private:
         user_ids, group_ids = get_user_and_group(request)
         if not ((self.group_id in group_ids) or (self.user_id in user_ids)):
             raise HTTPForbidden()
@@ -308,11 +401,10 @@ def submit_notice(self, request, form):
         }
 
     if (
-        self.expired_issues(request.app.principal) or
-        (
-            self.overdue_issues(request.app.principal) and
-            not request.is_private(self)
-        )
+        self.expired_issues or
+        (self.overdue_issues and not is_private) or
+        self.invalid_category or
+        self.invalid_organization
     ):
         return redirect(request.link(self, name='edit'))
 
@@ -362,7 +454,11 @@ def accept_notice(self, request, form):
             'show_form': False
         }
 
-    if self.expired_issues(request.app.principal):
+    if (
+        self.expired_issues or
+        self.invalid_category or
+        self.invalid_organization
+    ):
         return redirect(request.link(self, name='edit'))
 
     if form.submitted(request):
@@ -370,11 +466,10 @@ def accept_notice(self, request, form):
         request.message(_("Official notice accepted."), 'success')
         if request.app.principal.publish_to:
             reply_to = (
-                request.app.principal.publish_from or request.app.mail_sender
+                request.app.principal.publish_from or
+                request.app.mail_sender
             )
-            issues = list(self.issues.keys())
-            number = Issue.from_string(issues[0]).number if issues else ''
-            subject = "{} {} {}".format(number, self.title, self.id)
+            subject = construct_subject(self)
             request.app.send_email(
                 subject=subject,
                 receivers=(request.app.principal.publish_to, ),

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-09 08:58+0100\n"
-"PO-Revision-Date: 2017-11-09 08:54+0100\n"
+"POT-Creation-Date: 2017-11-10 10:28+0100\n"
+"PO-Revision-Date: 2017-11-10 10:28+0100\n"
 "Last-Translator: Marc Sommerhalder <marc.sommerhalder@seantis.ch>\n"
 "Language-Team: German\n"
 "Language: de_CH\n"
@@ -32,51 +32,9 @@ msgstr "Alle anzeigen"
 msgid "Show less"
 msgstr "Weniger anzeigen"
 
-msgid "Role"
-msgstr "Rolle"
-
-msgid "Title"
-msgstr "Titel"
-
-msgid "Organization"
-msgstr "Organisation"
-
-msgid "Category"
-msgstr "Rubrik"
-
-msgid "Liable to pay costs"
-msgstr "Kostenpflichtig 85% vom Normalpreis"
-
-msgid "Issue(s)"
-msgstr "Ausgabe(n)"
-
-msgid "Text"
-msgstr "Text"
-
-msgid "Comment"
-msgstr "Bemerkung"
-
-msgid "Publisher"
-msgstr "Herausgeber"
-
-msgid "Editor"
-msgstr "Redaktor"
-
-msgid "- none -"
-msgstr "- keine -"
-
-msgid "Select one"
-msgstr "Bitte auswählen"
-
 #, python-format
 msgid "No. ${number}, ${issue_date}"
 msgstr "Nr. ${number}, ${issue_date}"
-
-msgid "Users"
-msgstr "Benutzer"
-
-msgid "Groups"
-msgstr "Gruppen"
 
 msgid "Official Notices"
 msgstr "Meldungen"
@@ -84,14 +42,32 @@ msgstr "Meldungen"
 msgid "Statistics"
 msgstr "Statistiken"
 
+msgid "Issues"
+msgstr "Ausgaben"
+
+msgid "Organizations"
+msgstr "Organisationen"
+
+msgid "Categories"
+msgstr "Rubriken"
+
+msgid "Users"
+msgstr "Benutzer"
+
+msgid "Groups"
+msgstr "Gruppen"
+
 msgid "My Drafted and Submitted Official Notices"
 msgstr "Offene Meldungen"
 
 msgid "My Accepted Official Notices"
 msgstr "Angenommene Meldungen"
 
-msgid "A user with this e-mail address already exists."
-msgstr "Ein Benutzer mit dieser E-Mail-Adresse existiert bereits."
+msgid "This value already exists."
+msgstr "Dieser Wert ist bereits vorhanden."
+
+msgid "This value is in use."
+msgstr "Dieser Wert wird verwendet."
 
 msgid "drafted"
 msgstr "in Arbeit"
@@ -111,8 +87,80 @@ msgstr "veröffentlicht"
 msgid "created"
 msgstr "erstellt"
 
+msgid "Title"
+msgstr "Titel"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Leave blank to set the value automatically."
+msgstr "Leer lassen, um den Wert automatisch zu setzen."
+
+msgid "Comment"
+msgstr "Bemerkung"
+
+msgid "Number"
+msgstr "Nummer"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Deadline"
+msgstr "Eingabeschluss"
+
+msgid "Organization"
+msgstr "Organisation"
+
+msgid "Category"
+msgstr "Rubrik"
+
+msgid "Liable to pay costs"
+msgstr "Kostenpflichtig 85% vom Normalpreis"
+
+msgid "Issue(s)"
+msgstr "Ausgabe(n)"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Select one"
+msgstr "Bitte auswählen"
+
+msgid "Parent Organization"
+msgstr "Übergeordnete Organisation"
+
+msgid "External ID"
+msgstr "Externe ID"
+
+msgid "- none -"
+msgstr "- keine -"
+
+msgid "Role"
+msgstr "Rolle"
+
+msgid "Publisher"
+msgstr "Herausgeber"
+
+msgid "Editor"
+msgstr "Redaktor"
+
 msgid "New"
 msgstr "Neu"
+
+msgid "Actions"
+msgstr "Aktionen"
+
+msgid "No categories."
+msgstr "Keine Rubriken."
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Delete"
+msgstr "Löschen"
 
 msgid "No official notices."
 msgstr "Keine Meldungen."
@@ -136,17 +184,23 @@ msgstr ""
 msgid "Number of Users"
 msgstr "Anzahl Benutzer"
 
-msgid "Actions"
-msgstr "Aktionen"
-
 msgid "No groups."
 msgstr "Keine Gruppen."
 
-msgid "Edit"
-msgstr "Bearbeiten"
+msgid "Upcoming Issues"
+msgstr "Kommende Ausgaben"
 
-msgid "Delete"
-msgstr "Löschen"
+msgid "Issue"
+msgstr "Ausgabe"
+
+msgid "No upcoming issues."
+msgstr "Keine kommenden Ausgaben."
+
+msgid "Past Issues"
+msgstr "Vergangene Ausgaben"
+
+msgid "No past issues."
+msgstr "Keine vergangenen Ausgaben."
 
 msgid "Gazette"
 msgstr "Amtsblatt"
@@ -190,9 +244,6 @@ msgstr "Aktuelle Seite"
 msgid "Next deadline"
 msgstr "Nächster Eingabeschluss"
 
-msgid "Issue"
-msgstr "Ausgabe"
-
 msgid "Dear Sirs and Madams,"
 msgstr "Sehr geehrte Damen und Herren,"
 
@@ -205,9 +256,6 @@ msgstr "Ja"
 
 msgid "No"
 msgstr "Nein"
-
-msgid "ID"
-msgstr "ID"
 
 msgid "Dear Sir or Madam,"
 msgstr "Sehr geehrte Dame, sehr geehrter Herr"
@@ -256,11 +304,17 @@ msgstr "Änderung"
 msgid "Search"
 msgstr "Suche"
 
-msgid "Date"
-msgstr "Datum"
-
 msgid "Filter by date"
 msgstr "Nach Datum filtern"
+
+msgid "Order"
+msgstr "Ordnen"
+
+msgid "No organizations."
+msgstr "Keine Organisationen."
+
+msgid "Order Organizations"
+msgstr "Organisationen ordnen"
 
 msgid "Close"
 msgstr "Schliessen"
@@ -326,6 +380,34 @@ msgstr "Passwort geändert."
 msgid "Password reset"
 msgstr "Persönliches Passwort Amtsblattredaktion zurücksetzen"
 
+msgid "New Category"
+msgstr "Neue Rubrik"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Edit Category"
+msgstr "Rubrik bearbeiten"
+
+#, python-format
+msgid "Do you really want to delete \"${item}\"?"
+msgstr "Möchten Sie \"${item}\" wirklich löschen?"
+
+msgid "Delete Category"
+msgstr "Rubrik löschen"
+
+msgid "Category added."
+msgstr "Rubrik hinzugefügt."
+
+msgid "Category modified."
+msgstr "Rubrik geändert."
+
+msgid "Only unused categorys may be deleted."
+msgstr "Es können nur unbenutzte Rubriken gelöscht werden."
+
+msgid "Category deleted."
+msgstr "Rubrik gelöscht."
+
 msgid "Access Denied"
 msgstr "Zugriff verweigert"
 
@@ -345,10 +427,6 @@ msgstr "Neue Gruppe"
 msgid "Edit Group"
 msgstr "Gruppe bearbeiten"
 
-#, python-format
-msgid "Do you really want to delete \"${item}\"?"
-msgstr "Möchten Sie \"${item}\" wirklich löschen?"
-
 msgid "Delete Group"
 msgstr "Gruppe löschen"
 
@@ -367,11 +445,29 @@ msgstr "Es können nur Gruppen ohne Benutzer gelöscht werden."
 msgid "Group deleted."
 msgstr "Gruppe gelöscht."
 
+msgid "New Issue"
+msgstr "Neue Ausgabe"
+
+msgid "Edit Issue"
+msgstr "Ausgabe bearbeiten"
+
+msgid "Delete Issue"
+msgstr "Ausgabe löschen"
+
+msgid "Issue added."
+msgstr "Ausgabe hinzugefügt."
+
+msgid "Issue modified."
+msgstr "Ausgabe geändert."
+
+msgid "Only unused issues may be deleted."
+msgstr "Es können nur unbenutzte Ausgaben gelöscht werden."
+
+msgid "Issue deleted."
+msgstr "Ausgabe gelöscht."
+
 msgid "Edit Official Notice"
 msgstr "Meldung bearbeiten"
-
-msgid "Save"
-msgstr "Speichern"
 
 msgid "Delete Official Notice"
 msgstr "Meldung löschen"
@@ -406,11 +502,28 @@ msgstr "Angenommene Meldungen können nicht mehr bearbeitet werden."
 msgid "The official notice has past issue. Please re-select issues."
 msgstr "Bitte Ausgaben neu wählen."
 
+msgid ""
+"The official notice has an invalid category. Please re-select the category."
+msgstr "Bitte Rubrik neu wählen."
+
+msgid ""
+"The official notice has an invalid organization. Please re-select the "
+"organization."
+msgstr "Bitte Organisation neu wählen."
+
 msgid "edited"
 msgstr "bearbeitet"
 
 msgid "Official notice modified."
 msgstr "Meldung geändert."
+
+msgid "This official notice has already been accepted!"
+msgstr "Diese Meldung wurde bereits angenommen!"
+
+msgid "Only drafted or rejected official notices may be deleted."
+msgstr ""
+"Es können nur zurückgewiesene Meldungen oder Meldungen in Arbeit gelöscht "
+"werden."
 
 msgid "Official notice deleted."
 msgstr "Meldung gelöscht."
@@ -443,13 +556,8 @@ msgid ""
 "re-select valid issues."
 msgstr "Bitte Ausgaben neu wählen."
 
-msgid "It's probably not a good idea to delete this official notice!"
-msgstr "Es ist vermutlich keine gute Idee, diese Meldung zu löschen!"
-
-msgid "Only drafted or rejected official notices may be deleted."
-msgstr ""
-"Es können nur zurückgewiesene Meldungen oder Meldungen in Arbeit gelöscht "
-"werden."
+msgid "This official notice has already been published!"
+msgstr "Diese Meldung wurde bereits veröffentlicht!"
 
 msgid "mail sent"
 msgstr "Druck beauftragt"
@@ -476,14 +584,31 @@ msgstr "Meldungen aktualisieren"
 msgid "Update"
 msgstr "Aktualisieren"
 
-msgid "Organizations"
-msgstr "Organisationen"
-
-msgid "Categories"
-msgstr "Rubriken"
-
 msgid "Notices updated."
 msgstr "Meldungen aktualisiert."
+
+msgid "New Organization"
+msgstr "Neue Organisation"
+
+msgid "Edit Organization"
+msgstr "Organisation bearbeiten"
+
+msgid "Delete Organization"
+msgstr "Organisation löschen"
+
+msgid "Organization added."
+msgstr "Organisation hinzugefügt."
+
+msgid "Organization modified."
+msgstr "Organisation geändert."
+
+msgid "Only unused organizations with no sub-organisations may be deleted."
+msgstr ""
+"Nur unbenutzte Organisationen ohne Unterorganisationen können gelöscht "
+"werden."
+
+msgid "Organization deleted."
+msgstr "Organisation gelöscht."
 
 msgid "You have rejected messages."
 msgstr "Sie haben zurückgewiesene Meldungen."
