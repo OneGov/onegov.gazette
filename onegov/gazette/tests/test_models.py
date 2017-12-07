@@ -46,17 +46,17 @@ def test_category(session):
 
     assert category.name == '100'
     assert category.title == 'Election'
-    assert category.active == True
+    assert category.active is True
 
     # Test helpers
     assert len(category.notices().all()) == 0
-    assert category.in_use == False
+    assert category.in_use is False
 
     session.add(GazetteNotice(title='notice', category_id=category.name))
     session.flush()
 
     assert len(category.notices().all()) == 1
-    assert category.in_use == True
+    assert category.in_use is True
 
     # Test title observer
     category.title = 'Vote'
@@ -77,8 +77,8 @@ def test_organization(session):
 
     assert parent.name == '100'
     assert parent.title == 'State Chancellery'
-    assert parent.active == True
-    assert parent.external_name == None
+    assert parent.active is True
+    assert parent.external_name is None
 
     # Test in use
     session.add(
@@ -94,8 +94,8 @@ def test_organization(session):
 
     assert len(parent.notices().all()) == 0
     assert len(child.notices().all()) == 0
-    assert parent.in_use == False
-    assert child.in_use == False
+    assert parent.in_use is False
+    assert child.in_use is False
 
     session.add(
         GazetteNotice(title='notice', organization_id='101')
@@ -104,8 +104,8 @@ def test_organization(session):
 
     assert len(parent.notices().all()) == 0
     assert len(child.notices().all()) == 1
-    assert parent.in_use == False
-    assert child.in_use == True
+    assert parent.in_use is False
+    assert child.in_use is True
 
     # Test title observer
     child.title = 'Administrations'
@@ -210,7 +210,7 @@ def test_issue(gazette_app, session):
     assert len(issue.notices().all()) == 0
     assert issue.notices('accepted').all() == []
     assert issue.notices('submitted').all() == []
-    assert issue.in_use == False
+    assert issue.in_use is False
 
     issues = [issue.name]
     session.add(GazetteNotice(title='d', issues=issues))
@@ -223,7 +223,7 @@ def test_issue(gazette_app, session):
     assert len(issue.notices().all()) == 4
     assert issue.notices('accepted').all()[0].title == 'a'
     assert issue.notices('submitted').one().title == 's'
-    assert issue.in_use == True
+    assert issue.in_use is True
 
     # Test date observer
     issue.date = date(2017, 7, 2)
@@ -272,18 +272,12 @@ def test_principal():
         color: '#aabbcc'
         logo: 'logo.svg'
         publish_to: 'printer@govikon.org'
-        organizations:
-        categories:
-        issues:
     """))
     assert principal.name == 'Govikon'
     assert principal.color == '#aabbcc'
     assert principal.logo == 'logo.svg'
     assert principal.publish_to == 'printer@govikon.org'
     assert principal.publish_from == ''
-    assert dict(principal._organizations) == {}
-    assert dict(principal._categories) == {}
-    assert dict(principal._issues) == {}
 
     principal = Principal.from_yaml(dedent("""
         name: Govikon
@@ -292,25 +286,6 @@ def test_principal():
         publish_to: 'printer@govikon.org'
         publish_from: 'publisher@govikon.org'
         help_link: 'https://help.me'
-        organizations:
-            - '1': Organization 1
-            - '2': Örgänizätiön 2
-        categories:
-            - 'A': Category A
-            - 'B': Category B
-            - 'C': Category C
-        issues:
-            2018:
-                1: 2018-01-05 / 2018-01-04T23:59:59
-            2016:
-                10: 2016-01-01 / 2015-12-31T23:59:59
-            2017:
-                40: 2017-10-06 / 2017-10-05T23:59:59
-                50: 2017-12-15 / 2017-12-14T23:59:59
-                52: 2017-12-29 / 2017-12-28T23:59:59
-                41: 2017-10-13 / 2017-10-12T23:59:59
-                46: 2017-11-17 / 2017-11-16T23:59:59
-                45: 2017-11-10 / 2017-11-09T23:59:59
     """))
     assert principal.name == 'Govikon'
     assert principal.color == '#aabbcc'
@@ -318,36 +293,6 @@ def test_principal():
     assert principal.publish_to == 'printer@govikon.org'
     assert principal.publish_from == 'publisher@govikon.org'
     assert principal.help_link == 'https://help.me'
-    assert dict(principal._organizations) == {
-        '1': 'Organization 1', '2': 'Örgänizätiön 2'
-    }
-    assert list(principal._organizations.keys()) == ['1', '2']
-    assert dict(principal._categories) == {
-        'C': 'Category C', 'B': 'Category B', 'A': 'Category A'
-    }
-    assert list(principal._categories.keys()) == ['A', 'B', 'C']
-    assert list(principal._issues.keys()) == [2016, 2017, 2018]
-    assert list(principal._issues[2016]) == [10]
-    assert list(principal._issues[2017]) == [40, 41, 45, 46, 50, 52]
-    assert list(principal._issues[2018]) == [1]
-    assert [
-        dates.issue_date for dates in principal._issues[2017].values()
-    ] == [
-        date(2017, 10, 6),
-        date(2017, 10, 13),
-        date(2017, 11, 10),
-        date(2017, 11, 17),
-        date(2017, 12, 15),
-        date(2017, 12, 29)
-    ]
-    assert [dates.deadline for dates in principal._issues[2017].values()] == [
-        datetime(2017, 10, 5, 23, 59, 59),
-        datetime(2017, 10, 12, 23, 59, 59),
-        datetime(2017, 11, 9, 23, 59, 59),
-        datetime(2017, 11, 16, 23, 59, 59),
-        datetime(2017, 12, 14, 23, 59, 59),
-        datetime(2017, 12, 28, 23, 59, 59)
-    ]
 
 
 def test_notice_organization(session):
@@ -498,11 +443,11 @@ def test_notice_change(session):
     change = session.query(GazetteNoticeChange).one()
     assert change.text == 'text'
     assert change.channel_id == 'channel'
-    assert change.user == None
-    assert change.user_name == None
-    assert change._user_name == None
-    assert change.notice == None
-    assert change.event == None
+    assert change.user is None
+    assert change.user_name is None
+    assert change._user_name is None
+    assert change.notice is None
+    assert change.event is None
 
     # Add user
     change.event = 'event'
@@ -516,7 +461,7 @@ def test_notice_change(session):
     assert change.user == user
     assert change.user_name == '1@2.com'
     assert change._user_name == '1@2.com'
-    assert change.notice == None
+    assert change.notice is None
     assert change.event == 'event'
     assert user.changes == [change]
 
@@ -543,7 +488,7 @@ def test_notice_change(session):
     session.flush()
     session.refresh(change)
 
-    assert change.user == None
+    assert change.user is None
     assert change.user_name == '(Peter)'
     assert change._user_name == 'Peter'
 
