@@ -1,11 +1,12 @@
 from onegov.core import Framework, utils
 from onegov.core.filestorage import FilestorageFile
+from onegov.file import DepotApp
 from onegov.gazette.models import Principal
 from onegov.gazette.theme import GazetteTheme
 from onegov.quill import QuillApp
 
 
-class GazetteApp(Framework, QuillApp):
+class GazetteApp(Framework, DepotApp, QuillApp):
     """ The gazette application. Include this in your onegov.yml to serve
     it with onegov-server.
 
@@ -145,6 +146,7 @@ def get_frameworks_asset():
     yield 'chosen.jquery.js'
     yield 'sortable.js'
     yield 'sortable_custom.js'
+    yield 'dropzone.js'
 
 
 @GazetteApp.webasset('common')
