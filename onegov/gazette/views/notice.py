@@ -79,11 +79,19 @@ def view_notice(self, request):
         if admin:
             actions.append(action['delete'])
     elif self.state == 'accepted':
+        if publisher:
+            actions.append(action['publish'])
         actions.append(action['copy'])
         if admin:
             actions.append(action['edit_un'])
             actions.append(action['attachments'])
             actions.append(action['delete'])
+    elif self.state == 'published':
+        actions.append(action['copy'])
+        if admin:
+            actions.append(action['edit_un'])
+            actions.append(action['attachments'])
+
     actions.append(action['preview'])
 
     return {
@@ -214,6 +222,15 @@ def edit_notice_unrestricted(self, request, form):
 
     layout = Layout(self, request)
 
+    if self.state == 'published':
+        form.disable_issues()
+
+    if form.submitted(request):
+        form.update_model(self)
+        self.add_change(request, _("edited"))
+        request.message(_("Official notice modified."), 'success')
+        return redirect(request.link(self))
+
     if self.state == 'accepted':
         request.message(
             _("This official notice has already been accepted!"), 'warning'
@@ -222,12 +239,6 @@ def edit_notice_unrestricted(self, request, form):
         request.message(
             _("This official notice has already been published!"), 'warning'
         )
-
-    if form.submitted(request):
-        form.update_model(self)
-        self.add_change(request, _("edited"))
-        request.message(_("Official notice modified."), 'success')
-        return redirect(request.link(self))
 
     if not form.errors:
         form.apply_model(self)
