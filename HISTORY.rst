@@ -1,5 +1,13 @@
 Changelog
 ---------
+1.12.0 (2017-12-11)
+~~~~~~~~~~~~~~~~~~~
+
+- Adds attachments to notices.
+  [msom]
+
+1.11.1 (2017-12-08)
+~~~~~~~~~~~~~~~~~~~
 
 - Cleanup code.
   [msom]

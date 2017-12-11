@@ -4,7 +4,7 @@ name = 'onegov.gazette'
 description = (
     'OneGov official notices website.'
 )
-version = '1.11.0'
+version = '1.12.0'
 
 
 def get_long_description():
@@ -36,7 +36,7 @@ setup(
         'cached_property',
         'cssmin',
         'onegov.chat',
-        'onegov.core',
+        'onegov.core>=0.54.2',
         'onegov.file',
         'onegov.form',
         'onegov.foundation',
