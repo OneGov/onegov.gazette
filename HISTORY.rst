@@ -1,5 +1,9 @@
 Changelog
 ---------
+
+- Updates dependencies.
+  [msom]
+
 1.11.1 (2017-12-08)
 ~~~~~~~~~~~~~~~~~~~
 
