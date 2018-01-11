@@ -1,6 +1,9 @@
 Changelog
 ---------
 
+- Includes attachments in PDFs.
+  [msom]
+
 - Requires Python 3.6.
   [href]
 
