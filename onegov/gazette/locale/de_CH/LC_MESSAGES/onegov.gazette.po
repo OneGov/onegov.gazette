@@ -117,6 +117,9 @@ msgstr "Organisation"
 msgid "Category"
 msgstr "Rubrik"
 
+msgid "Print only"
+msgstr "Nur Druck"
+
 msgid "Liable to pay costs"
 msgstr "Kostenpflichtig 85% vom Normalpreis"
 
@@ -496,8 +499,23 @@ msgstr "\"${item}\" zurückweisen?"
 msgid "Reject Official Note"
 msgstr "Meldung zurückweisen"
 
+msgid "Submit"
+msgstr "Einreichen"
+
+msgid "Accept"
+msgstr "Annehmen"
+
+msgid "Reject"
+msgstr "Zurückweisen"
+
+msgid "Publish"
+msgstr "Veröffentlichen"
+
 msgid "Preview"
 msgstr "Vorschau"
+
+msgid "Copy"
+msgstr "Kopieren"
 
 msgid "Accepted official notices may not be edited."
 msgstr "Angenommene Meldungen können nicht mehr bearbeitet werden."
@@ -551,9 +569,6 @@ msgstr "Es können nur eingereichte Meldungen zurückgewiesen werden."
 msgid "Official notice rejected."
 msgstr "Meldung zurückgewiesen."
 
-msgid "Copy"
-msgstr "Kopieren"
-
 msgid ""
 "The official notice has issues for which the deadlines are reached. Please "
 "re-select valid issues."
@@ -564,15 +579,6 @@ msgstr "Diese Meldung wurde bereits veröffentlicht!"
 
 msgid "mail sent"
 msgstr "Druck beauftragt"
-
-msgid "Submit"
-msgstr "Einreichen"
-
-msgid "Accept"
-msgstr "Annehmen"
-
-msgid "Reject"
-msgstr "Zurückweisen"
 
 #, python-format
 msgid "Official Notice Rejected ${id}"
