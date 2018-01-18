@@ -1,5 +1,7 @@
 Changelog
 ---------
+1.13.2 (2018-01-18)
+~~~~~~~~~~~~~~~~~~~
 
 - Fixes handling of whitespace in the PDF.
   [msom]
