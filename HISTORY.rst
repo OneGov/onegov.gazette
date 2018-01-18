@@ -1,5 +1,7 @@
 Changelog
 ---------
+1.11.3 (2018-01-18)
+~~~~~~~~~~~~~~~~~~~
 
 - Adds a print only option to notices.
   [msom]
