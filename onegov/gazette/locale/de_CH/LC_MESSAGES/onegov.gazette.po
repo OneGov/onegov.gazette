@@ -117,6 +117,9 @@ msgstr "Organisation"
 msgid "Category"
 msgstr "Rubrik"
 
+msgid "Print only"
+msgstr "Nur Druck"
+
 msgid "Liable to pay costs"
 msgstr "Kostenpflichtig 85% vom Normalpreis"
 
@@ -680,6 +683,3 @@ msgstr "Benutzer gelöscht."
 
 msgid "User account created"
 msgstr "Benutzerkonto Amtsblattredaktion erstellt"
-
-#~ msgid "Do you really want to delete the attachment?"
-#~ msgstr "Anhang löschen?"
