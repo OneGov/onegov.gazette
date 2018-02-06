@@ -100,7 +100,8 @@ def view_notice(self, request):
     return {
         'layout': layout,
         'notice': self,
-        'actions': actions
+        'actions': actions,
+        'publisher': publisher
     }
 
 

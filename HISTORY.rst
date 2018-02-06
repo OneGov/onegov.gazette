@@ -1,5 +1,9 @@
 Changelog
 ---------
+
+- Shows print only options only to publishers.
+  [msom]
+
 1.11.4 (2018-01-18)
 ~~~~~~~~~~~~~~~~~~~
 
