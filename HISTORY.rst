@@ -1,5 +1,9 @@
 Changelog
 ---------
+
+- Fixes label of rich text editor fields not visible.
+  [msom]
+
 1.13.5 (2018-02-06)
 ~~~~~~~~~~~~~~~~~~~
 
