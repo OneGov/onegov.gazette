@@ -136,6 +136,9 @@ def test_view_notice(gazette_app):
             manage.form['billing_address'] = 'someone\nstreet\r\nplace'
             manage.form['issues'] = ['2017-44', '2017-45']
             manage.form['text'] = "1. Oktober 2017"
+            manage.form['author_place'] = 'Govikon'
+            manage.form['author_name'] = 'State Chancellerist'
+            manage.form['author_date'] = '2019-01-01'
             manage.form.submit()
 
         # check if the notices are displayed correctly
@@ -148,6 +151,8 @@ def test_view_notice(gazette_app):
                 view = user.get('/notice/{}'.format(slug))
                 assert title in view
                 assert "1. Oktober 2017" in view
+                assert "Govikon, 1. Januar 2019" in view
+                assert "State Chancellerist" in view
                 assert "Civic Community" in view
                 assert "Education" in view
                 assert "<dd>Ja</dd>" in view
@@ -181,6 +186,9 @@ def test_view_notice_actions(gazette_app):
             manage.form['category'] = '11'
             manage.form['issues'] = ['2017-44', '2017-45']
             manage.form['text'] = "1. Oktober 2017"
+            manage.form['author_place'] = 'Govikon'
+            manage.form['author_name'] = 'State Chancellerist'
+            manage.form['author_date'] = '2019-01-01'
             manage.form.submit()
 
         # check the actions
@@ -328,11 +336,16 @@ def test_view_notice_preview(gazette_app):
         manage.form['category'] = '11'
         manage.form['issues'] = ['2017-44', '2017-45']
         manage.form['text'] = "1. Oktober 2017"
+        manage.form['author_place'] = 'Govikon'
+        manage.form['author_name'] = 'State Chancellerist'
+        manage.form['author_date'] = '2019-01-01'
         manage.form.submit()
 
     view = editor.get('/notice/titel/preview')
     assert "Titel" in view
     assert "1. Oktober 2017" in view
+    assert "Govikon, 1. Januar 2019" in view
+    assert "State Chancellerist" in view
     assert "Civic Community" not in view
     assert "Education" not in view
     assert "TestGroup" not in view
@@ -354,6 +367,9 @@ def test_view_notice_submit(gazette_app):
             manage.form['category'] = '11'
             manage.form['issues'] = ['2017-44', '2017-45']
             manage.form['text'] = "1. Oktober 2017"
+            manage.form['author_place'] = 'Govikon'
+            manage.form['author_name'] = 'State Chancellerist'
+            manage.form['author_date'] = '2019-01-01'
             manage.form.submit()
 
         # check invalid actions
@@ -411,6 +427,9 @@ def test_view_notice_reject(gazette_app):
             manage.form['category'] = '11'
             manage.form['issues'] = ['2017-44', '2017-45']
             manage.form['text'] = "1. Oktober 2017"
+            manage.form['author_place'] = 'Govikon'
+            manage.form['author_name'] = 'State Chancellerist'
+            manage.form['author_date'] = '2019-01-01'
             manage.form.submit()
             submit_notice(user, 'titel-{}'.format(count + 1))
 
@@ -455,6 +474,9 @@ def test_view_notice_accept(gazette_app):
             manage.form['billing_address'] = 'someone\nstreet\nplace'
             manage.form['issues'] = ['2017-44', '2017-45']
             manage.form['text'] = "1. Oktober 2017"
+            manage.form['author_place'] = 'Govikon'
+            manage.form['author_name'] = 'State Chancellerist'
+            manage.form['author_date'] = '2019-01-01'
             manage.form.submit()
             submit_notice(user, 'titel-{}'.format(count + 1))
 
@@ -509,6 +531,8 @@ def test_view_notice_accept(gazette_app):
         payload = message.get_payload(1).get_payload(decode=True)
         payload = payload.decode('utf-8')
         assert '44  Titel 2' in payload
+        assert "Govikon, 1. Januar 2019" in payload
+        assert "State Chancellerist" in payload
         assert "Kostenpflichtig 85% vom Normalpreis" in payload
         assert "someone<br>street<br>place" in payload
 
@@ -558,6 +582,9 @@ def test_view_notice_delete(gazette_app):
             manage.form['category'] = '11'
             manage.form['issues'] = ['2017-44', '2017-45']
             manage.form['text'] = "1. Oktober 2017"
+            manage.form['author_place'] = 'Govikon'
+            manage.form['author_name'] = 'State Chancellerist'
+            manage.form['author_date'] = '2019-01-01'
             manage.form.submit()
 
             manage = user.get('/notice/erneuerungswahlen/delete')
@@ -572,6 +599,9 @@ def test_view_notice_delete(gazette_app):
             manage.form['category'] = '11'
             manage.form['issues'] = ['2017-44', '2017-45']
             manage.form['text'] = "1. Oktober 2017"
+            manage.form['author_place'] = 'Govikon'
+            manage.form['author_name'] = 'State Chancellerist'
+            manage.form['author_date'] = '2019-01-01'
             manage.form.submit()
 
             submit_notice(user, 'erneuerungswahlen')
@@ -590,6 +620,9 @@ def test_view_notice_delete(gazette_app):
             manage.form['category'] = '11'
             manage.form['issues'] = ['2017-44', '2017-45']
             manage.form['text'] = "1. Oktober 2017"
+            manage.form['author_place'] = 'Govikon'
+            manage.form['author_name'] = 'State Chancellerist'
+            manage.form['author_date'] = '2019-01-01'
             manage.form.submit()
 
             submit_notice(user, 'erneuerungswahlen')
@@ -607,6 +640,9 @@ def test_view_notice_delete(gazette_app):
             manage.form['category'] = '11'
             manage.form['issues'] = ['2017-44', '2017-45']
             manage.form['text'] = "1. Oktober 2017"
+            manage.form['author_place'] = 'Govikon'
+            manage.form['author_name'] = 'State Chancellerist'
+            manage.form['author_date'] = '2019-01-01'
             manage.form.submit()
 
             submit_notice(editor, 'erneuerungswahlen')
@@ -637,6 +673,9 @@ def test_view_notice_changelog(gazette_app):
         manage.form['category'] = '11'
         manage.form['issues'] = ['2017-44', '2017-45']
         manage.form['text'] = "1. Oktober 2017"
+        manage.form['author_place'] = 'Govikon'
+        manage.form['author_name'] = 'State Chancellerist'
+        manage.form['author_date'] = '2019-01-01'
         manage.form.submit()
 
     with freeze_time("2017-11-01 11:02"):
@@ -693,6 +732,9 @@ def test_view_notice_edit(gazette_app):
         manage.form['category'] = '11'
         manage.form['issues'] = ['2017-44', '2017-45']
         manage.form['text'] = "1. Oktober 2017"
+        manage.form['author_place'] = 'Govikon'
+        manage.form['author_name'] = 'State Chancellerist'
+        manage.form['author_date'] = '2019-01-01'
         manage.form.submit()
 
         edit_notice(
@@ -764,6 +806,9 @@ def test_view_notice_edit_deadlines(gazette_app):
         manage.form['category'] = '11'
         manage.form['issues'] = ['2017-44', '2017-45']
         manage.form['text'] = "1. Oktober 2017"
+        manage.form['author_place'] = 'Govikon'
+        manage.form['author_name'] = 'State Chancellerist'
+        manage.form['author_date'] = '2019-01-01'
         manage.form.submit()
 
     marker = "Bitte Ausgaben neu wählen."
@@ -790,6 +835,9 @@ def test_view_notice_edit_invalid_category(gazette_app):
         manage.form['category'] = '11'
         manage.form['issues'] = ['2017-44', '2017-45']
         manage.form['text'] = "1. Oktober 2017"
+        manage.form['author_place'] = 'Govikon'
+        manage.form['author_name'] = 'State Chancellerist'
+        manage.form['author_date'] = '2019-01-01'
         manage.form.submit()
 
         marker = "Bitte Rubrik neu wählen."
@@ -810,6 +858,9 @@ def test_view_notice_edit_invalid_organization(gazette_app):
         manage.form['category'] = '11'
         manage.form['issues'] = ['2017-44', '2017-45']
         manage.form['text'] = "1. Oktober 2017"
+        manage.form['author_place'] = 'Govikon'
+        manage.form['author_name'] = 'State Chancellerist'
+        manage.form['author_date'] = '2019-01-01'
         manage.form.submit()
 
         marker = "Bitte Organisation neu wählen."
@@ -840,6 +891,9 @@ def test_view_notice_edit_unrestricted(gazette_app):
         manage.form['category'] = '11'
         manage.form['issues'] = ['2017-44', '2017-45']
         manage.form['text'] = "1. Oktober 2017"
+        manage.form['author_place'] = 'Govikon'
+        manage.form['author_name'] = 'State Chancellerist'
+        manage.form['author_date'] = '2019-01-01'
         manage.form.submit()
 
     # drafted
@@ -915,6 +969,9 @@ def test_view_notice_copy(gazette_app):
         manage.form['category'] = '11'
         manage.form['issues'] = ['2017-40']
         manage.form['text'] = "1. Oktober 2017"
+        manage.form['author_place'] = 'Govikon'
+        manage.form['author_name'] = 'State Chancellerist'
+        manage.form['author_date'] = '2019-01-01'
         manage.form.submit()
 
         submit_notice(editor_1, 'erneuerungswahlen')
