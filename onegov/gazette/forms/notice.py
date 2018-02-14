@@ -96,17 +96,18 @@ class NoticeForm(Form):
     )
 
     author_date = DateField(
-        label=_("Date"),
+        label=_("Date (usually the date of the issue)"),
         validators=[
             InputRequired()
         ]
     )
 
-    author_name = StringField(
+    author_name = TextAreaField(
         label=_("Author"),
         validators=[
             InputRequired()
-        ]
+        ],
+        render_kw={'rows': 4},
     )
 
     @property

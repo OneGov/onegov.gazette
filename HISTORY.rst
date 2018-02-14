@@ -1,5 +1,15 @@
 Changelog
 ---------
+
+- Makes the author name a multi line text field.
+  [msom]
+
+- Adds some help texts to the notice form.
+  [msom]
+
+- Changes layout of print only and at cost options.
+  [msom]
+
 1.13.6 (2018-02-07)
 ~~~~~~~~~~~~~~~~~~~
 
