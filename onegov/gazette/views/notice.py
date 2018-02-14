@@ -17,7 +17,7 @@ from onegov.gazette.views import get_user_and_group
 from webob.exc import HTTPForbidden
 
 
-def construct_subject(notice):
+def construct_subject(notice, request):
     """ Construct the subject of the publish email. """
     issues = notice.issue_objects
     number = issues[0].number if issues else ''
@@ -25,8 +25,12 @@ def construct_subject(notice):
     organization = notice.organization_object
     parent = organization.parent if organization else None
     parent_id = (parent.external_name or '') if parent else ''
+    prefix = request.translate(_("Print only")) if notice.print_only else ''
+    prefix = "{} - ".format(prefix) if prefix else ''
 
-    return "{} {} {} {}".format(number, parent_id, notice.title, notice.id)
+    return "{}{} {} {} {}".format(
+        prefix, number, parent_id, notice.title, notice.id
+    )
 
 
 @GazetteApp.html(
@@ -431,7 +435,7 @@ def accept_notice(self, request, form):
                 request.app.principal.publish_from or
                 request.app.mail_sender
             )
-            subject = construct_subject(self)
+            subject = construct_subject(self, request)
             request.app.send_email(
                 subject=subject,
                 receivers=(request.app.principal.publish_to, ),
