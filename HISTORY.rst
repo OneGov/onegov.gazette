@@ -1,5 +1,7 @@
 Changelog
 ---------
+1.13.8 (2018-03-06)
+~~~~~~~~~~~~~~~~~~~
 
 - Splits e-mails into transactional/marketing.
   [href]
