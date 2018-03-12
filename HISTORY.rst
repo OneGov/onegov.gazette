@@ -4,6 +4,9 @@ Changelog
 - Allows to search by notice id.
   [msom]
 
+- Limits the title of a notice to 60 characters.
+  [msom]
+
 1.11.8 (2018-03-06)
 ~~~~~~~~~~~~~~~~~~~
 
