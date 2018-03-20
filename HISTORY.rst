@@ -1,5 +1,9 @@
 Changelog
 ---------
+
+- Makes the rich text editor bigger.
+  [msom]
+
 1.12.11 (2018-03-20)
 ~~~~~~~~~~~~~~~~~~~
 
