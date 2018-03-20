@@ -1,5 +1,9 @@
 Changelog
 ---------
+
+- Fixes PDF attachments not displayed in browser.
+  [msom]
+
 1.13.10 (2018-03-20)
 ~~~~~~~~~~~~~~~~~~~
 
