@@ -1,5 +1,9 @@
 Changelog
 ---------
+
+- Adds some help texts to the notice form.
+  [msom]
+
 1.13.9 (2018-03-12)
 ~~~~~~~~~~~~~~~~~~~
 
