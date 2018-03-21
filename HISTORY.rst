@@ -1,5 +1,9 @@
 Changelog
 ---------
+
+- Let the rich text editor grow when needed.
+  [msom]
+
 1.13.12 (2018-03-20)
 ~~~~~~~~~~~~~~~~~~~
 
