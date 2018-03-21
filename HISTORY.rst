@@ -1,7 +1,7 @@
 Changelog
 ---------
 1.13.13 (2018-03-21)
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 - Let the rich text editor grow when needed.
   [msom]
@@ -10,7 +10,7 @@ Changelog
   [msom]
 
 1.13.12 (2018-03-20)
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 - Makes the rich text editor bigger.
   [msom]
@@ -19,13 +19,13 @@ Changelog
   [msom]
 
 1.13.11 (2018-03-20)
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 - Fixes PDF attachments not displayed in browser.
   [msom]
 
 1.13.10 (2018-03-20)
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 - Adds some help texts to the notice form.
   [msom]
