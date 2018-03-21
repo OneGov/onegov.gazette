@@ -4,6 +4,9 @@ Changelog
 - Let the rich text editor grow when needed.
   [msom]
 
+- Remember notice filter settings when changing states.
+  [msom]
+
 1.13.12 (2018-03-20)
 ~~~~~~~~~~~~~~~~~~~
 
