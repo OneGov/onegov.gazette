@@ -1,5 +1,12 @@
 Changelog
 ---------
+
+- Adjusts texts/translations.
+  [msom]
+
+- Adjusts the publish mail.
+  [msom]
+
 1.13.13 (2018-03-21)
 ~~~~~~~~~~~~~~~~~~~~
 
