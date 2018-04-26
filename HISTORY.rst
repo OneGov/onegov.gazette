@@ -4,6 +4,9 @@ Changelog
 - Updates translation.
   [msom]
 
+- Hides print only option for editors.
+  [msom]
+
 1.12.14 (2018-03-23)
 ~~~~~~~~~~~~~~~~~~~~
 
