@@ -1,5 +1,9 @@
 Changelog
 ---------
+
+- Updates translation.
+  [msom]
+
 1.13.14 (2018-03-23)
 ~~~~~~~~~~~~~~~~~~~~
 
