@@ -9,6 +9,8 @@ from onegov.core.crypto import random_password
 from onegov.core.csv import convert_xls_to_csv
 from onegov.core.csv import CSVFile
 from onegov.gazette import _
+from onegov.gazette.collections import CategoryCollection
+from onegov.gazette.collections import OrganizationCollection
 from onegov.user import User
 from onegov.user import UserCollection
 from onegov.user import UserGroupCollection
@@ -106,3 +108,130 @@ def import_editors(ctx, file, clear, dry_run, locale):
             transaction.abort()
 
     return import_editors_and_groups
+
+
+@cli.command(name='import-organizations')
+@click.argument('file', type=click.File('rb'))
+@click.option('--clear/--no-clear', default=False)
+@click.option('--dry-run/--no-dry-run', default=False)
+@click.option('--locale', default='de_CH')
+@pass_group_context
+def import_organizations(ctx, file, clear, dry_run, locale):
+    """ Imports Organizations. For example:
+
+        onegov-gazette --select '/onegov_gazette/zug' \
+            import-organizations data.xlsx
+
+    """
+
+    def _import_organizations(request, app):
+        request.locale = locale
+        headers = {
+            'id': request.translate(_("ID")),
+            'title': request.translate(_("Title")),
+            'active': request.translate(_("Active")),
+            'parent': request.translate(_("Parent Organization"))
+        }
+
+        session = app.session()
+        organizations = OrganizationCollection(session)
+
+        if clear:
+            click.secho("Deleting organizations", fg='yellow')
+            for organization in organizations.query():
+                session.delete(organization)
+
+        csvfile = convert_xls_to_csv(
+            file, sheet_name=request.translate(_("Organizations"))
+        )
+        csv = CSVFile(csvfile, expected_headers=headers.values())
+        lines = list(csv.lines)
+        columns = {
+            key: csv.as_valid_identifier(value)
+            for key, value in headers.items()
+        }
+
+        count = 0
+        for line in lines:
+            count += 1
+            id_ = int(getattr(line, columns['id']))
+            parent = getattr(line, columns['parent'])
+            parent = int(parent) if parent else None
+            title = getattr(line, columns['title'])
+            active = bool(int(getattr(line, columns['active'])))
+
+            organization = organizations.add_root(
+                id=id_,
+                title=title,
+                active=active,
+                order=count
+            )
+            organization.parent_id = parent
+
+        click.secho("{} organization(s) imported".format(count), fg='green')
+
+        if dry_run:
+            transaction.abort()
+
+    return _import_organizations
+
+
+@cli.command(name='import-categories')
+@click.argument('file', type=click.File('rb'))
+@click.option('--clear/--no-clear', default=False)
+@click.option('--dry-run/--no-dry-run', default=False)
+@click.option('--locale', default='de_CH')
+@pass_group_context
+def import_categories(ctx, file, clear, dry_run, locale):
+    """ Imports categories. For example:
+
+        onegov-gazette --select '/onegov_gazette/zug' \
+            import-categories data.xlsx
+
+    """
+
+    def _import_categories(request, app):
+
+        request.locale = locale
+        headers = {
+            'id': request.translate(_("ID")),
+            'title': request.translate(_("Title")),
+            'active': request.translate(_("Active"))
+        }
+
+        session = app.session()
+        categories = CategoryCollection(session)
+
+        if clear:
+            click.secho("Deleting categories", fg='yellow')
+            for category in categories.query():
+                session.delete(category)
+
+        csvfile = convert_xls_to_csv(
+            file, sheet_name=request.translate(_("Categories"))
+        )
+        csv = CSVFile(csvfile, expected_headers=headers.values())
+        lines = list(csv.lines)
+        columns = {
+            key: csv.as_valid_identifier(value)
+            for key, value in headers.items()
+        }
+
+        count = 0
+        for line in lines:
+            count += 1
+            id_ = int(getattr(line, columns['id']))
+            title = getattr(line, columns['title'])
+            active = bool(int(getattr(line, columns['active'])))
+            categories.add_root(
+                id=id_,
+                title=title,
+                active=active
+            )
+
+        click.secho("{} categorie(s) imported".format(count), fg='green')
+
+        if dry_run:
+            transaction.abort()
+
+    return _import_categories
