@@ -40,7 +40,7 @@ def test_view_archive(gazette_app):
             manage = manage.form.submit().maybe_follow()
             assert "Ausgabe veröffentlicht." in manage
 
-        archive = client.get('/').maybe_follow()
+        archive = client.get('/archive').maybe_follow()
         assert "<h3>2017</h3>" in archive
         assert "<h3>2018</h3>" not in archive
 
@@ -65,7 +65,7 @@ def test_view_archive(gazette_app):
             manage = manage.form.submit().maybe_follow()
             assert "Ausgabe veröffentlicht." in manage
 
-        archive = client.get('/').maybe_follow()
+        archive = client.get('/archive').maybe_follow()
         assert "<h3>2017</h3>" in archive
         assert "<h3>2018</h3>" in archive
 
