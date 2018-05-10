@@ -72,12 +72,14 @@
             <p i18n:translate>No official notices.</p>
         </div>
         <div tal:condition="notices">
-            <div>
-                <span i18n:translate>Ordering</span>:
-                <span class="ordering" tal:repeat="key orderings">
+            <dl class="sub-nav">
+                <dt><tal:block i18n:translate>Ordering</tal:block>:</dt>
+                <dd tal:repeat="key orderings">
                     <tal:block metal:use-macro="layout.macros['order_link']"></tal:block>
-                </span>
-            </div>
+                </dd>
+                <a href="${pdf}" class="pull-right"><i class="fa fa-file-pdf-o"></i></a>
+            </dl>
+
             <div tal:repeat="notice notices">
                 <hr>
                 <div>
