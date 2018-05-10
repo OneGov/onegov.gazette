@@ -6,6 +6,7 @@ from onegov.gazette.collections import CategoryCollection
 from onegov.gazette.collections import GazetteNoticeCollection
 from onegov.gazette.collections import IssueCollection
 from onegov.gazette.collections import OrganizationCollection
+from onegov.gazette.collections import PublishedNoticeCollection
 from onegov.gazette.models import Category
 from onegov.gazette.models import GazetteNotice
 from onegov.gazette.models import Issue
@@ -122,3 +123,29 @@ def get_notices(app, state, page=0, term=None, order=None, direction=None,
 @GazetteApp.path(model=GazetteNotice, path='/notice/{name}')
 def get_notice(app, name):
     return GazetteNoticeCollection(app.session()).by_name(name)
+
+
+@GazetteApp.path(
+    model=PublishedNoticeCollection,
+    path='/search',
+    converters=dict(
+        from_date=extended_date_converter,
+        to_date=extended_date_converter,
+        organizations=[str],
+        categories=[str],
+    )
+)
+def get_search(app, page=0, term=None, order=None, direction=None,
+               from_date=None, to_date=None,
+               organizations=None, categories=None):
+    return PublishedNoticeCollection(
+        app.session(),
+        page=page,
+        term=term,
+        order=order,
+        direction=direction,
+        from_date=from_date,
+        to_date=to_date,
+        organizations=organizations,
+        categories=categories,
+    )

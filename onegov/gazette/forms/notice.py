@@ -1,12 +1,13 @@
 from datetime import date
 from onegov.form import Form
 from onegov.gazette import _
+from onegov.gazette.collections import CategoryCollection
+from onegov.gazette.collections import OrganizationCollection
 from onegov.gazette.fields import MultiCheckboxField
 from onegov.gazette.fields import SelectField
 from onegov.gazette.layout import Layout
-from onegov.gazette.models import Category
 from onegov.gazette.models import Issue
-from onegov.gazette.models import Organization
+from onegov.gazette.views import get_user
 from onegov.quill import QuillField
 from sedate import as_datetime
 from sedate import standardize_date
@@ -123,31 +124,17 @@ class NoticeForm(Form):
     def on_request(self):
         session = self.request.session
 
-        # populate organization (active root elements with no children or
-        # active children (but not their parents))
+        # populate organization
         self.organization.choices = []
         self.organization.choices.append(
             ('', self.request.translate(_("Select one")))
         )
-        query = session.query(Organization)
-        query = query.filter(Organization.active.is_(True))
-        query = query.filter(Organization.parent_id.is_(None))
-        query = query.order_by(Organization.order)
-        for root in query:
-            if root.children:
-                for child in root.children:
-                    if child.active:
-                        self.organization.choices.append(
-                            (child.name, child.title)
-                        )
-            else:
-                self.organization.choices.append((root.name, root.title))
+        self.organization.choices.extend(
+            OrganizationCollection(session).as_options()
+        )
 
         # populate categories
-        query = session.query(Category.name, Category.title)
-        query = query.filter(Category.active.is_(True))
-        query = query.order_by(Category.order)
-        self.category.choices = query.all()
+        self.category.choices = CategoryCollection(session).as_options()
 
         # populate issues
         now = utcnow()
@@ -221,30 +208,17 @@ class UnrestrictedNoticeForm(NoticeForm):
         def title(item):
             return item.title if item.active else '({})'.format(item.title)
 
-        # populate organization (root elements with no children or children
-        # (but not their parents))
+        # populate organization
         self.organization.choices = []
         self.organization.choices.append(
             ('', self.request.translate(_("Select one")))
         )
-        query = session.query(Organization)
-        query = query.filter(Organization.parent_id.is_(None))
-        query = query.order_by(Organization.order)
-        for root in query:
-            if root.children:
-                for child in root.children:
-                    self.organization.choices.append(
-                        (child.name, title(child))
-                    )
-            else:
-                self.organization.choices.append((root.name, title(root)))
+        self.organization.choices.extend(
+            OrganizationCollection(session).as_options(False)
+        )
 
         # populate categories
-        self.category.choices = []
-        query = session.query(Category)
-        query = query.order_by(Category.order)
-        for category in query:
-            self.category.choices.append((category.name, title(category)))
+        self.category.choices = CategoryCollection(session).as_options(False)
 
         # populate issues
         del self.issues.render_kw['data-limit']

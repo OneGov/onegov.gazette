@@ -380,6 +380,24 @@ msgstr "Organisationen ordnen"
 msgid "Print"
 msgstr "Drucken"
 
+msgid "Term"
+msgstr "Suchbegriff"
+
+msgid "From"
+msgstr "Von"
+
+msgid "To"
+msgstr "Bis"
+
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+msgid "Search Results"
+msgstr "Suchergebnisse"
+
+msgid "Ordering"
+msgstr "Sortierung"
+
 msgid "Sessions"
 msgstr "Sitzungen"
 

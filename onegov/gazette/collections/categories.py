@@ -24,3 +24,18 @@ class CategoryCollection(AdjacencyListCollection):
         ])
         next = (names[-1] + 1) if names else 1
         return str(next)
+
+    def as_options(self, active_only=True):
+        """ Returns an ordered list of (active) categories which can be used
+        for selects.
+
+        """
+
+        def title(item):
+            return item.title if item.active else '({})'.format(item.title)
+
+        query = self.query()
+        if active_only:
+            query = query.filter(Category.active.is_(True))
+        query = query.order_by(Category.order)
+        return [(category.name, title(category)) for category in query]

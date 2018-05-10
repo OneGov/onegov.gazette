@@ -269,3 +269,58 @@ class GazetteNoticeCollection(OfficialNoticeCollection):
             )
             for group in groupbylist(result, lambda a: a[0])
         ]
+
+
+class PublishedNoticeCollection(GazetteNoticeCollection):
+
+    def __init__(self, session, **kwargs):
+        kwargs.pop('state', None)
+        super(PublishedNoticeCollection, self).__init__(
+            session,
+            state='published',
+            **kwargs
+        )
+
+    def for_organizations(self, organizations):
+        """ Returns a new instance of the collection with the given
+        organizations.
+
+        """
+
+        return self.__class__(
+            self.session,
+            state=self.state,
+            term=self.term,
+            order=self.order,
+            direction=self.direction,
+            issues=self.issues,
+            categories=self.categories,
+            organizations=organizations,
+            user_ids=self.user_ids,
+            group_ids=self.group_ids,
+            from_date=self.from_date,
+            to_date=self.to_date,
+            source=self.source
+        )
+
+    def for_categories(self, categories):
+        """ Returns a new instance of the collection with the given
+        categories.
+
+        """
+
+        return self.__class__(
+            self.session,
+            state=self.state,
+            term=self.term,
+            order=self.order,
+            direction=self.direction,
+            issues=self.issues,
+            categories=categories,
+            organizations=self.organizations,
+            user_ids=self.user_ids,
+            group_ids=self.group_ids,
+            from_date=self.from_date,
+            to_date=self.to_date,
+            source=self.source
+        )

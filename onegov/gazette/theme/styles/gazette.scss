@@ -803,3 +803,26 @@ table.changes {
         font-size: $input-font-size !important;
     }
 }
+
+
+/*
+    Search
+*/
+.search-filters {
+    background-color: $white-smoke;
+    padding-top: 1em;
+}
+.search-filter {
+    padding: 0 1em;
+}
+
+.blank-label {
+    @include label($bg: $white);
+    border: 1px solid $aluminum;
+    font-size: .8rem;
+    margin: 0 4px 7px 0;
+}
+
+.ordering {
+    margin-left: 1em;
+}
