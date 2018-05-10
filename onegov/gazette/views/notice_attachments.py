@@ -1,6 +1,6 @@
 from morepath import redirect
 from onegov.core.crypto import random_token
-from onegov.core.security import Private
+from onegov.core.security import Personal
 from onegov.file.utils import as_fileintent
 from onegov.gazette import _
 from onegov.gazette import GazetteApp
@@ -11,11 +11,14 @@ from onegov.gazette.models import GazetteNoticeFile
 from webob import exc
 
 
+# mockup: no group test for the new personal permission was added!
+
+
 @GazetteApp.html(
     model=GazetteNotice,
     template='attachments.pt',
     name='attachments',
-    permission=Private
+    permission=Personal  # mockup: was Private
 )
 def view_notice_attachments(self, request):
     """ View all attachments to a single notice and allow to drop new
@@ -46,7 +49,7 @@ def view_notice_attachments(self, request):
 @GazetteApp.view(
     model=GazetteNotice,
     name='upload',
-    permission=Private,
+    permission=Personal,  # mockup: was Private
     request_method='POST'
 )
 def upload_attachment(self, request):
@@ -87,7 +90,7 @@ def upload_attachment(self, request):
     model=GazetteNoticeFile,
     name='delete',
     template='form.pt',
-    permission=Private,
+    permission=Personal,  # mockup: was Private
     form=EmptyForm
 )
 def delete_attachment(self, request, form):

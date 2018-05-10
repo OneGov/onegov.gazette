@@ -12,7 +12,7 @@ from onegov.quill import QuillField
 from sedate import as_datetime
 from sedate import standardize_date
 from sedate import utcnow
-from wtforms import BooleanField
+from wtforms import HiddenField
 from wtforms import RadioField
 from wtforms import StringField
 from wtforms import TextAreaField
@@ -55,7 +55,8 @@ class NoticeForm(Form):
         ]
     )
 
-    print_only = BooleanField(
+    # mockup: was BooleanField
+    print_only = HiddenField(
         label=_("Print only"),
         default=False
     )
@@ -88,7 +89,8 @@ class NoticeForm(Form):
         label=_("Text"),
         tags=('strong', 'ol', 'ul'),
         validators=[
-            InputRequired()
+            # mockup:
+            # InputRequired()
         ]
     )
 
@@ -132,6 +134,14 @@ class NoticeForm(Form):
         self.organization.choices.extend(
             OrganizationCollection(session).as_options()
         )
+
+        # mockup: added
+        group = get_user(self.request).group
+        if group:
+            self.organization.choices = [
+                (id_, name) for id_, name in self.organization.choices
+                if name == group.name
+            ]
 
         # populate categories
         self.category.choices = CategoryCollection(session).as_options()

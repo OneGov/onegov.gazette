@@ -67,8 +67,7 @@ def view_notice(self, request):
             actions.append(action['submit'])
             actions.append(action['edit'])
             actions.append(action['delete'])
-        if publisher:
-            actions.append(action['attachments'])
+            actions.append(action['attachments'])  # mockup: was publisher
     elif self.state == 'submitted':
         if publisher:
             actions.append(action['accept'])
