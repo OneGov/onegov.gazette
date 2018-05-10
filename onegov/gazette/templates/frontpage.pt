@@ -1,0 +1,72 @@
+<div metal:use-macro="layout.base" i18n:domain="onegov.gazette">
+    <tal:block metal:fill-slot="content">
+
+        <h2>Amtsblatt des Kanton St. Gallen</h2>
+
+        <p>
+            Das kantonale Amtsblatt ist amtliches Publikationsorgan des Kantons
+            St.Gallen. Es erscheint in der Regel jeden Montag.
+        </p>
+        <p>
+            Im Amtsblatt werden rechtsetzenden Erlasse des Kantons sowie
+            Beschlüsse und Mitteilungen der Behörden veröffentlicht, deren
+            Publikation vorgeschrieben oder von allgemeinem Interesse ist.
+            Zudem werden Handänderungen von Grundstücken, Bebauungspläne,
+            Planauflagen und Konzessionsgesuche, Bauausschreibungen sowie
+            offene Verwaltungsstellen und Stellen bei Gerichten publiziert.
+        </p>
+
+        <div class="row">
+            <div class="small-12 medium-6 columns">
+                <div class="panel radius" style="min-height: 12em;">
+                    <h3>Aktuelle Ausgabe</h3>
+                    <p>
+                        <i>${layout.format_issue(current_issue)}</i>
+                    </p>
+                    <p tal:condition="current_issue.pdf">
+                        Die aktuelle Ausgabe als <a  href="${request.link(current_issue.pdf)}">PDF</a>.<br>
+                        Alle Inserate der aktuellen Ausgabe in der <a href="${search}">Recherche</a>.
+                    </p>
+                </div>
+            </div>
+            <div class="small-12 medium-6 columns">
+
+                <div class="panel radius" style="background-color: white; min-height: 12em;">
+                    <h3>Nächste Ausgabe</h3>
+                    <p>
+                        <i>${layout.format_issue(next_issue)}</i>
+                    </p>
+                    <p>
+                        Redaktionschluss ist
+                        <strong>${layout.format_date(next_issue.deadline, format='datetime_with_weekday')}</strong>.
+                    </p>
+                </div>
+            </div>
+            <div class="small-12 medium-6 columns">
+            </div>
+        </div>
+
+
+        <h3>Archiv und Recherche</h3>
+        <p>
+            Alle vergangenen Ausgaben des Amtsblattes (PDF) finden Sie im
+            <a href="${archive}">Archiv</a>.
+        </p>
+        <p>
+            Sie können einzelne Inserate - gefiltert nach Organisation, Rubrik,
+            Datum und Volltext - anzeigen, herunterladen oder als Suchabo
+            speichern in der <a href="${search}">Recherche</a>.
+        </p>
+
+        <h3>Redaktion</h3>
+        <p>
+            Staatskanzlei<br>
+            Regierungsgebäude<br>
+            9001 St.Gallen<br>
+            T 058 229 32 59<br>
+            F 058 229 39 55<br>
+            E-Mail: amtsblatt.sk@sg.ch<br>
+        </p>
+
+    </tal:block>
+</div>

@@ -6,7 +6,9 @@ from onegov.gazette import _
 from onegov.gazette import GazetteApp
 from onegov.gazette.collections import GazetteNoticeCollection
 from onegov.gazette.collections import IssueCollection
+from onegov.gazette.collections import PublishedNoticeCollection
 from onegov.gazette.layout import Layout
+from onegov.gazette.models import Issue
 from onegov.gazette.models import Principal
 from onegov.gazette.views import get_user_and_group
 from sedate import utcnow
@@ -14,14 +16,15 @@ from sedate import utcnow
 
 @GazetteApp.html(
     model=Principal,
-    permission=Public
+    permission=Public,
+    template='frontpage.pt',
 )
 def view_principal(self, request):
     """ The homepage.
 
     Redirects to the default management views according to the logged in role.
 
-    Shows the weekly PDFs if not logged-in.
+    Shows the home page if not logged-in.
 
     """
 
@@ -36,7 +39,23 @@ def view_principal(self, request):
     if not request.app.principal.show_archive:
         return redirect(layout.login_link)
 
-    return redirect(request.link(self, name='archive'))
+    issues = IssueCollection(request.session)
+
+    current_issue = issues.query().filter(Issue.date < utcnow())
+    current_issue = current_issue.order_by(None).order_by(Issue.date.desc())
+    current_issue = current_issue.first()
+
+    next_issue = issues.query().filter(Issue.date > utcnow())
+    next_issue = next_issue.order_by(None).order_by(Issue.date.desc())
+    next_issue = next_issue.first()
+
+    return {
+        'layout': layout,
+        'archive': request.link(self, name='archive'),
+        'search': request.link(PublishedNoticeCollection(request.session)),
+        'current_issue': current_issue,
+        'next_issue': next_issue
+    }
 
 
 @GazetteApp.html(
