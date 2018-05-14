@@ -92,6 +92,9 @@
                     <div>
                         <tal:block metal:use-macro="layout.macros['notice_text']" />
                     </div>
+                    <div tal:condition="notice.files">
+                        <p tal:repeat="file notice.files"><a href="${request.link(file)}" i18n:translate>Attachment</a></p>
+                    </div>
                 </div>
             </div>
             <div class="pagination-centered">
