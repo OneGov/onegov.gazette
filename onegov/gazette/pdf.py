@@ -42,8 +42,61 @@ class Pdf(PdfBase):
         self.style.li.spaceAfter = 0.275 * self.style.li.fontSize
         self.style.li.leading = 1.275 * self.style.li.fontSize
 
+    def notice(self, notice, layout):
+        """ Adds an official notice. """
+
+        meta = [notice.organization, notice.category]
+        meta.extend([
+            layout.format_issue(issue, notice=notice)
+            for issue in notice.issue_objects
+        ])
+        meta = ' | '.join(meta)
+
+        self.p_markup(f'<i>{meta}</i>', style=self.style.meta)
+        self.story[-1].keepWithNext = True
+        self.p(notice.title, style=self.style.h_notice)
+        self.story[-1].keepWithNext = True
+        self.mini_html(notice.text)
+        if notice.author_place and notice.author_date:
+            self.mini_html(
+                "{}, {}<br>{}".format(
+                    notice.author_place,
+                    layout.format_date(
+                        notice.author_date, 'date_long'
+                    ),
+                    notice.author_name
+                )
+            )
+        for file in notice.files:
+            self.pdf(file.reference.file)
+
+    @classmethod
+    def from_notice(cls, notice, request):
+        """ Create a PDF from a single notice. """
+
+        layout = Layout(None, request)
+        result = BytesIO()
+        pdf = cls(
+            result,
+            title=notice.title,
+            author=request.app.principal.name
+        )
+        pdf.init_a4_portrait(
+            page_fn=page_fn_footer,
+            page_fn_later=page_fn_header_and_footer
+        )
+        pdf.h1(notice.title)
+
+        pdf.spacer()
+        pdf.notice(notice, layout)
+        pdf.generate()
+
+        result.seek(0)
+        return result
+
     @classmethod
     def from_collection(cls, collection, request):
+        """ Create a PDF from a collection of notices. """
 
         layout = Layout(None, request)
         title = request.translate(_("Gazette"))
@@ -58,34 +111,9 @@ class Pdf(PdfBase):
             page_fn_later=page_fn_header_and_footer
         )
         pdf.h1(title)
-
         for notice in collection.query():
-            meta = [notice.organization, notice.category]
-            meta.extend([
-                layout.format_issue(issue, notice=notice)
-                for issue in notice.issue_objects
-            ])
-            meta = ' | '.join(meta)
-
             pdf.spacer()
-            pdf.p_markup(f'<i>{meta}</i>', style=pdf.style.meta)
-            pdf.story[-1].keepWithNext = True
-            pdf.p(notice.title, style=pdf.style.h_notice)
-            pdf.story[-1].keepWithNext = True
-            pdf.mini_html(notice.text)
-            if notice.author_place and notice.author_date:
-                pdf.mini_html(
-                    "{}, {}<br>{}".format(
-                        notice.author_place,
-                        layout.format_date(
-                            notice.author_date, 'date_long'
-                        ),
-                        notice.author_name
-                    )
-                )
-            for file in notice.files:
-                pdf.pdf(file.reference.file)
-
+            pdf.notice(notice, layout)
         pdf.generate()
 
         result.seek(0)
