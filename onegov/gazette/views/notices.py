@@ -1,6 +1,9 @@
+from datetime import datetime
 from morepath import redirect
+from morepath.request import Response
 from onegov.core.security import Personal
 from onegov.core.security import Private
+from onegov.core.utils import normalize_for_url
 from onegov.gazette import _
 from onegov.gazette import GazetteApp
 from onegov.gazette.collections import GazetteNoticeCollection
@@ -8,6 +11,7 @@ from onegov.gazette.forms import EmptyForm
 from onegov.gazette.forms import NoticeForm
 from onegov.gazette.layout import Layout
 from onegov.gazette.models import GazetteNotice
+from onegov.gazette.pdf import Pdf
 from onegov.gazette.views import get_user
 from onegov.gazette.views import get_user_and_group
 
@@ -82,6 +86,7 @@ def view_notices(self, request):
     """
 
     layout = Layout(self, request)
+    is_publisher = request.is_private(self)
 
     filters = (
         {
@@ -128,13 +133,16 @@ def view_notices(self, request):
     }
 
     title = _("Official Notices")
-    if not request.is_private(self):
+    if not is_publisher:
         self.user_ids, self.group_ids = get_user_and_group(request)
         filters = None
         title = _("My Published Official Notices")
 
+    export = request.link(self, name='export-pdf') if is_publisher else None
+
     return {
         'layout': layout,
+        'is_publisher': is_publisher,
         'notices': self.batch,
         'title': title,
         'filters': filters,
@@ -143,8 +151,39 @@ def view_notices(self, request):
         'to_date': self.to_date,
         'orderings': orderings,
         'clear': request.link(self.for_dates(None, None).for_term(None)),
-        'new_notice': request.link(self, name='new-notice')
+        'new_notice': request.link(self, name='new-notice'),
+        'export': export
     }
+
+
+@GazetteApp.view(
+    model=GazetteNoticeCollection,
+    name='export-pdf',
+    permission=Private
+)
+def view_notices_export(self, request):
+    """ Export the notices as PDF.
+
+    This view is only visible by a publisher.
+
+    """
+
+    pdf = Pdf.from_collection(self, request)
+
+    filename = normalize_for_url(
+        '{}-{}-{}-{}'.format(
+            request.translate(_("Gazette")),
+            request.app.principal.name,
+            request.translate(_("Search Results")),
+            datetime.now().isoformat()
+        )
+    )
+
+    return Response(
+        pdf.read(),
+        content_type='application/pdf',
+        content_disposition=f'inline; filename={filename}.pdf'
+    )
 
 
 @GazetteApp.form(
