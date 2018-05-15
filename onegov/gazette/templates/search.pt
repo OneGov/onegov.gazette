@@ -68,18 +68,22 @@
         </div>
 
         <h3 i18n:translate>Search Results</h3>
-        <div tal:condition="not:notices">
-            <p i18n:translate>No official notices.</p>
-        </div>
-        <div tal:condition="notices">
-            <dl class="sub-nav">
-                <dt><tal:block i18n:translate>Ordering</tal:block>:</dt>
-                <dd tal:repeat="key orderings">
-                    <tal:block metal:use-macro="layout.macros['order_link']"></tal:block>
-                </dd>
-                <a href="${pdf}" class="pull-right"><i class="fa fa-file-pdf-o"></i></a>
-            </dl>
-
+        <dl class="sub-nav">
+            <dt><tal:block i18n:translate>Ordering</tal:block>:</dt>
+            <dd tal:repeat="key orderings">
+                <tal:block metal:use-macro="layout.macros['order_link']"></tal:block>
+            </dd>
+        </dl>
+        <dl class="sub-nav">
+            <dd>
+                <a href="${subscribe}" class="dt"><i class="fa fa-envelope-o" aria-hidden="true"></i> <tal:block i18n:translate>Subscribe</tal:block></a>
+            </dd>
+            <dd>
+                <a href="${pdf}"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> <tal:block i18n:translate>Download as PDF</tal:block></a>
+            </dd>
+        </dl>
+        <p tal:condition="not:notices" i18n:translate>No official notices.</p>
+        <tal:block tal:condition="notices">
             <div tal:repeat="notice notices">
                 <hr>
                 <div>
@@ -100,7 +104,7 @@
             <div class="pagination-centered">
                 <div metal:use-macro="layout.macros['pagination']" tal:define="collection layout.model; current_page layout.model;" />
             </div>
-        </div>
+        </tal:block>
 
     </tal:block>
 </div>

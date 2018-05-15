@@ -3,6 +3,7 @@ from onegov.gazette.collections.issues import IssueCollection
 from onegov.gazette.collections.notices import GazetteNoticeCollection
 from onegov.gazette.collections.notices import PublishedNoticeCollection
 from onegov.gazette.collections.organizations import OrganizationCollection
+from onegov.gazette.collections.subscriptions import SubscriptionCollection
 
 
 __all__ = [
@@ -11,4 +12,5 @@ __all__ = [
     'IssueCollection',
     'OrganizationCollection',
     'PublishedNoticeCollection',
+    'SubscriptionCollection',
 ]

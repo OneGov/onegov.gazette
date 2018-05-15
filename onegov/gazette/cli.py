@@ -3,22 +3,28 @@
 import click
 import transaction
 
+from datetime import timedelta
 from dateutil import parser
 from onegov.core.cli import command_group
 from onegov.core.cli import pass_group_context
 from onegov.core.crypto import random_password
 from onegov.core.csv import convert_xls_to_csv
 from onegov.core.csv import CSVFile
+from onegov.core.templates import render_template
 from onegov.gazette import _
 from onegov.gazette.collections import CategoryCollection
 from onegov.gazette.collections import IssueCollection
 from onegov.gazette.collections import OrganizationCollection
+from onegov.gazette.collections import PublishedNoticeCollection
+from onegov.gazette.collections import SubscriptionCollection
+from onegov.gazette.layout import MailLayout
+from onegov.gazette.models import GazetteSubscription
 from onegov.gazette.models import IssueName
 from onegov.user import User
 from onegov.user import UserCollection
 from onegov.user import UserGroupCollection
 from sedate import standardize_date
-
+from sedate import utcnow
 
 cli = command_group()
 
@@ -305,3 +311,49 @@ def import_issues(ctx, file, clear, dry_run, locale, timezone):
             transaction.abort()
 
     return _import_issues
+
+
+@cli.command(name='process-subscriptions')
+@pass_group_context
+def process_subscriptions(ctx):
+    """ Imports issues. For example:
+
+        onegov-gazette --select '/onegov_gazette/zug' import-issues data.xlsx
+
+    """
+
+    def _process_subscriptions(request, app):
+        session = app.session()
+        query = SubscriptionCollection(session).query()
+        query = query.filter(GazetteSubscription.validated.is_(True))
+        for subscription in query:
+            request.locale = subscription.locale
+            notices = PublishedNoticeCollection(
+                session,
+                term=subscription.term,
+                order=subscription.order,
+                direction=subscription.direction,
+                categories=subscription.categories,
+                organizations=subscription.organizations,
+                from_date=subscription.last_sent.date(),
+                to_date=utcnow().date() + timedelta(days=1)
+            )
+            if notices.query().first():
+                request.app.send_marketing_email(
+                    subject=_("New official notices"),
+                    receivers=(subscription.email, ),
+                    reply_to=request.app.mail['marketing']['sender'],
+                    content=render_template(
+                        'mail_subscription.pt',
+                        request,
+                        {
+                            'title': _("New official notices"),
+                            'layout': MailLayout(subscription, request),
+                            'url': request.link(notices)
+                        }
+                    )
+                )
+
+            subscription.last_sent = utcnow()
+
+    return _process_subscriptions

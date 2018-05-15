@@ -7,6 +7,7 @@ from onegov.gazette.collections import GazetteNoticeCollection
 from onegov.gazette.collections import IssueCollection
 from onegov.gazette.collections import OrganizationCollection
 from onegov.gazette.collections import PublishedNoticeCollection
+from onegov.gazette.collections import SubscriptionCollection
 from onegov.gazette.models import Category
 from onegov.gazette.models import GazetteNotice
 from onegov.gazette.models import Issue
@@ -94,6 +95,11 @@ def get_issue_pdf(request, app, name):
     issue = IssueCollection(app.session()).by_name(name.replace('.pdf', ''))
     if issue and issue.pdf:
         return get_file(app, issue.pdf.id)
+
+
+@GazetteApp.path(model=SubscriptionCollection, path='/subscriptions')
+def get_subscriptions(app):
+    return SubscriptionCollection(app.session())
 
 
 @GazetteApp.path(

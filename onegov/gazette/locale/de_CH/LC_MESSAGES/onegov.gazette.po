@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-08 13:27+0200\n"
-"PO-Revision-Date: 2018-05-08 13:27+0200\n"
+"POT-Creation-Date: 2018-05-15 10:23+0200\n"
+"PO-Revision-Date: 2018-05-15 10:24+0200\n"
 "Last-Translator: Marc Sommerhalder <marc.sommerhalder@seantis.ch>\n"
 "Language-Team: German\n"
 "Language: de_CH\n"
@@ -55,6 +55,9 @@ msgstr "Rubriken"
 
 msgid "Issues"
 msgstr "Ausgaben"
+
+msgid "New official notices"
+msgstr "Neue amtlichen Meldungen"
 
 msgid "Show all"
 msgstr "Alle anzeigen"
@@ -302,15 +305,21 @@ msgstr "Aktuelle Seite"
 msgid "Next deadline"
 msgstr "Nächster Eingabeschluss"
 
+msgid "Dear Sir or Madam,"
+msgstr "Sehr geehrte Dame, sehr geehrter Herr"
+
+msgid "Click the following link to confirm your subscription:"
+msgstr "Klicken Sie auf den folgenden Link, um Ihr Abonnement zu bestätigen:"
+
+msgid "Confirm subscription"
+msgstr "Abonnement bestätigen"
+
 msgid "Dear Sirs and Madams,"
 msgstr "Sehr geehrte Damen und Herren,"
 
 msgid "Your official notice has been rejected:"
 msgstr ""
 "Ihr Inserat für den amtlichen Teil des Amtsblatts wurde zurückgewiesen:"
-
-msgid "Dear Sir or Madam,"
-msgstr "Sehr geehrte Dame, sehr geehrter Herr"
 
 msgid "Click the following link to set a new password:"
 msgstr ""
@@ -330,6 +339,12 @@ msgstr "Bitte publizieren Sie folgendes Inserat für den amtlichen Teil"
 
 msgid "Attachments"
 msgstr "Anhänge"
+
+msgid "There are new official notices:"
+msgstr "Es sind neue amtliche Meldungen erschienen:"
+
+msgid "Official notices"
+msgstr "Amtliche Meldungen"
 
 msgid "Your user account has been created."
 msgstr ""
@@ -397,6 +412,12 @@ msgstr "Suchergebnisse"
 
 msgid "Ordering"
 msgstr "Sortierung"
+
+msgid "Subscribe"
+msgstr "Abbonnieren"
+
+msgid "Download as PDF"
+msgstr "Als PDF herunterladen"
 
 msgid "Sessions"
 msgstr "Sitzungen"
@@ -695,6 +716,19 @@ msgstr "Aktualisieren"
 
 msgid "Notices updated."
 msgstr "Meldungen aktualisiert."
+
+msgid "Confirm your subscription"
+msgstr "Abonnement bestätigen"
+
+msgid "Confirm"
+msgstr "Bestätigen"
+
+msgid "Thank You! Please check your email to activate your subscription."
+msgstr ""
+"Danke! Bitte überprüfen Sie Ihre E-Mail, um Ihr Abonnement zu aktivieren."
+
+msgid "Your subscription has been successfully confirmed."
+msgstr "Ihr Abonnement wurde erfolgreich bestätigt."
 
 msgid "New Organization"
 msgstr "Neue Organisation"
