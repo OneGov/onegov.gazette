@@ -7,7 +7,7 @@
         <h3 tal:condition="subtitle|nothing" class="subheader">${subtitle}</h3>
         <div metal:use-macro="layout.macros['deadline_callout']"></div>
         <div class="panel callout radius" tal:condition="callout|nothing">
-             <p tal:content="structure layout.format_text(callout)">
+             <p>${callout}</p>
         </div>
         <p tal:condition="message|nothing">${message}</p>
         <div tal:condition="show_form|True" class="row">

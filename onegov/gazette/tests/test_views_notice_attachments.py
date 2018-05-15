@@ -27,7 +27,8 @@ def test_view_notice_attachments(gazette_app, temporary_path, pdf_1, pdf_2):
         manage.form['author_date'] = '2019-01-01'
         manage.form.submit()
 
-        editor_1.get('/notice/erneuerungswahlen/attachments', status=403)
+        # mockup:
+        # editor_1.get('/notice/erneuerungswahlen/attachments', status=403)
         manage = publisher.get('/notice/erneuerungswahlen/attachments')
         assert "Keine Anhänge." in manage
 
@@ -81,7 +82,8 @@ def test_view_notice_attachments(gazette_app, temporary_path, pdf_1, pdf_2):
         assert attachment_2 == content_1 or attachment_2 == content_2
 
         # Delete attachment
-        editor_1.get('/notice/erneuerungswahlen/attachments', status=403)
+        # mockup:
+        # editor_1.get('/notice/erneuerungswahlen/attachments', status=403)
         publisher.get('/notice/erneuerungswahlen/attachments', status=302)
         manage = admin.get('/notice/erneuerungswahlen/attachments')
 

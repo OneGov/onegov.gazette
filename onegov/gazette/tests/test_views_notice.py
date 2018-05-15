@@ -122,17 +122,17 @@ def test_view_notice_actions(gazette_app):
             (publisher, 'titel-2', 'pteds'),
             (publisher, 'titel-3', 'pteds'),
             (publisher, 'titel-4', 'pteds'),
-            (editor_1, 'titel-1', 'peds'),
-            (editor_1, 'titel-2', 'peds'),
+            (editor_1, 'titel-1', 'pteds'),
+            (editor_1, 'titel-2', 'pteds'),
             (editor_1, 'titel-3', 'p'),
             (editor_1, 'titel-4', 'p'),
-            (editor_2, 'titel-1', 'peds'),
-            (editor_2, 'titel-2', 'peds'),
+            (editor_2, 'titel-1', 'pteds'),  # mockup: was peds
+            (editor_2, 'titel-2', 'pteds'),  # mockup: was peds
             (editor_2, 'titel-3', 'p'),
             (editor_2, 'titel-4', 'p'),
             (editor_3, 'titel-1', 'p'),
             (editor_3, 'titel-2', 'p'),
-            (editor_3, 'titel-3', 'peds'),
+            (editor_3, 'titel-3', 'pteds'),  # mockup: was peds
             (editor_3, 'titel-4', 'p'),
         ))
 
@@ -180,17 +180,17 @@ def test_view_notice_actions(gazette_app):
             (publisher, 'titel-2', 'pteds'),
             (publisher, 'titel-3', 'pteds'),
             (publisher, 'titel-4', 'pteds'),
-            (editor_1, 'titel-1', 'peds'),
-            (editor_1, 'titel-2', 'peds'),
+            (editor_1, 'titel-1', 'pteds'),  # mockup: was peds
+            (editor_1, 'titel-2', 'pteds'),  # mockup: was peds
             (editor_1, 'titel-3', 'p'),
             (editor_1, 'titel-4', 'p'),
-            (editor_2, 'titel-1', 'peds'),
-            (editor_2, 'titel-2', 'peds'),
+            (editor_2, 'titel-1', 'pteds'),  # mockup: was peds
+            (editor_2, 'titel-2', 'pteds'),  # mockup: was peds
             (editor_2, 'titel-3', 'p'),
             (editor_2, 'titel-4', 'p'),
             (editor_3, 'titel-1', 'p'),
             (editor_3, 'titel-2', 'p'),
-            (editor_3, 'titel-3', 'peds'),
+            (editor_3, 'titel-3', 'pteds'),  # mockup: was peds
             (editor_3, 'titel-4', 'p'),
         ))
 

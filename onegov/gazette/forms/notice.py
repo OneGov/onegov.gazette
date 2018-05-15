@@ -136,12 +136,17 @@ class NoticeForm(Form):
         )
 
         # mockup: added
-        group = get_user(self.request).group
-        if group:
-            self.organization.choices = [
-                (id_, name) for id_, name in self.organization.choices
-                if name == group.name
-            ]
+        try:
+            group = get_user(self.request).group
+            if group:
+                subset = [
+                    (id_, name) for id_, name in self.organization.choices
+                    if name == group.name
+                ]
+                if subset:
+                    self.organization.choices = subset
+        except AttributeError:
+            pass
 
         # populate categories
         self.category.choices = CategoryCollection(session).as_options()
@@ -184,7 +189,8 @@ class NoticeForm(Form):
         model.billing_address = self.billing_address.data
         model.issues = self.issues.data
         if self.print_only:
-            model.print_only = self.print_only.data
+            model.print_only = self.print_only.data == 'True'
+            # mockup: was model.print_only = self.print_only.data
 
         model.apply_meta(self.request.session)
 

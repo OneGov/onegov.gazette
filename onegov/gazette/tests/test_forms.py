@@ -462,7 +462,8 @@ def test_notice_form(session, categories, organizations, issues):
     form.title.data = 'Notice'
     form.organization.data = '300'
     form.category.data = '11'
-    form.print_only.data = True
+    form.print_only.data = 'True'
+    # mockup: was form.print_only.data = True
     form.at_cost.data = 'yes'
     form.billing_address.data = 'someone\nsomewhere'
     form.text.data = 'A <b>notice</b>.'

@@ -187,13 +187,13 @@ def view_search_subscribe(self, request, form):
 
     callout = ''
     if self.term:
-        callout += '{}: {}\n'.format(
+        callout += '{}: {}. '.format(
             request.translate(_("Term")),
             self.term
         )
     if self.categories:
         categories = CategoryCollection(request.session).as_options()
-        callout += '{}: {}\n'.format(
+        callout += '{}: {}. '.format(
             request.translate(_("Categories")),
             ', '.join([
                 title for value, title in categories
@@ -202,7 +202,7 @@ def view_search_subscribe(self, request, form):
         )
     if self.organizations:
         organizations = OrganizationCollection(request.session).as_options()
-        callout += '{}: {}\n'.format(
+        callout += '{}: {}. '.format(
             request.translate(_("Organizations")),
             ', '.join([
                 title for value, title in organizations
