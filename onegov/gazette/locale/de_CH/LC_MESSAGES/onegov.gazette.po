@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-15 10:23+0200\n"
-"PO-Revision-Date: 2018-05-15 10:24+0200\n"
+"POT-Creation-Date: 2018-05-15 13:05+0200\n"
+"PO-Revision-Date: 2018-05-15 13:06+0200\n"
 "Last-Translator: Marc Sommerhalder <marc.sommerhalder@seantis.ch>\n"
 "Language-Team: German\n"
 "Language: de_CH\n"
@@ -413,11 +413,11 @@ msgstr "Suchergebnisse"
 msgid "Ordering"
 msgstr "Sortierung"
 
-msgid "Subscribe"
-msgstr "Abbonnieren"
+msgid "Subscribe to the current search query"
+msgstr "Suchanfrage abonnieren"
 
-msgid "Download as PDF"
-msgstr "Als PDF herunterladen"
+msgid "Download the search results as PDF"
+msgstr "Suchergebnisse als PDF herunterladen"
 
 msgid "Sessions"
 msgstr "Sitzungen"
@@ -720,6 +720,9 @@ msgstr "Meldungen aktualisiert."
 msgid "Confirm your subscription"
 msgstr "Abonnement bestätigen"
 
+msgid "Subscribe"
+msgstr "Abbonnieren"
+
 msgid "Confirm"
 msgstr "Bestätigen"
 
@@ -793,3 +796,6 @@ msgstr "Benutzer gelöscht."
 
 msgid "User account created"
 msgstr "Benutzerkonto Amtsblattredaktion erstellt"
+
+#~ msgid "Download as PDF"
+#~ msgstr "Als PDF herunterladen"

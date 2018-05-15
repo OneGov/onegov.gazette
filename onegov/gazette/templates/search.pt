@@ -20,8 +20,15 @@
                         <div class="search-filter">
                             <label for="organizations" i18n:translate>Organization</label>
                             <select name="organizations" multiple class="chosen-select">
-                                <tal:block tal:repeat="(value, title, selected) organizations">
-                                    <option value="${value}" tal:attributes="selected selected">${title}</option>
+                                <tal:block tal:repeat="(group, options) organizations">
+                                    <optgroup tal:condition="group" label="${group}">
+                                        <tal:block tal:repeat="(value, title) options">
+                                            <option value="${value}" tal:attributes="selected (value in selected_organizations)">${title}</option>
+                                        </tal:block>
+                                    </optgroup>
+                                    <tal:block tal:condition="not group" tal:repeat="(value, title) options">
+                                        <option value="${value}" tal:attributes="selected (value in selected_organizations)">${title}</option>
+                                    </tal:block>
                                 </tal:block>
                             </select>
                         </div>
@@ -30,8 +37,8 @@
                         <div class="search-filter">
                             <label for="categories" i18n:translate>Category</label>
                             <select name="categories" multiple class="chosen-select">
-                                <tal:block tal:repeat="(value, title, selected) categories">
-                                    <option value="${value}" tal:attributes="selected selected">${title}</option>
+                                <tal:block tal:repeat="(value, title) categories">
+                                    <option value="${value}" tal:attributes="selected (value in selected_categories)">${title}</option>
                                 </tal:block>
                             </select>
                         </div>
@@ -68,7 +75,7 @@
         </div>
 
         <h3 i18n:translate>Search Results</h3>
-        <dl class="sub-nav">
+        <dl class="sub-nav" tal:condition="notices">
             <dt><tal:block i18n:translate>Ordering</tal:block>:</dt>
             <dd tal:repeat="key orderings">
                 <tal:block metal:use-macro="layout.macros['order_link']"></tal:block>
@@ -76,13 +83,16 @@
         </dl>
         <dl class="sub-nav">
             <dd>
-                <a href="${subscribe}" class="dt"><i class="fa fa-envelope-o" aria-hidden="true"></i> <tal:block i18n:translate>Subscribe</tal:block></a>
+                <a href="${subscribe}" class="dt"><i class="fa fa-envelope-o" aria-hidden="true"></i> <tal:block i18n:translate>Subscribe to the current search query</tal:block></a>
             </dd>
-            <dd>
-                <a href="${pdf}"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> <tal:block i18n:translate>Download as PDF</tal:block></a>
+            <dd tal:condition="notices">
+                <a href="${pdf}"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> <tal:block i18n:translate>Download the search results as PDF</tal:block></a>
             </dd>
         </dl>
-        <p tal:condition="not:notices" i18n:translate>No official notices.</p>
+        <div tal:condition="not:notices" i18n:translate>
+            <hr>
+            <p>No official notices.</p>
+        </div>
         <tal:block tal:condition="notices">
             <div tal:repeat="notice notices">
                 <hr>

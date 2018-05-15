@@ -24,7 +24,7 @@ class OrganizationCollection(AdjacencyListCollection):
         next = (names[-1] + 1) if names else 1
         return str(next)
 
-    def as_options(self, active_only=True):
+    def as_options(self, active_only=True, grouped=False):
         """ Returns an ordered list of (active) organizations which can be used
         for selects.
 
@@ -34,6 +34,7 @@ class OrganizationCollection(AdjacencyListCollection):
             return item.title if item.active else '({})'.format(item.title)
 
         result = []
+        result_grouped = []
 
         query = self.query()
         if active_only:
@@ -42,10 +43,14 @@ class OrganizationCollection(AdjacencyListCollection):
         query = query.order_by(Organization.order)
         for root in query:
             if root.children:
-                for child in root.children:
-                    if child.active or not active_only:
-                        result.append((child.name, title(child)))
+                group = [
+                    (child.name, title(child)) for child in root.children
+                    if child.active or not active_only
+                ]
+                result.extend(group)
+                result_grouped.append((title(root), group))
             else:
                 result.append((root.name, title(root)))
+                result_grouped.append((None, [(root.name, title(root))]))
 
-        return result
+        return result_grouped if grouped else result

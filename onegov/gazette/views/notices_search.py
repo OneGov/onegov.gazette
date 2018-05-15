@@ -60,6 +60,7 @@ def view_search(self, request):
     """ Search the published notices. """
 
     layout = Layout(self, request)
+    session = request.session
 
     orderings = {
         'first_issue': {
@@ -84,18 +85,6 @@ def view_search(self, request):
         },
     }
 
-    categories = CategoryCollection(request.session).as_options()
-    categories = [
-        (value, title, value in (self.categories or []))
-        for value, title in categories
-    ]
-
-    organizations = OrganizationCollection(request.session).as_options()
-    organizations = [
-        (value, title, value in (self.organizations or []))
-        for value, title in organizations
-    ]
-
     clear = None
     if any((
         self.term, self.categories, self.organizations,
@@ -111,8 +100,12 @@ def view_search(self, request):
         'layout': layout,
         'notices': self.batch,
         'term': self.term,
-        'categories': categories,
-        'organizations': organizations,
+        'categories': CategoryCollection(session).as_options(),
+        'organizations': OrganizationCollection(session).as_options(
+            grouped=True
+        ),
+        'selected_categories': self.categories,
+        'selected_organizations': self.organizations,
         'from_date': self.from_date,
         'to_date': self.to_date,
         'orderings': orderings,
