@@ -89,9 +89,9 @@
                 <a href="${pdf}"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> <tal:block i18n:translate>Download the search results as PDF</tal:block></a>
             </dd>
         </dl>
-        <div tal:condition="not:notices" i18n:translate>
+        <div tal:condition="not:notices">
             <hr>
-            <p>No official notices.</p>
+            <p i18n:translate>No official notices.</p>
         </div>
         <tal:block tal:condition="notices">
             <div tal:repeat="notice notices">
