@@ -168,7 +168,7 @@ def view_notices_export(self, request):
 
     """
 
-    pdf = Pdf.from_collection(self, request)
+    pdf = Pdf.from_notices(self, request, add_registers=True)
 
     filename = normalize_for_url(
         '{}-{}-{}-{}'.format(

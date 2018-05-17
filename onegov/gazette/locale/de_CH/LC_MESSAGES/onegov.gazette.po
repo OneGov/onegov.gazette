@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-15 13:05+0200\n"
+"POT-Creation-Date: 2018-05-17 16:53+0200\n"
 "PO-Revision-Date: 2018-05-15 13:06+0200\n"
 "Last-Translator: Marc Sommerhalder <marc.sommerhalder@seantis.ch>\n"
 "Language-Team: German\n"
@@ -93,6 +93,9 @@ msgstr "Veröffentlichte Meldungen"
 
 msgid "Gazette"
 msgstr "Amtsblatt"
+
+msgid "Index"
+msgstr "Stichwortverzeichnis"
 
 msgid "This value already exists."
 msgstr "Dieser Wert ist bereits vorhanden."
@@ -796,6 +799,3 @@ msgstr "Benutzer gelöscht."
 
 msgid "User account created"
 msgstr "Benutzerkonto Amtsblattredaktion erstellt"
-
-#~ msgid "Download as PDF"
-#~ msgstr "Als PDF herunterladen"

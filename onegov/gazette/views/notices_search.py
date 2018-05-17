@@ -123,7 +123,7 @@ def view_search(self, request):
 def view_search_pdf(self, request):
     """ Download the search results as PDF. """
 
-    pdf = Pdf.from_collection(self, request)
+    pdf = Pdf.from_notices(self, request)
 
     filename = normalize_for_url(
         '{}-{}-{}-{}'.format(
