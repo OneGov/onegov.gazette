@@ -45,8 +45,10 @@ Suche
 
 - Commits
   - 414fa8a634f48147f156227de2f6e49bf276263a
+  - d49514d7afaf84e66bcc065eaf405085bf94579d
 - What needs to be done
   - Tests
+  - Improve Performance
 
 ## PDF Preview (Back-End)
 
