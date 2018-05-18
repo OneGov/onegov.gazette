@@ -115,6 +115,48 @@ def view_search(self, request):
     }
 
 
+@GazetteApp.html(
+    model=PublishedNoticeCollection,
+    template='embed.pt',
+    name='embed',
+    permission=Public
+)
+def view_search_embed(self, request):
+    """ Show the search results embeddable. """
+
+    layout = Layout(self, request)
+
+    orderings = {
+        'first_issue': {
+            'title': _("Issue(s)"),
+            'href': request.link(self.for_order('first_issue')),
+            'sort': self.direction if self.order == 'first_issue' else '',
+        },
+        'organization': {
+            'title': _("Organization"),
+            'href': request.link(self.for_order('organization')),
+            'sort': self.direction if self.order == 'organization' else '',
+        },
+        'category': {
+            'title': _("Category"),
+            'href': request.link(self.for_order('category')),
+            'sort': self.direction if self.order == 'category' else '',
+        },
+        'title': {
+            'title': _("Title"),
+            'href': request.link(self.for_order('title')),
+            'sort': self.direction if self.order == 'title' else '',
+        },
+    }
+
+    return {
+        'layout': layout,
+        'notices': self.batch,
+        'term': self.term,
+        'orderings': orderings,
+    }
+
+
 @GazetteApp.view(
     model=PublishedNoticeCollection,
     name='pdf',

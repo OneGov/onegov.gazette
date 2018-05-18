@@ -30,7 +30,7 @@ metal:define-macro="layout">
     <script tal:condition="layout.sentry_js">Raven.config('${layout.sentry_js}').install()</script>
 </head>
 <body>
-    <div class="row header">
+    <div class="row header" metal:define-slot="header">
         <div class="small-12 medium-6 columns small-only-text-center">
             <div metal:define-slot="logo">
                 <a href="${layout.homepage_link}" title="homepage" i18n:attributes="title">
@@ -49,7 +49,7 @@ metal:define-macro="layout">
         </div>
     </div>
 
-    <div class="before-content">
+    <div class="before-content" metal:define-slot="before-content-wrapper">
         <div class="row">
             <div class="columns small-12">
                 <div metal:define-slot="before-content">
