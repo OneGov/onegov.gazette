@@ -31,13 +31,12 @@
 
 ## Search
 
-Suche
-
 - Commits
   - e23d1ad0ae3fc666868fedb1b8521cd100dbb9c2
   - 44737089257339d0327ed70e82ec24bbfd585d93
   - 1a12bc5e96a20cc9013895d7fa0f4af8e22aaa23
   - db193dfc9319b9525d4e1aeef7f70dd9c8d114ac
+  - f683149a5477483613e4d4e04a2640e3fb7c0d10
 
 - What needs to be done
   - Tests
