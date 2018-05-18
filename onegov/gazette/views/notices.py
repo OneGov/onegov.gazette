@@ -138,7 +138,12 @@ def view_notices(self, request):
         filters = None
         title = _("My Published Official Notices")
 
-    export = request.link(self, name='export-pdf') if is_publisher else None
+    export_pdf = None
+    export_index = None
+    if is_publisher:
+        export_pdf = request.link(self, name='export-pdf')
+    if is_publisher and self.state == 'published':
+        export_index = request.link(self, name='export-index')
 
     return {
         'layout': layout,
@@ -152,7 +157,8 @@ def view_notices(self, request):
         'orderings': orderings,
         'clear': request.link(self.for_dates(None, None).for_term(None)),
         'new_notice': request.link(self, name='new-notice'),
-        'export': export
+        'export_pdf': export_pdf,
+        'export_index': export_index
     }
 
 
@@ -161,14 +167,44 @@ def view_notices(self, request):
     name='export-pdf',
     permission=Private
 )
-def view_notices_export(self, request):
+def view_notices_export_pdf(self, request):
     """ Export the notices as PDF.
 
     This view is only visible by a publisher.
 
     """
 
-    pdf = Pdf.from_notices(self, request, add_registers=True)
+    pdf = Pdf.from_notices(self, request)
+
+    filename = normalize_for_url(
+        '{}-{}-{}-{}'.format(
+            request.translate(_("Gazette")),
+            request.app.principal.name,
+            request.translate(_("Search Results")),
+            datetime.now().isoformat()
+        )
+    )
+
+    return Response(
+        pdf.read(),
+        content_type='application/pdf',
+        content_disposition=f'inline; filename={filename}.pdf'
+    )
+
+
+@GazetteApp.view(
+    model=GazetteNoticeCollection,
+    name='export-index',
+    permission=Private
+)
+def view_notices_export_index(self, request):
+    """ Export the index to the notices as PDF.
+
+    This view is only visible by a publisher.
+
+    """
+
+    pdf = Pdf.index_from_notices(self, request)
 
     filename = normalize_for_url(
         '{}-{}-{}-{}'.format(

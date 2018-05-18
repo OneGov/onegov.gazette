@@ -170,7 +170,7 @@ class Pdf(PdfBase):
         return result
 
     @classmethod
-    def from_notices(cls, notices, request, add_registers=False):
+    def from_notices(cls, notices, request):
         """ Create a PDF from a collection of notices. """
 
         layout = Layout(None, request)
@@ -190,15 +190,33 @@ class Pdf(PdfBase):
         for notice in notices.query():
             pdf.spacer()
             pdf.notice(notice, layout)
-        if add_registers:
-            pdf.pagebreak()
-            pdf.h1(request.translate(_("Index")))
-            pdf.h2(request.translate(_("Categories")))
-            pdf.category_index(notices)
+        pdf.generate()
 
-            pdf.pagebreak()
-            pdf.h2(request.translate(_("Organizations")))
-            pdf.organization_index(notices)
+        result.seek(0)
+        return result
+
+    @classmethod
+    def index_from_notices(cls, notices, request):
+        """ Create an index PDF from a collection of notices. """
+
+        title = request.translate(_("Gazette"))
+        result = BytesIO()
+        pdf = cls(
+            result,
+            title=title,
+            author=request.app.principal.name
+        )
+        pdf.init_a4_portrait(
+            page_fn=page_fn_footer,
+            page_fn_later=page_fn_header_and_footer
+        )
+        pdf.h1(title)
+        pdf.h1(request.translate(_("Index")))
+        pdf.h2(request.translate(_("Organizations")))
+        pdf.organization_index(notices)
+        pdf.pagebreak()
+        pdf.h2(request.translate(_("Categories")))
+        pdf.category_index(notices)
         pdf.generate()
 
         result.seek(0)
