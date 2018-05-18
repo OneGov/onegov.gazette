@@ -35,7 +35,9 @@ Suche
 
 - Commits
   - e23d1ad0ae3fc666868fedb1b8521cd100dbb9c2
+  - 44737089257339d0327ed70e82ec24bbfd585d93
   - 1a12bc5e96a20cc9013895d7fa0f4af8e22aaa23
+  - db193dfc9319b9525d4e1aeef7f70dd9c8d114ac
 
 - What needs to be done
   - Tests
@@ -54,7 +56,7 @@ Suche
 
 - Commits
   - 930be3b6db78c8d5beec185fdbd2de150c09b308
-  - faf3859944241602c6c8b209c6196aac9db831ad
+  - 21d392606d7368d40d4d84e13614b803834de67e
 - What needs to be done
   - Tests
 
