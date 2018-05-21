@@ -14,6 +14,7 @@
   - 4f2eb2da611b26abab845f1ecaf584b72e149d20
   - b3526237a99f92afc9d656b52fb5558c6a02eb30
   - b3526237a99f92afc9d656b52fb5558c6a02eb30
+  - 23b476d0d0c08b5e6c405a07346e77236a9f24a5
 
 - What needs to be done
 
@@ -42,7 +43,7 @@
   - Tests
   - Honour principal.show_archive/frontend (possibly raise NotFound in path.py or redirect if disabled)
 
-## PDF Export of Notices (Back-End) 
+## PDF Export of Notices (Back-End)
 
 - Commits
   - 414fa8a634f48147f156227de2f6e49bf276263a
