@@ -170,35 +170,10 @@ def view_search_embed(self, request):
 def view_search_rss(self, request):
     """ Show the search results as RSS feed. """
 
-    layout = Layout(self, request)
-
-    def sub(parent, tag, attrib=None, text=None):
+    def sub(parent, tag, text=None, attrib=None):
         element = SubElement(parent, tag, attrib=attrib or {})
         element.text = text or ''
         return element
-
-    # <?xml version="1.0" encoding="utf-8"?>
-    # <rss version="2.0">
-    #   <channel>
-    #     <title>Titel des Feeds</title>
-    #     <link>URL der Webpräsenz</link>
-    #     <description>Kurze Beschreibung des Feeds</description>
-    #     <language>Sprache des Feeds (z. B. "de-de")</language>
-    #     <copyright>Autor des Feeds</copyright>
-    #     <pubDate>Erstellungsdatum("Tue, 8 Jul 2008 2:43:19")</pubDate>
-    #     <item>
-    #       <title>Titel des Eintrags</title>
-    #       <description>Kurze Zusammenfassung des Eintrags</description>
-    #       <link>Link zum vollständigen Eintrag</link>
-    #       <author>Autor des Artikels, E-Mail-Adresse</author>
-    #       <guid>Eindeutige Identifikation des Eintrages</guid>
-    #       <pubDate>Datum des Items</pubDate>
-    #     </item>
-    #     <item>
-    #       ...
-    #     </item>
-    #   </channel>
-    # </rss>
 
     @request.after
     def set_headers(response):
@@ -207,22 +182,30 @@ def view_search_rss(self, request):
     principal_name = request.app.principal.name
     title = f'{principal_name} {request.translate(_("Gazette"))}'
 
-    rss = Element('rss', attrib={'version': '2.0'})
+    rss = Element('rss', attrib={
+        'version': '2.0',
+        'xmlns:atom': 'http://www.w3.org/2005/Atom'
+    })
     channel = sub(rss, 'channel')
-    sub(channel, 'title', text=title)
-    sub(channel, 'link', text=request.link(self, name='rss'))
-    sub(channel, 'descrioption', text=title)
-    sub(channel, 'language', text=request.html_lang)
-    sub(channel, 'copyright', text=principal_name)
+    sub(channel, 'title', title)
+    sub(channel, 'description', title)
+    sub(channel, 'link', request.link(self, name='rss'))
+    sub(channel, 'atom:link', None, {
+        'href': request.link(self, name='rss'),
+        'rel': 'self',
+        'type': 'application/rss+xml'
+    })
+    sub(channel, 'language', request.html_lang)
+    sub(channel, 'copyright', principal_name)
     for notice in self.query():
         item = sub(channel, 'item')
-        sub(item, 'title', text=notice.title)
-        sub(item, 'description', text=request.translate(_("Official Notice")))
-        sub(item, 'link', text=request.link(notice))  # pdf?
-        sub(item, 'guid', text=request.link(notice))  # pdf?
-        sub(item, 'pubDate', text=format_datetime(notice.first_issue))
-        sub(item, 'category', text=notice.organization_object.title)
-        sub(item, 'category', text=notice.category_object.title)
+        sub(item, 'title', notice.title)
+        sub(item, 'description', request.translate(_("Official Notice")))
+        sub(item, 'link', request.link(notice, name='pdf'))
+        sub(item, 'guid', request.link(notice, name='pdf'))
+        sub(item, 'pubDate', format_datetime(notice.first_issue))
+        sub(item, 'category', notice.organization_object.title)
+        sub(item, 'category', notice.category_object.title)
 
     out = BytesIO()
     ElementTree(rss).write(out, encoding='utf-8', xml_declaration=True)
