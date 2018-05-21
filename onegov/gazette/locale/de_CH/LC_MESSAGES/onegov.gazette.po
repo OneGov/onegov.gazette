@@ -158,7 +158,7 @@ msgid "Date (usually the date of the issue)"
 msgstr "Datum (entspricht in der Regel dem Ausgabedatum)"
 
 msgid "Author"
-msgstr "Absender (z.B. Einwohnergemeinde Baar, Planung/Bau)"
+msgstr "Absender (z.B. Gemeinde Au, Planung/Bau)"
 
 msgid "No"
 msgstr "Nein"
