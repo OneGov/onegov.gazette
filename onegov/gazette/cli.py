@@ -138,6 +138,7 @@ def import_organizations(ctx, file, clear, dry_run, locale):
         request.locale = locale
         headers = {
             'id': request.translate(_("ID")),
+            'name': request.translate(_("Name")),
             'title': request.translate(_("Title")),
             'active': request.translate(_("Active")),
             'parent': request.translate(_("Parent Organization"))
@@ -165,6 +166,7 @@ def import_organizations(ctx, file, clear, dry_run, locale):
         for line in lines:
             count += 1
             id_ = int(getattr(line, columns['id']))
+            name = getattr(line, columns['name'])
             parent = getattr(line, columns['parent'])
             parent = int(parent) if parent else None
             title = getattr(line, columns['title'])
@@ -172,6 +174,7 @@ def import_organizations(ctx, file, clear, dry_run, locale):
 
             organization = organizations.add_root(
                 id=id_,
+                name=name,
                 title=title,
                 active=active,
                 order=count

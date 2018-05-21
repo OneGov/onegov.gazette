@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-18 07:51+0200\n"
+"POT-Creation-Date: 2018-05-21 12:33+0200\n"
 "PO-Revision-Date: 2018-05-18 07:52+0200\n"
 "Last-Translator: Marc Sommerhalder <marc.sommerhalder@seantis.ch>\n"
 "Language-Team: German\n"
@@ -238,6 +238,9 @@ msgstr "in Arbeit"
 msgid "Submitted"
 msgstr "Eingereicht"
 
+msgid "Ordering"
+msgstr "Sortierung"
+
 msgid "The form contains errors. Please check the fields marked in red."
 msgstr ""
 "Das Formular enthält Fehler. Bitte die rot markierten Felder überprüfen."
@@ -416,9 +419,6 @@ msgstr "Zurücksetzen"
 
 msgid "Search Results"
 msgstr "Suchergebnisse"
-
-msgid "Ordering"
-msgstr "Sortierung"
 
 msgid "Subscribe to the current search query"
 msgstr "Suchanfrage abonnieren"
