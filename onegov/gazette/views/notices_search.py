@@ -1,4 +1,6 @@
 from datetime import datetime
+from email.utils import format_datetime
+from io import BytesIO
 from morepath import redirect
 from morepath.request import Response
 from onegov.core.security import Public
@@ -16,6 +18,9 @@ from onegov.gazette.layout import Layout
 from onegov.gazette.layout import MailLayout
 from onegov.gazette.pdf import Pdf
 from sedate import utcnow
+from xml.etree.ElementTree import Element
+from xml.etree.ElementTree import ElementTree
+from xml.etree.ElementTree import SubElement
 
 
 def send_confirmation_mail(request, subscription):
@@ -155,6 +160,74 @@ def view_search_embed(self, request):
         'term': self.term,
         'orderings': orderings,
     }
+
+
+@GazetteApp.view(
+    model=PublishedNoticeCollection,
+    name='rss',
+    permission=Public
+)
+def view_search_rss(self, request):
+    """ Show the search results as RSS feed. """
+
+    layout = Layout(self, request)
+
+    def sub(parent, tag, attrib=None, text=None):
+        element = SubElement(parent, tag, attrib=attrib or {})
+        element.text = text or ''
+        return element
+
+    # <?xml version="1.0" encoding="utf-8"?>
+    # <rss version="2.0">
+    #   <channel>
+    #     <title>Titel des Feeds</title>
+    #     <link>URL der Webpräsenz</link>
+    #     <description>Kurze Beschreibung des Feeds</description>
+    #     <language>Sprache des Feeds (z. B. "de-de")</language>
+    #     <copyright>Autor des Feeds</copyright>
+    #     <pubDate>Erstellungsdatum("Tue, 8 Jul 2008 2:43:19")</pubDate>
+    #     <item>
+    #       <title>Titel des Eintrags</title>
+    #       <description>Kurze Zusammenfassung des Eintrags</description>
+    #       <link>Link zum vollständigen Eintrag</link>
+    #       <author>Autor des Artikels, E-Mail-Adresse</author>
+    #       <guid>Eindeutige Identifikation des Eintrages</guid>
+    #       <pubDate>Datum des Items</pubDate>
+    #     </item>
+    #     <item>
+    #       ...
+    #     </item>
+    #   </channel>
+    # </rss>
+
+    @request.after
+    def set_headers(response):
+        response.headers['Content-Type'] = 'application/rss+xml; charset=UTF-8'
+
+    principal_name = request.app.principal.name
+    title = f'{principal_name} {request.translate(_("Gazette"))}'
+
+    rss = Element('rss', attrib={'version': '2.0'})
+    channel = sub(rss, 'channel')
+    sub(channel, 'title', text=title)
+    sub(channel, 'link', text=request.link(self, name='rss'))
+    sub(channel, 'descrioption', text=title)
+    sub(channel, 'language', text=request.html_lang)
+    sub(channel, 'copyright', text=principal_name)
+    for notice in self.query():
+        item = sub(channel, 'item')
+        sub(item, 'title', text=notice.title)
+        sub(item, 'description', text=request.translate(_("Official Notice")))
+        sub(item, 'link', text=request.link(notice))  # pdf?
+        sub(item, 'guid', text=request.link(notice))  # pdf?
+        sub(item, 'pubDate', text=format_datetime(notice.first_issue))
+        sub(item, 'category', text=notice.organization_object.title)
+        sub(item, 'category', text=notice.category_object.title)
+
+    out = BytesIO()
+    ElementTree(rss).write(out, encoding='utf-8', xml_declaration=True)
+    out.seek(0)
+    return out.read()
 
 
 @GazetteApp.view(
