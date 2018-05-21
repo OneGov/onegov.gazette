@@ -62,6 +62,22 @@
 - What needs to be done
   - Tests
 
+## PDF View (Front-End)
+
+- Commits
+  - 96a9344684e1d7289d819998d23cc5017fa3aebd
+- What needs to be done
+  - Probably create the PDF as attachment
+  - Sign it
+  - Tests
+
+## RSS
+
+- Commits
+  - 2fbca18a0ee0085faf97007db267ed84a856543c
+- What needs to be done
+  - Tests
+
 ## Subscriptions
 
 - Commits
