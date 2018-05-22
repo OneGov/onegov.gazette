@@ -61,7 +61,7 @@ def send_confirmation_mail(request, subscription):
     template='notices_search.pt',
     permission=Public
 )
-def view_search(self, request):
+def view_published_notices(self, request):
     """ Search the published notices. """
 
     layout = Layout(self, request)
@@ -126,7 +126,7 @@ def view_search(self, request):
     name='embed',
     permission=Public
 )
-def view_search_embed(self, request):
+def view_published_notices_embed(self, request):
     """ Show the search results embeddable. """
 
     layout = Layout(self, request)
@@ -167,7 +167,7 @@ def view_search_embed(self, request):
     name='rss',
     permission=Public
 )
-def view_search_rss(self, request):
+def view_published_notices_rss(self, request):
     """ Show the search results as RSS feed. """
 
     def sub(parent, tag, text=None, attrib=None):
@@ -218,7 +218,7 @@ def view_search_rss(self, request):
     name='pdf',
     permission=Public
 )
-def view_search_pdf(self, request):
+def view_published_notices_pdf(self, request):
     """ Download the search results as PDF. """
 
     pdf = Pdf.from_notices(self, request)
@@ -246,7 +246,7 @@ def view_search_pdf(self, request):
     permission=Public,
     form=SubscriptionForm
 )
-def view_search_subscribe(self, request, form):
+def view_published_notices_subscribe(self, request, form):
     """ Subscribe by mail to the current query. """
 
     layout = Layout(self, request)
