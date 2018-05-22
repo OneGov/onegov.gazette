@@ -4,7 +4,6 @@ from onegov.core.security import Personal
 from onegov.file.utils import as_fileintent
 from onegov.gazette import _
 from onegov.gazette import GazetteApp
-from onegov.gazette.forms import EmptyForm
 from onegov.gazette.layout import Layout
 from onegov.gazette.models import PressRelease
 from onegov.gazette.models import GazetteNoticeFile
