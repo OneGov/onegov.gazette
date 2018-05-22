@@ -27,9 +27,11 @@
 
 - Commits
   - d592ba35d721b109713d697666cf5831890563a1
+  - 4058bfdf830826df72609ea39529e18525c6c845
 - What needs to be done
   - Make it dynamic/translated or/and use onegov.page
   - Remove/rename principal.show_archive (--> show_frontend?)
+  - Use macros for showing notices
 
 ## Search
 
@@ -39,6 +41,8 @@
   - 1a12bc5e96a20cc9013895d7fa0f4af8e22aaa23
   - db193dfc9319b9525d4e1aeef7f70dd9c8d114ac
   - f683149a5477483613e4d4e04a2640e3fb7c0d10
+  - b6551be3d9541129baf02d113166e0a4c90c392c
+  - be5c6d1b090648b249651f0adbe0992469ef9f6c
 
 - What needs to be done
   - Tests
