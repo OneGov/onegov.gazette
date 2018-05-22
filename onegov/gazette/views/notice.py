@@ -1,7 +1,6 @@
 from morepath import redirect
 from morepath.request import Response
 from onegov.core.security import Personal
-from onegov.core.security import Public
 from onegov.core.security import Secret
 from onegov.core.utils import normalize_for_url
 from onegov.gazette import _
@@ -104,7 +103,7 @@ def view_notice(self, request):
 
 @GazetteApp.html(
     model=GazetteNotice,
-    template='preview.pt',
+    template='notice_preview.pt',
     name='preview',
     permission=Personal
 )
@@ -127,34 +126,6 @@ def preview_notice(self, request):
 )
 def preview_notice_pdf(self, request):
     """ Preview the notice as PDF. """
-
-    pdf = Pdf.from_notice(self, request)
-
-    filename = normalize_for_url(
-        '{}-{}-{}'.format(
-            request.translate(_("Gazette")),
-            request.app.principal.name,
-            self.title
-        )
-    )
-
-    return Response(
-        pdf.read(),
-        content_type='application/pdf',
-        content_disposition=f'inline; filename={filename}.pdf'
-    )
-
-
-@GazetteApp.view(
-    model=GazetteNotice,
-    name='pdf',
-    permission=Public
-)
-def view_notice_pdf(self, request):
-    """ View the notice as PDF. """
-
-    if not self.state == 'published':
-        raise HTTPForbidden()
 
     pdf = Pdf.from_notice(self, request)
 
