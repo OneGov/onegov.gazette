@@ -7,6 +7,7 @@ from onegov.gazette.collections import CategoryCollection
 from onegov.gazette.collections import GazetteNoticeCollection
 from onegov.gazette.collections import IssueCollection
 from onegov.gazette.collections import OrganizationCollection
+from onegov.gazette.collections import PressReleaseCollection
 from onegov.gazette.models import Issue
 from onegov.gazette.models import OrganizationMove
 from onegov.gazette.models import Principal
@@ -97,13 +98,25 @@ class Layout(ChameleonLayout):
         )
 
     @cached_property
+    def manage_press_releases_link(self):
+        return self.request.link(
+            PressReleaseCollection(self.session, state='submitted')
+        )
+
+    @cached_property
     def dashboard_link(self):
         return self.request.link(self.principal, name='dashboard')
 
     @property
     def dashboard_or_notices_link(self):
-        if self.request.is_secret(self.model):
+        if self.request.is_private(self.model):
             return self.manage_notices_link
+        return self.dashboard_link
+
+    @property
+    def dashboard_or_press_releases_link(self):
+        if self.request.is_private(self.model):
+            return self.manage_press_releases_link
         return self.dashboard_link
 
     @cached_property
@@ -136,6 +149,7 @@ class Layout(ChameleonLayout):
             # Publisher
             active = (
                 isinstance(self.model, GazetteNoticeCollection) and
+                not isinstance(self.model, PressReleaseCollection) and
                 'statistics' not in self.request.url
             )
             result.append((
@@ -173,6 +187,13 @@ class Layout(ChameleonLayout):
                 _("Categories"), self.manage_categories_link, active
             ))
 
+            active = isinstance(self.model, PressReleaseCollection)
+            result.append((
+                _("Press Releases"),
+                self.manage_press_releases_link,
+                active
+            ))
+
         elif self.request.is_personal(self.model):
             # Editor
             active = isinstance(self.model, Principal)
@@ -182,12 +203,25 @@ class Layout(ChameleonLayout):
                 active
             ))
 
-            active = isinstance(self.model, GazetteNoticeCollection)
+            active = (
+                isinstance(self.model, GazetteNoticeCollection) and
+                not isinstance(self.model, PressReleaseCollection)
+            )
             link = self.request.link(
                 GazetteNoticeCollection(self.session, state='published')
             )
             result.append((
                 _("My Published Official Notices"),
+                link,
+                active
+            ))
+
+            active = isinstance(self.model, PressReleaseCollection)
+            link = self.request.link(
+                PressReleaseCollection(self.session, state='published')
+            )
+            result.append((
+                _("My Published Press Releases"),
                 link,
                 active
             ))

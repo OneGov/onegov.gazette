@@ -28,14 +28,14 @@ def test_view_dashboard(gazette_app):
         )
 
         manage = editor_1.get('/').maybe_follow()
-        assert "Keine Meldungen." in manage
+        assert "Keine amtliche Publikationen." in manage
         assert "<h3>Zurückgewiesen</h3>" not in manage
         assert "<h3>in Arbeit</h3>" not in manage
         assert "<h3>Eingereicht</h3>" not in manage
         assert deadline in manage
 
         # new notice
-        manage = manage.click("Neu")
+        manage = manage.click("Neu", index=0)
         assert deadline in manage
         manage.form['title'] = "Erneuerungswahlen"
         manage.form['organization'] = '100'
@@ -48,27 +48,27 @@ def test_view_dashboard(gazette_app):
         manage.form.submit()
 
         manage = editor_1.get('/').maybe_follow()
-        assert "Keine Meldungen." not in manage
-        assert "<h3>Zurückgewiesen</h3>" not in manage
-        assert "<h3>in Arbeit</h3>" in manage
-        assert "<h3>Eingereicht</h3>" not in manage
+        assert "Keine amtliche Publikationen." not in manage
+        assert "<h4>Zurückgewiesen</h4>" not in manage
+        assert "<h4>in Arbeit</h4>" in manage
+        assert "<h4>Eingereicht</h4>" not in manage
 
         manage = editor_2.get('/').maybe_follow()  # same group
-        assert "Keine Meldungen." not in manage
-        assert "<h3>Zurückgewiesen</h3>" not in manage
-        assert "<h3>in Arbeit</h3>" in manage
-        assert "<h3>Eingereicht</h3>" not in manage
+        assert "Keine amtliche Publikationen." not in manage
+        assert "<h4>Zurückgewiesen</h4>" not in manage
+        assert "<h4>in Arbeit</h4>" in manage
+        assert "<h4>Eingereicht</h4>" not in manage
 
         manage = editor_3.get('/').maybe_follow()  # other group
-        assert "Keine Meldungen." in manage
-        assert "<h3>Zurückgewiesen</h3>" not in manage
-        assert "<h3>in Arbeit</h3>" not in manage
-        assert "<h3>Eingereicht</h3>" not in manage
+        assert "Keine amtliche Publikationen." in manage
+        assert "<h4>Zurückgewiesen</h4>" not in manage
+        assert "<h4>in Arbeit</h4>" not in manage
+        assert "<h4>Eingereicht</h4>" not in manage
 
     with freeze_time("2017-11-01 11:00"):
         manage = editor_1.get('/').maybe_follow()
         assert (
-            "Sie haben Meldungen in Arbeit, für welche der "
+            "Sie haben amtliche Publikationen in Arbeit, für welche der "
             "Eingabeschluss bald erreicht ist."
         ) in manage
 
@@ -80,10 +80,11 @@ def test_view_dashboard(gazette_app):
 
         manage = editor_1.get('/').maybe_follow()
         assert (
-            "Sie haben Meldungen in Arbeit mit vergangenen Ausgaben."
+            "Sie haben amtliche Publikationen in Arbeit mit vergangenen "
+            "Ausgaben."
         ) in manage
         assert (
-            "Sie haben Meldungenen in Arbeit, für welche der "
+            "Sie haben amtliche Publikationenen in Arbeit, für welche der "
             "Eingabeschluss bald erreicht ist."
         ) not in manage
 
@@ -98,22 +99,22 @@ def test_view_dashboard(gazette_app):
         manage.click("Erneuerungswahlen").click("Einreichen").form.submit()
 
         manage = editor_1.get('/').maybe_follow()
-        assert "Keine Meldungen." not in manage
-        assert "<h3>Zurückgewiesen</h3>" not in manage
-        assert "<h3>in Arbeit</h3>" not in manage
-        assert "<h3>Eingereicht</h3>" in manage
+        assert "Keine amtliche Publikationen." not in manage
+        assert "<h4>Zurückgewiesen</h4>" not in manage
+        assert "<h4>in Arbeit</h4>" not in manage
+        assert "<h4>Eingereicht</h4>" in manage
 
         manage = editor_2.get('/').maybe_follow()  # same group
-        assert "Keine Meldungen." not in manage
-        assert "<h3>Zurückgewiesen</h3>" not in manage
-        assert "<h3>in Arbeit</h3>" not in manage
-        assert "<h3>Eingereicht</h3>" in manage
+        assert "Keine amtliche Publikationen." not in manage
+        assert "<h4>Zurückgewiesen</h4>" not in manage
+        assert "<h4>in Arbeit</h4>" not in manage
+        assert "<h4>Eingereicht</h4>" in manage
 
         manage = editor_3.get('/').maybe_follow()  # other group
-        assert "Keine Meldungen." in manage
-        assert "<h3>Zurückgewiesen</h3>" not in manage
-        assert "<h3>in Arbeit</h3>" not in manage
-        assert "<h3>Eingereicht</h3>" not in manage
+        assert "Keine amtliche Publikationen." in manage
+        assert "<h4>Zurückgewiesen</h4>" not in manage
+        assert "<h4>in Arbeit</h4>" not in manage
+        assert "<h4>Eingereicht</h4>" not in manage
 
         # reject notice
         manage = publisher.get('/').maybe_follow().click("Erneuerungswahlen")
@@ -122,24 +123,24 @@ def test_view_dashboard(gazette_app):
         manage = manage.form.submit()
 
         manage = editor_1.get('/').maybe_follow()
-        assert "Keine Meldungen." not in manage
-        assert "<h3>Zurückgewiesen</h3>" in manage
-        assert "<h3>in Arbeit</h3>" not in manage
-        assert "<h3>Eingereicht</h3>" not in manage
-        assert "Sie haben zurückgewiesene Meldungen." in manage
+        assert "Keine amtliche Publikationen." not in manage
+        assert "<h4>Zurückgewiesen</h4>" in manage
+        assert "<h4>in Arbeit</h4>" not in manage
+        assert "<h4>Eingereicht</h4>" not in manage
+        assert "Sie haben zurückgewiesene Publikationen." in manage
 
         manage = editor_2.get('/').maybe_follow()  # same group
-        assert "Keine Meldungen." not in manage
-        assert "<h3>Zurückgewiesen</h3>" in manage
-        assert "<h3>in Arbeit</h3>" not in manage
-        assert "<h3>Eingereicht</h3>" not in manage
-        assert "Sie haben zurückgewiesene Meldungen." in manage
+        assert "Keine amtliche Publikationen." not in manage
+        assert "<h4>Zurückgewiesen</h4>" in manage
+        assert "<h4>in Arbeit</h4>" not in manage
+        assert "<h4>Eingereicht</h4>" not in manage
+        assert "Sie haben zurückgewiesene Publikationen." in manage
 
         manage = editor_3.get('/').maybe_follow()  # other group
-        assert "Keine Meldungen." in manage
-        assert "<h3>Zurückgewiesen</h3>" not in manage
-        assert "<h3>in Arbeit</h3>" not in manage
-        assert "<h3>Eingereicht</h3>" not in manage
+        assert "Keine amtliche Publikationen." in manage
+        assert "<h4>Zurückgewiesen</h4>" not in manage
+        assert "<h4>in Arbeit</h4>" not in manage
+        assert "<h4>Eingereicht</h4>" not in manage
 
         # submit & accept notice
         manage = editor_1.get('/').maybe_follow().click("Erneuerungswahlen")
@@ -149,37 +150,37 @@ def test_view_dashboard(gazette_app):
         manage.click("Annehmen").form.submit()
 
         manage = editor_1.get('/').maybe_follow()
-        assert "Keine Meldungen." in manage
-        assert "<h3>Zurückgewiesen</h3>" not in manage
-        assert "<h3>in Arbeit</h3>" not in manage
-        assert "<h3>Eingereicht</h3>" not in manage
-        assert "Sie haben zurückgewiesene Meldungen." not in manage
+        assert "Keine amtliche Publikationen." in manage
+        assert "<h4>Zurückgewiesen</h4>" not in manage
+        assert "<h4>in Arbeit</h4>" not in manage
+        assert "<h4>Eingereicht</h4>" not in manage
+        assert "Sie haben zurückgewiesene Publikationen" not in manage
 
         manage = editor_2.get('/').maybe_follow()  # same group
-        assert "Keine Meldungen." in manage
-        assert "<h3>Zurückgewiesen</h3>" not in manage
-        assert "<h3>in Arbeit</h3>" not in manage
-        assert "<h3>Eingereicht</h3>" not in manage
-        assert "Sie haben zurückgewiesene Meldungen." not in manage
+        assert "Keine amtliche Publikationen." in manage
+        assert "<h4>Zurückgewiesen</h4>" not in manage
+        assert "<h4>in Arbeit</h4>" not in manage
+        assert "<h4>Eingereicht</h4>" not in manage
+        assert "Sie haben zurückgewiesene Publikationen" not in manage
 
         manage = editor_3.get('/').maybe_follow()  # other group
-        assert "Keine Meldungen." in manage
-        assert "<h3>Zurückgewiesen</h3>" not in manage
-        assert "<h3>in Arbeit</h3>" not in manage
-        assert "<h3>Eingereicht</h3>" not in manage
+        assert "Keine amtliche Publikationen." in manage
+        assert "<h4>Zurückgewiesen</h4>" not in manage
+        assert "<h4>in Arbeit</h4>" not in manage
+        assert "<h4>Eingereicht</h4>" not in manage
 
     # Group: None (editor_3)
 
     with freeze_time("2017-10-20 12:00"):
 
         manage = editor_3.get('/').maybe_follow()
-        assert "Keine Meldungen." in manage
-        assert "<h3>Zurückgewiesen</h3>" not in manage
-        assert "<h3>in Arbeit</h3>" not in manage
-        assert "<h3>Eingereicht</h3>" not in manage
+        assert "Keine amtliche Publikationen." in manage
+        assert "<h4>Zurückgewiesen</h4>" not in manage
+        assert "<h4>in Arbeit</h4>" not in manage
+        assert "<h4>Eingereicht</h4>" not in manage
 
         # new notice
-        manage = manage.click("Neu")
+        manage = manage.click("Neu", index=0)
         manage.form['title'] = "Kantonsratswahlen"
         manage.form['organization'] = '100'
         manage.form['category'] = '11'
@@ -191,19 +192,19 @@ def test_view_dashboard(gazette_app):
         manage.form.submit()
 
         manage = editor_1.get('/').maybe_follow()  # other group
-        assert "Keine Meldungen." in manage
-        assert "<h3>Zurückgewiesen</h3>" not in manage
-        assert "<h3>in Arbeit</h3>" not in manage
-        assert "<h3>Eingereicht</h3>" not in manage
+        assert "Keine amtliche Publikationen." in manage
+        assert "<h4>Zurückgewiesen</h4>" not in manage
+        assert "<h4>in Arbeit</h4>" not in manage
+        assert "<h4>Eingereicht</h4>" not in manage
 
         manage = editor_2.get('/').maybe_follow()  # other group
-        assert "Keine Meldungen." in manage
-        assert "<h3>Zurückgewiesen</h3>" not in manage
-        assert "<h3>in Arbeit</h3>" not in manage
-        assert "<h3>Eingereicht</h3>" not in manage
+        assert "Keine amtliche Publikationen." in manage
+        assert "<h4>Zurückgewiesen</h4>" not in manage
+        assert "<h4>in Arbeit</h4>" not in manage
+        assert "<h4>Eingereicht</h4>" not in manage
 
         manage = editor_3.get('/').maybe_follow()
-        assert "Keine Meldungen." not in manage
-        assert "<h3>Zurückgewiesen</h3>" not in manage
-        assert "<h3>in Arbeit</h3>" in manage
-        assert "<h3>Eingereicht</h3>" not in manage
+        assert "Keine amtliche Publikationen." not in manage
+        assert "<h4>Zurückgewiesen</h4>" not in manage
+        assert "<h4>in Arbeit</h4>" in manage
+        assert "<h4>Eingereicht</h4>" not in manage

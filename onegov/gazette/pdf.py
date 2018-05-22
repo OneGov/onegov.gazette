@@ -222,6 +222,41 @@ class Pdf(PdfBase):
         result.seek(0)
         return result
 
+    def press_release(self, press_release, layout):
+        """ Adds an press release. """
+
+        meta = '{} | {}'.format(
+            press_release.organization,
+            layout.format_date(press_release.issue_date, 'datetime')
+        )
+        self.p_markup(f'<i>{meta}</i>', style=self.style.meta)
+        self.story[-1].keepWithNext = True
+        self.p(press_release.title, style=self.style.h_notice)
+        self.story[-1].keepWithNext = True
+        self.mini_html(press_release.text)
+        for file in press_release.files:
+            self.story[-1].keepWithNext = True
+            href = layout.request.link(file)
+            self.p_markup(f'<u><a href="{href}">{file.name}</a></u>')
+
+    @classmethod
+    def from_press_release(cls, press_release, request):
+        """ Create a PDF from a single press release. """
+
+        layout = Layout(None, request)
+        result = BytesIO()
+        pdf = cls(
+            result,
+            title=press_release.title,
+            author=press_release.organization
+        )
+        pdf.init_a4_portrait()
+        pdf.spacer()
+        pdf.press_release(press_release, layout)
+        pdf.generate()
+        result.seek(0)
+        return result
+
 
 class IssuePdf(Pdf):
     """ A PDF containing all the notices of a single issue.

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-21 12:33+0200\n"
-"PO-Revision-Date: 2018-05-18 07:52+0200\n"
+"POT-Creation-Date: 2018-05-22 14:08+0200\n"
+"PO-Revision-Date: 2018-05-22 14:09+0200\n"
 "Last-Translator: Marc Sommerhalder <marc.sommerhalder@seantis.ch>\n"
 "Language-Team: German\n"
 "Language: de_CH\n"
@@ -57,7 +57,7 @@ msgid "Issues"
 msgstr "Ausgaben"
 
 msgid "New official notices"
-msgstr "Neue amtlichen Meldungen"
+msgstr "Neue amtliche Publikationen"
 
 msgid "Show all"
 msgstr "Alle anzeigen"
@@ -74,10 +74,13 @@ msgid "No. ${issue_number}, ${issue_date}"
 msgstr "Nr. ${issue_number}, ${issue_date}"
 
 msgid "Official Notices"
-msgstr "Meldungen"
+msgstr "Amtliche Publikationen"
 
 msgid "Statistics"
 msgstr "Statistiken"
+
+msgid "Press Releases"
+msgstr "Medienmitteilungen"
 
 msgid "Users"
 msgstr "Benutzer"
@@ -86,10 +89,13 @@ msgid "Groups"
 msgstr "Gruppen"
 
 msgid "My Drafted and Submitted Official Notices"
-msgstr "Offene Meldungen"
+msgstr "Dashboard"
 
 msgid "My Published Official Notices"
-msgstr "Veröffentlichte Meldungen"
+msgstr "Veröffentlichte amtliche Publikationen"
+
+msgid "My Published Press Releases"
+msgstr "Veröffentlichte Medienmitteilungen"
 
 msgid "Gazette"
 msgstr "Amtsblatt"
@@ -175,6 +181,9 @@ msgstr "Externe ID"
 msgid "- none -"
 msgstr "- keine -"
 
+msgid "Issue date"
+msgstr "Ausgabedatum"
+
 msgid "Role"
 msgstr "Rolle"
 
@@ -224,7 +233,7 @@ msgid "Download as XLSX."
 msgstr "Als XLSX herunterladen."
 
 msgid "No official notices."
-msgstr "Keine Meldungen."
+msgstr "Keine amtliche Publikationen."
 
 msgid "Rejected"
 msgstr "Zurückgewiesen"
@@ -238,8 +247,8 @@ msgstr "in Arbeit"
 msgid "Submitted"
 msgstr "Eingereicht"
 
-msgid "Ordering"
-msgstr "Sortierung"
+msgid "No press releases."
+msgstr "Keine Medienmitteilungen."
 
 msgid "The form contains errors. Please check the fields marked in red."
 msgstr ""
@@ -347,10 +356,10 @@ msgid "Attachments"
 msgstr "Anhänge"
 
 msgid "There are new official notices:"
-msgstr "Es sind neue amtliche Meldungen erschienen:"
+msgstr "Es sind neue amtliche Publikationen erschienen:"
 
 msgid "Official notices"
-msgstr "Amtliche Meldungen"
+msgstr "Amtliche Publikationen"
 
 msgid "Your user account has been created."
 msgstr ""
@@ -363,7 +372,7 @@ msgid "Set password"
 msgstr "Passwort festlegen"
 
 msgid "This official notice has been rejected."
-msgstr "Diese Meldung wurde zurückgewiesen."
+msgstr "Diese amtliche Publikation wurde zurückgewiesen."
 
 msgid "State"
 msgstr "Status"
@@ -377,33 +386,25 @@ msgstr "Datum/Zeit"
 msgid "Change"
 msgstr "Änderung"
 
+msgid "Print"
+msgstr "Drucken"
+
 msgid "Search"
 msgstr "Suche"
-
-msgid "Issue date"
-msgstr "Ausgabedatum"
 
 msgid "Submit"
 msgstr "Einreichen"
 
 msgid "Download the selected official notices as PDF."
-msgstr "Die ausgewählten Meldungen als PDF herunterladen."
+msgstr "Die ausgewählten amtlichen Publikationen als PDF herunterladen."
 
 msgid "Download an index for the selected official notices (PDF)."
 msgstr ""
-"Das Stichwortregister für die ausgewählten Meldungen als PDF herunterladen."
+"Das Stichwortregister für die ausgewählten amtlichen Publikationen als PDF "
+"herunterladen."
 
-msgid "Order"
-msgstr "Ordnen"
-
-msgid "No organizations."
-msgstr "Keine Organisationen."
-
-msgid "Order Organizations"
-msgstr "Organisationen ordnen"
-
-msgid "Print"
-msgstr "Drucken"
+msgid "Ordering"
+msgstr "Sortierung"
 
 msgid "Term"
 msgstr "Suchbegriff"
@@ -425,6 +426,18 @@ msgstr "Suchanfrage abonnieren"
 
 msgid "Download the search results as PDF"
 msgstr "Suchergebnisse als PDF herunterladen"
+
+msgid "Order"
+msgstr "Ordnen"
+
+msgid "No organizations."
+msgstr "Keine Organisationen."
+
+msgid "Order Organizations"
+msgstr "Organisationen ordnen"
+
+msgid "This press release has been rejected."
+msgstr "Diese Medienmitteilung wurde zurückgewiesen."
 
 msgid "Sessions"
 msgstr "Sitzungen"
@@ -535,7 +548,7 @@ msgid "Group modified."
 msgstr "Gruppe geändert."
 
 msgid "There are official notices linked to this group!"
-msgstr "Diese Gruppe hat Meldungen!"
+msgstr "Diese Gruppe hat amtliche Publikationen!"
 
 msgid "Only groups without users may be deleted."
 msgstr "Es können nur Gruppen ohne Benutzer gelöscht werden."
@@ -573,7 +586,7 @@ msgid "Issue deleted."
 msgstr "Ausgabe gelöscht."
 
 msgid "There are submitted notices for this issue!"
-msgstr "Diese Ausgabe hat eingereichte Meldungen!"
+msgstr "Diese Ausgabe hat eingereichte amtliche Publikationen!"
 
 msgid "A PDF already exists for this issue!"
 msgstr "Diese Ausgabe hat bereits ein PDF!"
@@ -592,13 +605,13 @@ msgstr ""
 "darauffolgenden Ausgaben neu veröffentlicht werden."
 
 msgid "Edit Official Notice"
-msgstr "Meldung bearbeiten"
+msgstr "Amtliche Publikatio bearbeiten"
 
 msgid "The fields marked with an asterisk * are mandatory fields."
 msgstr "Die mit einem Stern * gekennzeichneten Felder sind Pflichtfelder."
 
 msgid "Delete Official Notice"
-msgstr "Meldung löschen"
+msgstr "Amtliche Publikation löschen"
 
 msgid "Accept"
 msgstr "Annehmen"
@@ -613,7 +626,8 @@ msgid "Reject"
 msgstr "Zurückweisen"
 
 msgid "Accepted official notices may not be edited."
-msgstr "Angenommene Meldungen können nicht mehr bearbeitet werden."
+msgstr ""
+"Angenommene amtliche Publikationen können nicht mehr bearbeitet werden."
 
 msgid "The official notice has past issue. Please re-select issues."
 msgstr "Bitte Ausgaben neu wählen."
@@ -631,18 +645,18 @@ msgid "edited"
 msgstr "bearbeitet"
 
 msgid "Official notice modified."
-msgstr "Meldung geändert."
+msgstr "Amtliche Publikation geändert."
 
 msgid "This official notice has already been accepted!"
-msgstr "Diese Meldung wurde bereits angenommen!"
+msgstr "Diese amtliche Publikation wurde bereits angenommen!"
 
 msgid "Only drafted or rejected official notices may be deleted."
 msgstr ""
-"Es können nur zurückgewiesene Meldungen oder Meldungen in Arbeit gelöscht "
-"werden."
+"Es können nur zurückgewiesene amtliche Publikationen oder amtliche "
+"Publikationen in Arbeit gelöscht werden."
 
 msgid "Official notice deleted."
-msgstr "Meldung gelöscht."
+msgstr "Amtliche Publikation gelöscht."
 
 msgid ""
 "The official notice has issues for which the deadlines are reached. Please "
@@ -650,7 +664,7 @@ msgid ""
 msgstr "Bitte Ausgaben neu wählen."
 
 msgid "This official notice has already been published!"
-msgstr "Diese Meldung wurde bereits veröffentlicht!"
+msgstr "Diese amtliche Publikation wurde bereits veröffentlicht!"
 
 msgid "Attachment added."
 msgstr "Anhang hinzugefügt."
@@ -659,48 +673,51 @@ msgid "Attachment deleted."
 msgstr "Anhang gelöscht."
 
 msgid "Attachments of accepted notices can not be deleted."
-msgstr "Anhänge von angenommenen Meldungen können nicht gelöscht werden."
+msgstr ""
+"Anhänge von angenommenen amtlichen Publikationen können nicht gelöscht "
+"werden."
 
 #, python-format
 msgid "Do you really want to submit \"${item}\"?"
 msgstr "\"${item}\" einreichen?"
 
 msgid "Submit Official Note"
-msgstr "Meldung einreichen"
+msgstr "Amtliche Publikation einreichen"
 
 #, python-format
 msgid "Do you really want to accept \"${item}\"?"
 msgstr "\"${item}\" annehmen?"
 
 msgid "Accept Official Note"
-msgstr "Meldung annehmen"
+msgstr "Amtliche Publikation annehmen"
 
 #, python-format
 msgid "Do you really want to reject \"${item}\"?"
 msgstr "\"${item}\" zurückweisen?"
 
 msgid "Reject Official Note"
-msgstr "Meldung zurückweisen"
+msgstr "Amtliche Publikation zurückweisen"
 
 msgid "Only drafted or rejected official notices may be submitted."
 msgstr ""
-"Es können nur zurückgewiesene Meldungen oder Meldungen in Arbeit eingereicht "
-"werden."
+"Es können nur zurückgewiesene amtliche Publikationen oder amtliche "
+"Publikationen in Arbeit eingereicht werden."
 
 msgid "Official notice submitted."
-msgstr "Meldung eingereicht."
+msgstr "Amtliche Publikation eingereicht."
 
 msgid "Only submitted official notices may be accepted."
-msgstr "Es können nur eingereichte Meldungen angenommen werden."
+msgstr "Es können nur eingereichte amtliche Publikationen angenommen werden."
 
 msgid "Official notice accepted."
-msgstr "Meldung angenommen."
+msgstr "Amtliche Publikation angenommen."
 
 msgid "Only submitted official notices may be rejected."
-msgstr "Es können nur eingereichte Meldungen zurückgewiesen werden."
+msgstr ""
+"Es können nur eingereichte amtliche Publikationen zurückgewiesen werden."
 
 msgid "Official notice rejected."
-msgstr "Meldung zurückgewiesen."
+msgstr "Amtliche Publikation zurückgewiesen."
 
 msgid "mail sent"
 msgstr "Druck beauftragt"
@@ -713,16 +730,16 @@ msgid "Official Notice Rejected ${id}"
 msgstr "Inserat für den amtlichen Teil zurückgewiesen ${id}"
 
 msgid "New Official Notice"
-msgstr "Neue Meldung"
+msgstr "Neue amtliche Publikation"
 
 msgid "Update notices"
-msgstr "Meldungen aktualisieren"
+msgstr "Amtliche Publikationen aktualisieren"
 
 msgid "Update"
 msgstr "Aktualisieren"
 
 msgid "Notices updated."
-msgstr "Meldungen aktualisiert."
+msgstr "Amtliche Publikationen aktualisiert."
 
 msgid "Confirm your subscription"
 msgstr "Abonnement bestätigen"
@@ -736,6 +753,9 @@ msgstr "Bestätigen"
 msgid "Thank You! Please check your email to activate your subscription."
 msgstr ""
 "Danke! Bitte überprüfen Sie Ihre E-Mail, um Ihr Abonnement zu aktivieren."
+
+msgid "Official Notice"
+msgstr "Amtliche Publikation"
 
 msgid "Your subscription has been successfully confirmed."
 msgstr "Ihr Abonnement wurde erfolgreich bestätigt."
@@ -763,16 +783,91 @@ msgstr ""
 msgid "Organization deleted."
 msgstr "Organisation gelöscht."
 
-msgid "You have rejected messages."
-msgstr "Sie haben zurückgewiesene Meldungen."
+msgid "Edit Press Release"
+msgstr "Medienmitteilung bearbeiten"
+
+msgid "Delete Press Release"
+msgstr "Medienmitteilung löschen"
+
+msgid "Accepted press releases may not be edited."
+msgstr "Angenommene Medienmitteilung können nicht mehr bearbeitet werden."
+
+msgid ""
+"The press release has an invalid organization. Please re-select the "
+"organization."
+msgstr ""
+"Die Medienmitteilung hat eine ungültige Organisation. Wählen Sie die "
+"Organisation erneut aus."
+
+msgid "Press release modified."
+msgstr "Medienmitteilung geändert."
+
+msgid "Only drafted or rejected press releases may be deleted."
+msgstr ""
+"Es können nur zurückgewiesene Medienmitteilung oder Medienmitteilung in "
+"Arbeit gelöscht werden."
+
+msgid "This press release has already been accepted!"
+msgstr "Diese Medienmitteilung wurde bereits angenommen!"
+
+msgid "Press release deleted."
+msgstr "Medienmitteilung gelöscht."
+
+msgid "Submit Press Release"
+msgstr "Medienmitteilung einreichen"
+
+msgid "Accept Press Release"
+msgstr "Medienmitteilung annehmen"
+
+msgid "Reject Press Release"
+msgstr "Medienmitteilung zurückweisen"
+
+#, python-format
+msgid "Do you really want to publish \"${item}\"?"
+msgstr "\"${item}\" veröffentlichen?"
+
+msgid "Publish Press Release"
+msgstr "Medienmitteilung veröffentlichen"
+
+msgid "Only drafted or rejected press releases may be submitted."
+msgstr ""
+"Es können nur zurückgewiesene Medienmitteilung oder Medienmitteilung in "
+"Arbeit eingereicht werden."
+
+msgid "Press release submitted."
+msgstr "Medienmitteilung eingereicht."
+
+msgid "Only submitted press releases may be accepted."
+msgstr "Es können nur eingereichte Medienmitteilung angenommen werden."
+
+msgid "Press release accepted."
+msgstr "Medienmitteilung angenommen."
+
+msgid "Only submitted press releases may be rejected."
+msgstr "Es können nur eingereichte Medienmitteilung zurückgewiesen werden."
+
+msgid "Press release rejected."
+msgstr "Medienmitteilung zurückgewiesen."
+
+msgid "Only accepted press releases may be published."
+msgstr "Es können nur angenommene Medienmitteilung veröffentlicht werden."
+
+msgid "Press release published."
+msgstr "Medienmitteilung veröffentlicht."
+
+msgid "New Press Release"
+msgstr "Neue Medienmitteilung"
 
 msgid "You have drafted messages with past issues."
-msgstr "Sie haben Meldungen in Arbeit mit vergangenen Ausgaben."
+msgstr "Sie haben amtliche Publikationen in Arbeit mit vergangenen Ausgaben."
 
 msgid "You have drafted messages with issues close to the deadline."
 msgstr ""
-"Sie haben Meldungen in Arbeit, für welche der Eingabeschluss bald erreicht "
-"ist."
+"Sie haben amtliche Publikationen in Arbeit, für welche der Eingabeschluss "
+"bald erreicht ist."
+
+msgid "You have rejected messages."
+msgstr "Sie haben zurückgewiesene Publikationen."
 
 msgid "New User"
 msgstr "Neuer Benutzer"
@@ -796,10 +891,13 @@ msgid "User modified."
 msgstr "Benutzer geändert."
 
 msgid "There are official notices linked to this user!"
-msgstr "Dieser Nutzer hat Meldungen!"
+msgstr "Dieser Nutzer hat amtliche Publikationen!"
 
 msgid "User deleted."
 msgstr "Benutzer gelöscht."
 
 msgid "User account created"
 msgstr "Benutzerkonto Amtsblattredaktion erstellt"
+
+#~ msgid "Issue Date"
+#~ msgstr "Datum"

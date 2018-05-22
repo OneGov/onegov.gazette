@@ -10,11 +10,11 @@
         <div class="row dashboard">
             <div class="small-12 columns">
 
-                <div metal:use-macro="layout.macros['deadline_callout']"></div>
+                <h2 i18n:translate>${title}</h2>
 
                 <div class="row">
                     <div class="small-12 medium-10 columns">
-                        <h2 i18n:translate>${title}</h2>
+                        <h3 i18n:translate>Official Notices</h3>
                     </div>
                     <div class="small-12 medium-2 columns">
                         <ul class="top-actions text-right">
@@ -23,10 +23,12 @@
                     </div>
                 </div>
 
-                <div tal:condition="not: rejected or drafted or submitted" i18n:translate>No official notices.</div>
+                <div metal:use-macro="layout.macros['deadline_callout']"></div>
 
-                <tal:block tal:condition="rejected">
-                    <h3 i18n:translate>Rejected</h3>
+                <div tal:condition="not: rejected_notices or drafted_notices or submitted_notices" i18n:translate>No official notices.</div>
+
+                <tal:block tal:condition="rejected_notices">
+                    <h4 i18n:translate>Rejected</h4>
                     <table class="rejected stackable">
                         <thead>
                             <tr>
@@ -38,7 +40,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tal:block tal:repeat="notice rejected">
+                            <tal:block tal:repeat="notice rejected_notices">
                                 <tr>
                                     <td><strong><a href="${request.link(notice)}">${notice.title}</a></strong></td>
                                     <td>${notice.organization}</td>
@@ -51,8 +53,8 @@
                     </table>
                 </tal:block>
 
-                <tal:block tal:condition="drafted">
-                    <h3 i18n:translate>Drafted</h3>
+                <tal:block tal:condition="drafted_notices">
+                    <h4 i18n:translate>Drafted</h4>
                     <table class="drafted stackable">
                         <thead>
                             <tr>
@@ -64,7 +66,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tal:block tal:repeat="notice drafted">
+                            <tal:block tal:repeat="notice drafted_notices">
                                 <tr>
                                     <td><strong><a href="${request.link(notice)}">${notice.title}</a></strong></td>
                                     <td>${notice.organization}</td>
@@ -77,8 +79,8 @@
                     </table>
                 </tal:block>
 
-                <tal:block tal:condition="submitted">
-                    <h3 i18n:translate>Submitted</h3>
+                <tal:block tal:condition="submitted_notices">
+                    <h4 i18n:translate>Submitted</h4>
                     <table class="submitted stackable">
                         <thead>
                             <tr>
@@ -90,13 +92,98 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tal:block tal:repeat="notice submitted">
+                            <tal:block tal:repeat="notice submitted_notices">
                                 <tr>
                                     <td><strong><a href="${request.link(notice)}">${notice.title}</a></strong></td>
                                     <td>${notice.organization}</td>
                                     <td>${notice.category}</td>
                                     <td>${notice.user_name}</td>
                                     <td><tal:block metal:use-macro="layout.macros['issues']" tal:define="as_list False" /></td>
+                                </tr>
+                            </tal:block>
+                        </tbody>
+                    </table>
+                </tal:block>
+
+                <div class="row">
+                    <div class="small-12 medium-10 columns">
+                        <h3 i18n:translate>Press Releases</h3>
+                    </div>
+                    <div class="small-12 medium-2 columns">
+                        <ul class="top-actions text-right">
+                            <li><a class="action-new" href="${new_release}" i18n:translate>New</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div tal:condition="not: rejected_releases or drafted_releases or submitted_releases" i18n:translate>No press releases.</div>
+
+                <tal:block tal:condition="rejected_releases">
+                    <h4 i18n:translate>Rejected</h4>
+                    <table class="rejected stackable">
+                        <thead>
+                            <tr>
+                                <th i18n:translate>Title</th>
+                                <th i18n:translate>Organization</th>
+                                <th i18n:translate>User</th>
+                                <th i18n:translate>Issue date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tal:block tal:repeat="press_release rejected_releases">
+                                <tr>
+                                    <td><strong><a href="${request.link(press_release)}">${press_release.title}</a></strong></td>
+                                    <td>${press_release.organization}</td>
+                                    <td>${press_release.user_name}</td>
+                                    <td>${layout.format_date(press_release.first_issue, 'datetime')}</td>
+                                </tr>
+                            </tal:block>
+                        </tbody>
+                    </table>
+                </tal:block>
+
+                <tal:block tal:condition="drafted_releases">
+                    <h4 i18n:translate>Drafted</h4>
+                    <table class="drafted stackable">
+                        <thead>
+                            <tr>
+                                <th i18n:translate>Title</th>
+                                <th i18n:translate>Organization</th>
+                                <th i18n:translate>User</th>
+                                <th i18n:translate>Issue date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tal:block tal:repeat="press_release drafted_releases">
+                                <tr>
+                                    <td><strong><a href="${request.link(press_release)}">${press_release.title}</a></strong></td>
+                                    <td>${press_release.organization}</td>
+                                    <td>${press_release.user_name}</td>
+                                    <td>${layout.format_date(press_release.first_issue, 'datetime')}</td>
+                                </tr>
+                            </tal:block>
+                        </tbody>
+                    </table>
+                </tal:block>
+
+                <tal:block tal:condition="submitted_releases">
+                    <h4 i18n:translate>Submitted</h4>
+                    <table class="submitted stackable">
+                        <thead>
+                            <tr>
+                                <th i18n:translate>Title</th>
+                                <th i18n:translate>Organization</th>
+                                <th i18n:translate>User</th>
+                                <th i18n:translate>Issue date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tal:block tal:repeat="press_release submitted_releases">
+                                <tr>
+                                    <td><strong><a href="${request.link(press_release)}">${press_release.title}</a></strong></td>
+                                    <td>${press_release.organization}</td>
+                                    <td>${press_release.user_name}</td>
+                                    <td>${layout.format_date(press_release.first_issue, 'datetime')}</td>
                                 </tr>
                             </tal:block>
                         </tbody>

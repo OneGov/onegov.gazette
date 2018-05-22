@@ -6,13 +6,16 @@ from onegov.gazette.collections import CategoryCollection
 from onegov.gazette.collections import GazetteNoticeCollection
 from onegov.gazette.collections import IssueCollection
 from onegov.gazette.collections import OrganizationCollection
+from onegov.gazette.collections import PressReleaseCollection
 from onegov.gazette.collections import PublishedNoticeCollection
+from onegov.gazette.collections import PublishedPressReleaseCollection
 from onegov.gazette.collections import SubscriptionCollection
 from onegov.gazette.models import Category
 from onegov.gazette.models import GazetteNotice
 from onegov.gazette.models import Issue
 from onegov.gazette.models import Organization
 from onegov.gazette.models import OrganizationMove
+from onegov.gazette.models import PressRelease
 from onegov.gazette.models import Principal
 from onegov.gazette.models.issue import IssuePdfFile
 from onegov.user import Auth
@@ -154,4 +157,60 @@ def get_search(app, page=0, term=None, order=None, direction=None,
         to_date=to_date,
         organizations=organizations,
         categories=categories,
+    )
+
+
+@GazetteApp.path(
+    model=PressReleaseCollection,
+    path='/press-releases/{state}',
+    converters=dict(
+        from_date=extended_date_converter,
+        to_date=extended_date_converter,
+        source=uuid_converter
+    )
+)
+def get_press_releases(app, state, page=0, term=None, order=None,
+                       direction=None, from_date=None, to_date=None,
+                       source=None):
+    return PressReleaseCollection(
+        app.session(),
+        state=state,
+        page=page,
+        term=term,
+        order=order,
+        direction=direction,
+        from_date=from_date,
+        to_date=to_date,
+        source=source
+    )
+
+
+@GazetteApp.path(model=PressRelease, path='/press-release/{name}')
+def get_press_release(app, name):
+    return PressReleaseCollection(app.session()).by_name(name)
+
+
+@GazetteApp.path(
+    model=PublishedPressReleaseCollection,
+    path='/press',
+    converters=dict(
+        from_date=extended_date_converter,
+        to_date=extended_date_converter,
+        organizations=[str],
+        categories=[str],
+    )
+)
+def get_public_press_releases(
+    app, page=0, term=None, order=None, direction=None, from_date=None,
+    to_date=None, organizations=None
+):
+    return PublishedPressReleaseCollection(
+        app.session(),
+        page=page,
+        term=term,
+        order=order,
+        direction=direction,
+        from_date=from_date,
+        to_date=to_date,
+        organizations=organizations
     )

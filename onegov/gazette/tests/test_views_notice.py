@@ -301,7 +301,7 @@ def test_view_notice_delete(gazette_app):
 
             manage = user.get('/notice/erneuerungswahlen/delete')
             manage = manage.form.submit().maybe_follow()
-            assert "Meldung gelöscht." in manage
+            assert "Amtliche Publikation gelöscht." in manage
 
         # delete a submitted notice
         for user in (editor_1, publisher):
@@ -342,7 +342,7 @@ def test_view_notice_delete(gazette_app):
 
             manage = user.get('/notice/erneuerungswahlen/delete')
             manage = manage.form.submit().maybe_follow()
-            assert "Meldung gelöscht." in manage
+            assert "Amtliche Publikation gelöscht." in manage
 
         # delete an accepted notice
         for user in (editor_1, publisher):
@@ -364,7 +364,10 @@ def test_view_notice_delete(gazette_app):
             assert manage.forms == {}
 
             manage = admin.get('/notice/erneuerungswahlen/delete')
-            assert "Diese Meldung wurde bereits angenommen!" in manage
+            assert (
+                "Diese amtliche Publikation wurde bereits angenommen!"
+                in manage
+            )
             manage.form.submit().maybe_follow()
 
         # delete a published notice

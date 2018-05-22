@@ -226,4 +226,4 @@ def test_view_notice_edit_unrestricted(gazette_app):
         manage = admin.get('/notice/notice/edit_unrestricted')
         assert "(Complaints)" in manage
         assert "(Sikh Community)" in manage
-        assert "Diese Meldung wurde bereits angenommen!" in manage
+        assert "Diese amtliche Publikation wurde bereits angenommen!" in manage

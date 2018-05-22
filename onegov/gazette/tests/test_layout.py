@@ -77,16 +77,19 @@ def test_layout_menu():
     request._is_personal = True
     assert layout.menu == [
         ('My Drafted and Submitted Official Notices', '/dashboard/', False),
-        ('My Published Official Notices', '/GazetteNoticeCollection/', False)
+        ('My Published Official Notices', '/GazetteNoticeCollection/', False),
+        ('My Published Press Releases', '/PressReleaseCollection/', False)
     ]
 
     request._is_private = True
+
     assert layout.menu == [
         ('Official Notices', '/GazetteNoticeCollection/', False),
         ('Statistics', '/GazetteNoticeCollection/statistics/', False),
         ('Issues', '/IssueCollection/', False),
         ('Organizations', '/OrganizationCollection/', False),
         ('Categories', '/CategoryCollection/', False),
+        ('Press Releases', '/PressReleaseCollection/', False)
     ]
 
     request._is_secret = True
@@ -96,6 +99,7 @@ def test_layout_menu():
         ('Issues', '/IssueCollection/', False),
         ('Organizations', '/OrganizationCollection/', False),
         ('Categories', '/CategoryCollection/', False),
+        ('Press Releases', '/PressReleaseCollection/', False),
         ('Users', '/UserCollection/', False),
         ('Groups', '/UserGroupCollection/', False),
     ]

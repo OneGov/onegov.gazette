@@ -46,7 +46,6 @@
             </div>
         </div>
 
-
         <h3>Archiv und Recherche</h3>
         <p>
             Alle vergangenen Ausgaben des Amtsblattes (PDF) finden Sie im
@@ -66,6 +65,11 @@
             T 058 229 32 59<br>
             F 058 229 39 55<br>
             E-Mail: amtsblatt.sk@sg.ch<br>
+        </p>
+
+        <h3>Medienmitteilungen</h3>
+        <p>
+            Die Medienmitteilungen finden Sie <a href="${press_releases}">hier</a>.
         </p>
 
     </tal:block>

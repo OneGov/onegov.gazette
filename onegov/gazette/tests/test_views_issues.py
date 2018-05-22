@@ -259,7 +259,9 @@ def test_view_issues_publish(gazette_app):
 
         # publish 45
         manage = client.get('/issues').click('Veröffentlichen', index=1)
-        assert "Diese Ausgabe hat eingereichte Meldungen!" in manage
+        assert (
+            "Diese Ausgabe hat eingereichte amtliche Publikationen!" in manage
+        )
         manage = manage.form.submit().maybe_follow()
         assert "Ausgabe veröffentlicht." in manage
         assert "2017-45.pdf" in manage

@@ -1,0 +1,88 @@
+<div metal:use-macro="layout.base" i18n:domain="onegov.gazette">
+    <tal:block metal:fill-slot="title">
+        ${title}
+    </tal:block>
+    <tal:block metal:fill-slot="content">
+
+        <div metal:use-macro="layout.macros['tab_menu']"></div>
+        <div metal:use-macro="layout.macros['breadcrumbs']"></div>
+
+        <div class="row manage-press-releases">
+            <div class="small-12 columns">
+                <div class="row">
+                    <div class="small-12 medium-10 columns">
+                        <h2 i18n:translate>${title}</h2>
+                    </div>
+                    <div class="small-12 medium-2 columns">
+                        <ul class="top-actions text-right">
+                            <li><a class="action-new" href="${new_press_release}" i18n:translate>New</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <form action="" method="GET">
+                    <dl class="sub-nav" tal:condition="filters">
+                      <dt><tal:block i18n:translate>State</tal:block>:</dt>
+                      <dd tal:repeat="filter filters" class="${filter['class']}">
+                          <a href="${filter['link']}" class="press-release-filter">${filter['title']}</a>
+                      </dd>
+                    </dl>
+
+                    <dl class="sub-nav">
+                        <dt><tal:block i18n:translate>Search</tal:block>:</dt>
+                        <dd>
+                            <input type="text" name="term" value="${term}"/>
+                        </dd>
+                    </dl>
+
+                    <dl class="sub-nav">
+                        <dt><tal:block i18n:translate>Issue date</tal:block>:</dt>
+                        <dd><input type="date" name="from_date" value="${from_date}" placeholder=""></dd>
+                        <dd><input type="date" name="to_date" value="${to_date}" placeholder=""></dd>
+                        <dd tal:condition="from_date or to_date or term">
+                            <a href="${clear}"><i class="fa fa-close" aria-hidden="true"></i></a>
+                        </dd>
+                        <dd>
+                            <button type="submit" aria-label="Submit" i18n:attributes="aria-label">
+                                <i class="fa fa-check"></i>
+                            </button>
+                        </dd>
+                    </dl>
+                </form>
+
+                <table class="press-releases stackable">
+                    <thead>
+                        <tr>
+                            <th><tal:block metal:use-macro="layout.macros['order_link']" tal:define="key 'title'"></tal:block></th>
+                            <th><tal:block metal:use-macro="layout.macros['order_link']" tal:define="key 'organization'"></tal:block></th>
+                            <th><tal:block metal:use-macro="layout.macros['order_link']" tal:define="key 'group'"></tal:block></th>
+                            <th><tal:block metal:use-macro="layout.macros['order_link']" tal:define="key 'user'"></tal:block></th>
+                            <th><tal:block metal:use-macro="layout.macros['order_link']" tal:define="key 'first_issue'"></tal:block></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr tal:condition="not:press_releases">
+                            <td i18n:translate>No press releases.</td>
+                        </tr>
+                        <tal:block tal:repeat="press_release press_releases">
+                            <tr>
+                                <td><strong><a href="${request.link(press_release)}">${press_release.title}</a></strong></td>
+                                <td>${press_release.organization}</td>
+                                <td>${press_release.group_name}</td>
+                                <td>${press_release.user_name}</td>
+                                <td>${layout.format_date(press_release.first_issue, 'datetime')}</td>
+                            </tr>
+                        </tal:block>
+                    </tbody>
+                </table>
+
+                <div class="pagination-centered">
+                    <div metal:use-macro="layout.macros['pagination']" tal:define="collection layout.model; current_page layout.model;" />
+                </div>
+
+            </div>
+        </div>
+
+    </tal:block>
+</div>

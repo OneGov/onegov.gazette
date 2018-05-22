@@ -6,7 +6,9 @@ from onegov.gazette import _
 from onegov.gazette import GazetteApp
 from onegov.gazette.collections import GazetteNoticeCollection
 from onegov.gazette.collections import IssueCollection
+from onegov.gazette.collections import PressReleaseCollection
 from onegov.gazette.collections import PublishedNoticeCollection
+from onegov.gazette.collections import PublishedPressReleaseCollection
 from onegov.gazette.layout import Layout
 from onegov.gazette.models import Issue
 from onegov.gazette.models import Principal
@@ -53,6 +55,9 @@ def view_principal(self, request):
         'layout': layout,
         'archive': request.link(self, name='archive'),
         'search': request.link(PublishedNoticeCollection(request.session)),
+        'press_releases': request.link(
+            PublishedPressReleaseCollection(request.session)
+        ),
         'current_issue': current_issue,
         'next_issue': next_issue
     }
@@ -91,27 +96,44 @@ def view_dashboard(self, request):
     allows to create a new notice.
 
     """
-    layout = Layout(self, request)
 
+    layout = Layout(self, request)
     user_ids, group_ids = get_user_and_group(request)
-    collection = GazetteNoticeCollection(
+
+    # Notices
+    notices = GazetteNoticeCollection(
         request.session,
         user_ids=user_ids,
         group_ids=group_ids
     )
+    rejected_notices = notices.for_state('rejected').query().all()
+    drafted_notices = notices.for_state('drafted').query().all()
+    submitted_notices = notices.for_state('submitted').query().all()
+    new_notice = request.link(
+        notices.for_state('drafted'),
+        name='new-notice'
+    )
 
-    # rejected
-    rejected = collection.for_state('rejected').query().all()
-    if rejected:
-        request.message(_("You have rejected messages."), 'warning')
+    # Press releases
+    press_releases = PressReleaseCollection(
+        request.session,
+        user_ids=user_ids,
+        group_ids=group_ids
+    )
+    rejected_releases = press_releases.for_state('rejected').query().all()
+    drafted_releases = press_releases.for_state('drafted').query().all()
+    submitted_releases = press_releases.for_state('submitted').query().all()
+    new_release = request.link(
+        press_releases.for_state('drafted'),
+        name='new-press-release'
+    )
 
-    # drafted
-    drafted = collection.for_state('drafted').query().all()
+    # Warnings
     now = utcnow()
     limit = now + timedelta(days=2)
     past_issues_selected = False
     deadline_reached_soon = False
-    for notice in drafted:
+    for notice in drafted_notices:
         for issue in notice.issue_objects:
             if issue.deadline < now:
                 past_issues_selected = True
@@ -127,21 +149,19 @@ def view_dashboard(self, request):
             _("You have drafted messages with issues close to the deadline."),
             'warning'
         )
-
-    # submitted
-    submitted = collection.for_state('submitted').query().all()
-
-    new_notice = request.link(
-        collection.for_state('drafted'),
-        name='new-notice'
-    )
+    if rejected_notices or rejected_releases:
+        request.message(_("You have rejected messages."), 'warning')
 
     return {
         'layout': layout,
         'title': _("My Drafted and Submitted Official Notices"),
-        'rejected': rejected,
-        'drafted': drafted,
-        'submitted': submitted,
+        'rejected_notices': rejected_notices,
+        'drafted_notices': drafted_notices,
+        'submitted_notices': submitted_notices,
         'new_notice': new_notice,
+        'rejected_releases': rejected_releases,
+        'drafted_releases': drafted_releases,
+        'submitted_releases': submitted_releases,
+        'new_release': new_release,
         'current_issue': layout.current_issue
     }

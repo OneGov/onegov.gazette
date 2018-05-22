@@ -108,7 +108,7 @@ class GazetteNoticeFile(File):
     __mapper_args__ = {'polymorphic_identity': 'gazette_notice'}
 
 
-class GazetteNotice(
+class GazetteNoticeBase(
     OfficialNotice, CachedUserNameMixin, CachedGroupNameMixin, AssociatedFiles
 ):
     """ An official notice with extras.
@@ -131,7 +131,7 @@ class GazetteNotice(
 
     """
 
-    __mapper_args__ = {'polymorphic_identity': 'gazette'}
+    __mapper_args__ = {'polymorphic_identity': 'gazette_base'}
 
     #: True, if the official notice only appears in the print version
     print_only = meta_property('print_only')
@@ -178,7 +178,7 @@ class GazetteNotice(
 
         """
 
-        super(GazetteNotice, self).submit()
+        super(GazetteNoticeBase, self).submit()
         self.add_change(request, _("submitted"))
 
     def reject(self, request, comment):
@@ -188,7 +188,7 @@ class GazetteNotice(
 
         """
 
-        super(GazetteNotice, self).reject()
+        super(GazetteNoticeBase, self).reject()
         self.add_change(request, _("rejected"), comment)
 
     def accept(self, request):
@@ -198,7 +198,7 @@ class GazetteNotice(
 
         """
 
-        super(GazetteNotice, self).accept()
+        super(GazetteNoticeBase, self).accept()
         self.add_change(request, _("accepted"))
 
     def publish(self, request):
@@ -208,7 +208,7 @@ class GazetteNotice(
 
         """
 
-        super(GazetteNotice, self).publish()
+        super(GazetteNoticeBase, self).publish()
         self.add_change(request, _("published"))
 
     @property
@@ -361,6 +361,11 @@ class GazetteNotice(
                 )
 
 
+class GazetteNotice(GazetteNoticeBase):
+
+    __mapper_args__ = {'polymorphic_identity': 'gazette'}
+
+
 class GazetteNoticeChange(Message, CachedUserNameMixin):
     """ A changelog entry for an official notice. """
 
@@ -382,7 +387,7 @@ class GazetteNoticeChange(Message, CachedUserNameMixin):
 
     #: the notice which this change belongs to
     notice = relationship(
-        GazetteNotice,
+        GazetteNoticeBase,
         primaryjoin=(
             'foreign(GazetteNoticeChange.channel_id)'
             '== cast(GazetteNotice.id, TEXT)'

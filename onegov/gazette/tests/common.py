@@ -68,7 +68,7 @@ def submit_notice(user, slug, unable=False, forbidden=False, redirected=False):
     else:
         manage = user.get(url)
         manage = manage.form.submit()
-        assert "Meldung eingereicht" in manage.maybe_follow()
+        assert "Amtliche Publikation eingereicht" in manage.maybe_follow()
 
 
 def accept_notice(user, slug, unable=False, forbidden=False, redirected=False):
@@ -82,7 +82,7 @@ def accept_notice(user, slug, unable=False, forbidden=False, redirected=False):
     else:
         manage = user.get(url)
         manage = manage.form.submit()
-        assert "Meldung angenommen" in manage.maybe_follow()
+        assert "Amtliche Publikation angenommen" in manage.maybe_follow()
 
 
 def reject_notice(user, slug, unable=False, forbidden=False):
@@ -95,7 +95,7 @@ def reject_notice(user, slug, unable=False, forbidden=False):
         manage = user.get(url)
         manage.form['comment'] = 'XYZ'
         manage = manage.form.submit()
-        assert "Meldung zurückgewiesen" in manage.maybe_follow()
+        assert "Amtliche Publikation zurückgewiesen" in manage.maybe_follow()
 
 
 def edit_notice(user, slug, unable=False, forbidden=False, **kwargs):
@@ -109,7 +109,7 @@ def edit_notice(user, slug, unable=False, forbidden=False, **kwargs):
         for key, value in kwargs.items():
             manage.form[key] = value
         manage = manage.form.submit()
-        assert "Meldung geändert" in manage.maybe_follow()
+        assert "Amtliche Publikation geändert" in manage.maybe_follow()
 
 
 def edit_notice_unrestricted(user, slug, unable=False, forbidden=False,
@@ -124,7 +124,7 @@ def edit_notice_unrestricted(user, slug, unable=False, forbidden=False,
         for key, value in kwargs.items():
             manage.form[key] = value
         manage = manage.form.submit()
-        assert "Meldung geändert" in manage.maybe_follow()
+        assert "Amtliche Publikation geändert" in manage.maybe_follow()
 
 
 def change_category(gazette_app, name, **kwargs):

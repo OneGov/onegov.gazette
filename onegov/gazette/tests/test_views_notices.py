@@ -34,7 +34,10 @@ def test_view_notices(gazette_app):
             for state in (
                 'drafted', 'submitted', 'rejected', 'accepted', 'published'
             ):
-                assert "Keine Meldungen" in user.get('/notices/' + state)
+                assert (
+                    "Keine amtliche Publikationen"
+                    in user.get('/notices/' + state)
+                )
 
         # new notices
         manage = editor_1.get('/notices/drafted/new-notice')
@@ -61,7 +64,10 @@ def test_view_notices(gazette_app):
 
         for user in (publisher, editor_1, editor_2, editor_3):
             for state in ('submitted', 'rejected', 'accepted', 'published'):
-                assert "Keine Meldungen" in user.get('/notices/' + state)
+                assert (
+                    "Keine amtliche Publikationen"
+                    in user.get('/notices/' + state)
+                )
 
         assert "Erneuerungswahlen" in publisher.get('/notices/drafted')
         assert "Erneuerungswahlen" in editor_1.get('/notices/drafted')
@@ -78,7 +84,10 @@ def test_view_notices(gazette_app):
 
         for user in (publisher, editor_1, editor_2, editor_3):
             for state in ('drafted', 'rejected', 'accepted', 'published'):
-                assert "Keine Meldungen" in user.get('/notices/' + state)
+                assert (
+                    "Keine amtliche Publikationen"
+                    in user.get('/notices/' + state)
+                )
 
         assert "Erneuerungswahlen" in publisher.get('/notices/submitted')
         assert "Erneuerungswahlen" in editor_1.get('/notices/submitted')
@@ -100,7 +109,10 @@ def test_view_notices(gazette_app):
 
         for user in (publisher, editor_1, editor_2, editor_3):
             for state in ('drafted', 'submitted', 'accepted', 'published'):
-                assert "Keine Meldungen" in user.get('/notices/' + state)
+                assert (
+                    "Keine amtliche Publikationen"
+                    in user.get('/notices/' + state)
+                )
 
         assert "Erneuerungswahlen" in publisher.get('/notices/rejected')
         assert "Erneuerungswahlen" in editor_1.get('/notices/rejected')
@@ -119,7 +131,10 @@ def test_view_notices(gazette_app):
 
         for user in (publisher, editor_1, editor_2, editor_3):
             for state in ('drafted', 'submitted', 'rejected', 'published'):
-                assert "Keine Meldungen" in user.get('/notices/' + state)
+                assert (
+                    "Keine amtliche Publikationen"
+                    in user.get('/notices/' + state)
+                )
 
         assert "Erneuerungswahlen" in publisher.get('/notices/accepted')
         assert "Erneuerungswahlen" in editor_1.get('/notices/accepted')
@@ -632,7 +647,7 @@ def test_view_notices_statistics_rejected(gazette_app):
             manage.form['issues'] = ['2017-44']
             manage = manage.form.submit().maybe_follow()
             manage = manage.click("Einreichen").form.submit()
-            assert "Meldung eingereicht" in manage.maybe_follow()
+            assert "Amtliche Publikation eingereicht" in manage.maybe_follow()
 
     assert statistic() == []
 
@@ -641,7 +656,9 @@ def test_view_notices_statistics_rejected(gazette_app):
             manage = publisher.get(url.attrib['href']).click("Zurückweisen")
             manage.form['comment'] = 'XYZ'
             manage = manage.form.submit()
-            assert "Meldung zurückgewiesen" in manage.maybe_follow()
+            assert (
+                "Amtliche Publikation zurückgewiesen" in manage.maybe_follow()
+            )
 
     assert statistic() == [
         ['First Editor', 5],
@@ -692,7 +709,7 @@ def test_view_notices_update(gazette_app):
         # Update all notices
         manage = client.get('/notices/submitted/update')
         manage = manage.form.submit().maybe_follow()
-        assert "Meldungen aktualisiert." in manage
+        assert "Amtliche Publikationen aktualisiert." in manage
 
         manage = client.get('/notice/erneuerungswahlen')
         assert 'Education' not in manage
@@ -702,7 +719,7 @@ def test_view_notices_update(gazette_app):
 
         manage = client.get('/notices/accepted/update')
         manage = manage.form.submit().maybe_follow()
-        assert "Meldungen aktualisiert." in manage
+        assert "Amtliche Publikationen aktualisiert." in manage
 
         manage = client.get('/notice/erneuerungswahlen')
         assert 'Education' in manage
