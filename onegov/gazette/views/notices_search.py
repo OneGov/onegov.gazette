@@ -58,7 +58,7 @@ def send_confirmation_mail(request, subscription):
 
 @GazetteApp.html(
     model=PublishedNoticeCollection,
-    template='search.pt',
+    template='notices_search.pt',
     permission=Public
 )
 def view_search(self, request):
@@ -122,7 +122,7 @@ def view_search(self, request):
 
 @GazetteApp.html(
     model=PublishedNoticeCollection,
-    template='embed.pt',
+    template='notices_embed.pt',
     name='embed',
     permission=Public
 )
