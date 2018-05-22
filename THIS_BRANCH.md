@@ -90,3 +90,11 @@
   - Tests
   - Optimize the CLI command (process-subscriptions), as this might get super slow with many subscriptions
   - Add a mechanism to cancel the subscription
+
+## Press releases
+
+- Commits
+  - 43a934db4784de51da7100a9ccedbb214d02cbc0
+- What needs to be done
+  - Rework the whole thing?
+  - Tests
