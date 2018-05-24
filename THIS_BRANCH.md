@@ -99,8 +99,17 @@
   - Rework the whole thing?
   - Tests
 
-
 ## Backend Menu
 
 - Commits
   - 1e46e2e728972a20eaca4fa8669c99f38f5898f6
+
+
+## Editor Snippets
+
+- Commits
+  - 60e512b78dfac7aa398639f42a8843f0075504cf
+  - onegov.quill:placeholders
+- What needs to be done
+  - Allow to define snippets and templates in the backend (per category, organization, etc.)
+  - Tests
