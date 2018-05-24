@@ -91,7 +91,18 @@ class NoticeForm(Form):
         validators=[
             # mockup:
             # InputRequired()
-        ]
+        ],
+        placeholders={
+            'Rechtsmittelbelehrung': (
+                'Gegen diese Wahl kann wegen Verletzung von Vorschriften '
+                'über die politischen Rechte und ihre Ausübung innert 5 '
+                'Tagen, von der Veröffentlichung an gerechnet, schriftlich '
+                'Rekurs in Stimmrechtssachen beim Bezirksrat ... erhoben '
+                'werden. Die Rekursschrift muss einen Antrag und dessen '
+                'Begründung enthalten.'
+            )
+        },
+        placeholder_label=_("Templates")
     )
 
     author_place = StringField(
@@ -172,6 +183,7 @@ class NoticeForm(Form):
 
         # translate the string of the mutli select field
         self.issues.translate(self.request)
+        self.text.translate(self.request)
 
         # Remove the print only option if not publisher
         if not self.request.is_private(self.model):
@@ -249,6 +261,7 @@ class UnrestrictedNoticeForm(NoticeForm):
 
         # translate the string of the mutli select field
         self.issues.translate(self.request)
+        self.text.translate(self.request)
 
     def disable_issues(self):
         self.issues.validators = []
