@@ -116,7 +116,7 @@ def view_press_releases(self, request):
     if not is_publisher:
         self.user_ids, self.group_ids = get_user_and_group(request)
         filters = None
-        title = _("My Published Press Releases")
+        title = _("Published Press Releases")
 
     return {
         'layout': layout,

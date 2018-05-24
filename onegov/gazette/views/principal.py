@@ -154,7 +154,7 @@ def view_dashboard(self, request):
 
     return {
         'layout': layout,
-        'title': _("My Drafted and Submitted Official Notices"),
+        'title': _("Dashboard"),
         'rejected_notices': rejected_notices,
         'drafted_notices': drafted_notices,
         'submitted_notices': submitted_notices,

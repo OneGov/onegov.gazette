@@ -76,11 +76,14 @@ msgstr "Nr. ${issue_number}, ${issue_date}"
 msgid "Official Notices"
 msgstr "Amtliche Publikationen"
 
-msgid "Statistics"
-msgstr "Statistiken"
-
 msgid "Press Releases"
 msgstr "Medienmitteilungen"
+
+msgid "Manage"
+msgstr "Verwalten"
+
+msgid "Statistics"
+msgstr "Statistiken"
 
 msgid "Users"
 msgstr "Benutzer"
@@ -88,13 +91,13 @@ msgstr "Benutzer"
 msgid "Groups"
 msgstr "Gruppen"
 
-msgid "My Drafted and Submitted Official Notices"
+msgid "Dashboard"
 msgstr "Dashboard"
 
-msgid "My Published Official Notices"
+msgid "Published Official Notices"
 msgstr "Veröffentlichte amtliche Publikationen"
 
-msgid "My Published Press Releases"
+msgid "Published Press Releases"
 msgstr "Veröffentlichte Medienmitteilungen"
 
 msgid "Gazette"
@@ -898,6 +901,3 @@ msgstr "Benutzer gelöscht."
 
 msgid "User account created"
 msgstr "Benutzerkonto Amtsblattredaktion erstellt"
-
-#~ msgid "Issue Date"
-#~ msgstr "Datum"
