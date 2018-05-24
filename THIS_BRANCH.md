@@ -109,7 +109,7 @@
 
 - Commits
   - 60e512b78dfac7aa398639f42a8843f0075504cf
-  - onegov.quill:placeholders
+  - d456bd4e58eb782d309222048f2ed879716a940f
 - What needs to be done
   - Allow to define snippets and templates in the backend (per category, organization, etc.)
   - Tests
