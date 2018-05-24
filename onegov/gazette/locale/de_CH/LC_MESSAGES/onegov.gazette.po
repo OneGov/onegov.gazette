@@ -160,8 +160,8 @@ msgstr "Ausgabe(n)"
 msgid "Text"
 msgstr "Text"
 
-msgid "Templates"
-msgstr "Vorlagen"
+msgid "Boilerplates"
+msgstr "Textbausteine"
 
 msgid "Place"
 msgstr "Ort"

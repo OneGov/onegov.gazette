@@ -102,7 +102,7 @@ class NoticeForm(Form):
                 'Begründung enthalten.'
             )
         },
-        placeholder_label=_("Templates")
+        placeholder_label=_("Boilerplates")
     )
 
     author_place = StringField(
