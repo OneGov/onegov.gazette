@@ -113,3 +113,13 @@
 - What needs to be done
   - Allow to define snippets and templates in the backend (per category, organization, etc.)
   - Tests
+
+
+## SHAB Import
+
+- Commits
+    - 1540d1f8920528b9209e9ec4ec06b3d30da09368
+- What needs to be done
+    - Rework importer and converters
+    - Rework import view and/or add CLI interface
+    - Tests
