@@ -146,7 +146,8 @@ def get_notice(app, name):
 )
 def get_search(app, page=0, term=None, order=None, direction=None,
                from_date=None, to_date=None,
-               organizations=None, categories=None):
+               organizations=None, categories=None,
+               import_source=None):
     return PublishedNoticeCollection(
         app.session(),
         page=page,
@@ -157,6 +158,7 @@ def get_search(app, page=0, term=None, order=None, direction=None,
         to_date=to_date,
         organizations=organizations,
         categories=categories,
+        import_source=import_source
     )
 
 

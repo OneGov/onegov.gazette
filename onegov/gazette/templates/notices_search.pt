@@ -60,6 +60,19 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="small-12 large-6 columns">
+                        <div class="search-filter">
+                            <label for="import_source" i18n:translate>SOGC</label>
+                            <select name="import_source" class="chosen-select">
+                                <option value="any" i18n:translate>All publications</option>
+                                <option value="unblank" tal:attributes="selected import_source=='unblank'" i18n:translate>Only publications from the SOGC</option>
+                                <option value="blank" tal:attributes="selected import_source=='blank'" i18n:translate>Exclude publications from the SOGC</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 <dl class="sub-nav">
                     <dd>
                         <button type="submit" aria-label="Submit" i18n:attributes="aria-label">

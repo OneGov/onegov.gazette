@@ -113,6 +113,7 @@ def view_published_notices(self, request):
         'selected_organizations': self.organizations,
         'from_date': self.from_date,
         'to_date': self.to_date,
+        'import_source': self.import_source,
         'orderings': orderings,
         'clear': clear,
         'pdf': request.link(self, name='pdf'),

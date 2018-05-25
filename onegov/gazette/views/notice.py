@@ -79,6 +79,11 @@ def view_notice(self, request):
             actions.append(action['attachments'])
         if admin:
             actions.append(action['delete'])
+    elif self.state == 'imported':
+        if admin:
+            actions.append(action['accept'])
+            actions.append(action['edit_un'])
+            actions.append(action['delete'])
     elif self.state == 'accepted':
         actions.append(action['copy'])
         if admin:

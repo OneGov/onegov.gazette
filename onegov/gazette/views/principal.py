@@ -2,6 +2,7 @@ from datetime import timedelta
 from morepath import redirect
 from onegov.core.security import Personal
 from onegov.core.security import Public
+from onegov.core.security import Secret
 from onegov.gazette import _
 from onegov.gazette import GazetteApp
 from onegov.gazette.collections import GazetteNoticeCollection
@@ -9,9 +10,11 @@ from onegov.gazette.collections import IssueCollection
 from onegov.gazette.collections import PressReleaseCollection
 from onegov.gazette.collections import PublishedNoticeCollection
 from onegov.gazette.collections import PublishedPressReleaseCollection
+from onegov.gazette.forms import ImportForm
 from onegov.gazette.layout import Layout
 from onegov.gazette.models import Issue
 from onegov.gazette.models import Principal
+from onegov.gazette.shab import ShabImporter
 from onegov.gazette.views import get_user_and_group
 from sedate import utcnow
 
@@ -164,4 +167,42 @@ def view_dashboard(self, request):
         'submitted_releases': submitted_releases,
         'new_release': new_release,
         'current_issue': layout.current_issue
+    }
+
+
+@GazetteApp.form(
+    model=Principal,
+    name='shab-import',
+    template='form.pt',
+    permission=Secret,
+    form=ImportForm
+)
+def view_shab_import(self, request, form):
+
+    layout = Layout(self, request)
+
+    if form.submitted(request):
+        importer = ShabImporter(
+            session=request.session,
+            endpoint='https://int.eshab.shab.ch/api/v1',
+            username='marc.sommerhalder@seantis.ch',
+            password='M4ngf9Cw69V{Qu2T',
+            canton=form.canton.data,
+            rubrics=[],
+            subrubrics=form.subrubrics.data
+        )
+        importer(clear=form.clear.data)
+        request.message(_("Official notices imported."), 'success')
+        return redirect(
+            request.link(
+                GazetteNoticeCollection(request.session).for_state('imported')
+            )
+        )
+
+    return {
+        'layout': layout,
+        'form': form,
+        'title': _("SOGC Import"),
+        'button_text': _("Import"),
+        'cancel': layout.homepage_link
     }

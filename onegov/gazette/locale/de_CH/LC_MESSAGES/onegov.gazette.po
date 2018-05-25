@@ -106,6 +106,9 @@ msgstr "Amtsblatt"
 msgid "Index"
 msgstr "Stichwortverzeichnis"
 
+msgid "imported"
+msgstr "importiert"
+
 msgid "This value already exists."
 msgstr "Dieser Wert ist bereits vorhanden."
 
@@ -136,14 +139,20 @@ msgstr "Leer lassen, um den Wert automatisch zu setzen."
 msgid "Comment"
 msgstr "Bemerkung"
 
+msgid "Canton"
+msgstr "Kanton"
+
+msgid "Category"
+msgstr "Rubrik"
+
+msgid "Clear"
+msgstr "Löschen"
+
 msgid "Title (maximum 60 characters)"
 msgstr "Titel (höchstens 60 Zeichen)"
 
 msgid "Organization"
 msgstr "Organisation"
-
-msgid "Category"
-msgstr "Rubrik"
 
 msgid "Print only"
 msgstr "Stopp Internet"
@@ -420,6 +429,18 @@ msgstr "Von"
 
 msgid "To"
 msgstr "Bis"
+
+msgid "SOGC"
+msgstr "SHAB"
+
+msgid "All publications"
+msgstr "Alle Publikationen"
+
+msgid "Only publications from the SOGC"
+msgstr "Nur Publikationen aus dem SHAB"
+
+msgid "Exclude publications from the SOGC"
+msgstr "Publikationen aus dem SHAB ausschliessen"
 
 msgid "Reset"
 msgstr "Zurücksetzen"
@@ -864,6 +885,12 @@ msgstr "Medienmitteilung veröffentlicht."
 msgid "New Press Release"
 msgstr "Neue Medienmitteilung"
 
+msgid "SOGC Import"
+msgstr "SHAB Import"
+
+msgid "Import"
+msgstr "Importieren"
+
 msgid "You have drafted messages with past issues."
 msgstr "Sie haben amtliche Publikationen in Arbeit mit vergangenen Ausgaben."
 
@@ -874,6 +901,9 @@ msgstr ""
 
 msgid "You have rejected messages."
 msgstr "Sie haben zurückgewiesene Publikationen."
+
+msgid "Official notices imported."
+msgstr "Amtliche Publikationen importiert."
 
 msgid "New User"
 msgstr "Neuer Benutzer"

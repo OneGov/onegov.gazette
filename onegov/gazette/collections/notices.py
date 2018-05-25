@@ -321,11 +321,67 @@ class PublishedNoticeCollection(GazetteNoticeCollection):
 
     def __init__(self, session, **kwargs):
         kwargs.pop('state', None)
+        self.import_source = str(kwargs.pop('import_source', '') or '').lower()
         super(PublishedNoticeCollection, self).__init__(
             session,
             state='published',
             **kwargs
         )
+
+    def page_by_index(self, index):
+        return self.__class__(
+            self.session,
+            page=index,
+            state=self.state,
+            term=self.term,
+            order=self.order,
+            direction=self.direction,
+            issues=self.issues,
+            categories=self.categories,
+            organizations=self.organizations,
+            user_ids=self.user_ids,
+            group_ids=self.group_ids,
+            from_date=self.from_date,
+            to_date=self.to_date,
+            source=self.source,
+            import_source=self.import_source
+        )
+
+    def for_state(self, state):
+        """ Returns a new instance of the collection with the given state. """
+
+        result = super(PublishedNoticeCollection, self).for_state(state)
+        result.import_source = self.import_source
+        return result
+
+    def for_term(self, term):
+        """ Returns a new instance of the collection with the given term. """
+
+        result = super(PublishedNoticeCollection, self).for_term(term)
+        result.import_source = self.import_source
+        return result
+
+    def for_order(self, order, direction=None):
+        """ Returns a new instance of the collection with the given ordering.
+        Inverts the direction if the new ordering is the same as the old one
+        and an explicit ordering is not defined.
+
+        """
+
+        result = super(PublishedNoticeCollection, self).for_order(
+            order, direction
+        )
+        result.import_source = self.import_source
+        return result
+
+    def for_dates(self, from_date, to_date):
+        """ Returns a new instance of the collection with the given dates. """
+
+        result = super(PublishedNoticeCollection, self).for_order(
+            from_date, to_date
+        )
+        result.import_source = self.import_source
+        return result
 
     def for_organizations(self, organizations):
         """ Returns a new instance of the collection with the given
@@ -346,7 +402,8 @@ class PublishedNoticeCollection(GazetteNoticeCollection):
             group_ids=self.group_ids,
             from_date=self.from_date,
             to_date=self.to_date,
-            source=self.source
+            source=self.source,
+            import_source=self.import_source
         )
 
     def for_categories(self, categories):
@@ -368,5 +425,17 @@ class PublishedNoticeCollection(GazetteNoticeCollection):
             group_ids=self.group_ids,
             from_date=self.from_date,
             to_date=self.to_date,
-            source=self.source
+            source=self.source,
+            import_source=self.import_source
         )
+
+    def query(self):
+        """ Returns a filtered and sorted query  """
+        query = super(PublishedNoticeCollection, self).query()
+
+        if self.import_source == 'unblank':
+            query = query.filter(self.model_class.source.isnot(None))
+        if self.import_source == 'blank':
+            query = query.filter(self.model_class.source.is_(None))
+
+        return query

@@ -10,7 +10,8 @@ $('.chosen-select').chosen({
     placeholder_text_multiple: "Mehrere Optionen auswählen",
     placeholder_text_single: "Eine Option auswählen",
     search_contains: true,
-    width: '100%'
+    width: '100%',
+    disable_search_threshold: 10
 });
 
 // Add backend dropdown actions
