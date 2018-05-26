@@ -119,6 +119,7 @@
 
 - Commits
     - 1540d1f8920528b9209e9ec4ec06b3d30da09368
+    - e89f55ddbdc9ab1d02e7582a4a1311f12b534f0e
 - What needs to be done
     - Rework importer and converters
     - Rework import view and/or add CLI interface
