@@ -87,6 +87,11 @@ def view_notices(self, request):
 
     layout = Layout(self, request)
     is_publisher = request.is_private(self)
+    is_admin = request.is_secret(self)
+
+    states = ['drafted', 'submitted', 'accepted', 'published', 'rejected']
+    if is_admin:
+        states.append('imported')
 
     filters = (
         {
@@ -94,9 +99,7 @@ def view_notices(self, request):
             'link': request.link(self.for_state(state)),
             'class': 'active' if state == self.state else ''
         }
-        for state in (
-            'drafted', 'submitted', 'accepted', 'rejected', 'published'
-        )
+        for state in states
     )
 
     orderings = {

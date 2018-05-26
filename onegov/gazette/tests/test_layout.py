@@ -103,7 +103,8 @@ def test_layout_menu():
             ('Organizations', '/OrganizationCollection/', False, []),
             ('Categories', '/CategoryCollection/', False, []),
             ('Users', '/UserCollection/', False, []),
-            ('Groups', '/UserGroupCollection/', False, [])
+            ('Groups', '/UserGroupCollection/', False, []),
+            ('SOGC Import', '/sogc-import/', False, [])
         ]),
         ('Statistics', '/GazetteNoticeCollection/statistics/', False, [])
     ]

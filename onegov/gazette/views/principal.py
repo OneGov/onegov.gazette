@@ -14,7 +14,7 @@ from onegov.gazette.forms import ImportForm
 from onegov.gazette.layout import Layout
 from onegov.gazette.models import Issue
 from onegov.gazette.models import Principal
-from onegov.gazette.shab import ShabImporter
+from onegov.gazette.sogc import SogcImporter
 from onegov.gazette.views import get_user_and_group
 from sedate import utcnow
 
@@ -172,26 +172,30 @@ def view_dashboard(self, request):
 
 @GazetteApp.form(
     model=Principal,
-    name='shab-import',
+    name='sogc-import',
     template='form.pt',
     permission=Secret,
     form=ImportForm
 )
-def view_shab_import(self, request, form):
+def view_sogc_import(self, request, form):
 
     layout = Layout(self, request)
 
     if form.submitted(request):
-        importer = ShabImporter(
+        config = request.app.principal.sogc
+        importer = SogcImporter(
             session=request.session,
-            endpoint='https://int.eshab.shab.ch/api/v1',
-            username='marc.sommerhalder@seantis.ch',
-            password='M4ngf9Cw69V{Qu2T',
+            endpoint=config['endpoint'],
+            username=config['username'],
+            password=config['password'],
             canton=form.canton.data,
             rubrics=[],
             subrubrics=form.subrubrics.data
         )
-        importer(clear=form.clear.data)
+        importer(
+            clear=form.clear.data,
+            accept=form.accept.data
+        )
         request.message(_("Official notices imported."), 'success')
         return redirect(
             request.link(

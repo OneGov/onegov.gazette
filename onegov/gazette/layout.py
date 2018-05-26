@@ -195,7 +195,8 @@ class Layout(ChameleonLayout):
                 active = (
                     active or
                     isinstance(self.model, UserCollection) or
-                    isinstance(self.model, UserGroupCollection)
+                    isinstance(self.model, UserGroupCollection) or
+                    isinstance(self.model, Principal)
                 )
                 manage.append((
                     _("Users"),
@@ -207,6 +208,12 @@ class Layout(ChameleonLayout):
                     _("Groups"),
                     self.manage_groups_link,
                     isinstance(self.model, UserGroupCollection),
+                    []
+                ))
+                manage.append((
+                    _("SOGC Import"),
+                    self.request.link(self.principal, name='sogc-import'),
+                    isinstance(self.model, Principal),
                     []
                 ))
             result.append((_("Manage"), None, active, manage))

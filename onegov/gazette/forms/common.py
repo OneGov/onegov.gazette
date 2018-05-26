@@ -39,7 +39,14 @@ class ImportForm(Form):
         choices=[
             ('KK01', 'KK01 – Vorläufige Konkursanzeige'),
             ('KK02', 'KK02 – Konkurspublikation/Schuldenruf'),
-            ('KK03', 'KK03 – Einstellung des Konkursverfahrens')
+            ('KK03', 'KK03 – Einstellung des Konkursverfahrens'),
+            ('KK04', 'KK04 – Kollokationsplan und Inventar'),
+            ('KK05', 'KK05 – Verteilungsliste und Schlussrechnung'),
+            ('KK06', 'KK06 – Schluss des Konkursverfahrens'),
+            ('KK07', 'KK07 – Widerruf des Konkurses'),
+            ('KK08', 'KK08 – Konkursamtliche Grundstücksteigerung'),
+            ('KK09', 'KK09 – Lastenverzeichnisse'),
+            ('KK10', 'KK10 – Weitere Konkurse'),
         ],
         validators=[
             InputRequired()
@@ -48,5 +55,10 @@ class ImportForm(Form):
 
     clear = BooleanField(
         label=_("Clear"),
+        default=False
+    )
+
+    accept = BooleanField(
+        label=_("Accept"),
         default=False
     )

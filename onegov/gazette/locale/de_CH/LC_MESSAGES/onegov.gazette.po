@@ -91,6 +91,9 @@ msgstr "Benutzer"
 msgid "Groups"
 msgstr "Gruppen"
 
+msgid "SOGC Import"
+msgstr "SHAB Import"
+
 msgid "Dashboard"
 msgstr "Dashboard"
 
@@ -147,6 +150,9 @@ msgstr "Rubrik"
 
 msgid "Clear"
 msgstr "Löschen"
+
+msgid "Accept"
+msgstr "Annehmen"
 
 msgid "Title (maximum 60 characters)"
 msgstr "Titel (höchstens 60 Zeichen)"
@@ -640,9 +646,6 @@ msgstr "Die mit einem Stern * gekennzeichneten Felder sind Pflichtfelder."
 msgid "Delete Official Notice"
 msgstr "Amtliche Publikation löschen"
 
-msgid "Accept"
-msgstr "Annehmen"
-
 msgid "Copy"
 msgstr "Kopieren"
 
@@ -884,9 +887,6 @@ msgstr "Medienmitteilung veröffentlicht."
 
 msgid "New Press Release"
 msgstr "Neue Medienmitteilung"
-
-msgid "SOGC Import"
-msgstr "SHAB Import"
 
 msgid "Import"
 msgstr "Importieren"
