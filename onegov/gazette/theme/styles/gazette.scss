@@ -652,6 +652,12 @@ a.button.right {
     margin-right: .75ex;
 }
 
+.action-view::before {
+    content: '\f109';
+    font-family: 'FontAwesome';
+    margin-right: .75ex;
+}
+
 
 /*
     Filters

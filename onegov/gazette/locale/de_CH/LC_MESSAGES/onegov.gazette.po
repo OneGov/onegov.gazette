@@ -664,6 +664,9 @@ msgstr "Vorschau"
 msgid "Reject"
 msgstr "Zurückweisen"
 
+msgid "View"
+msgstr "Anzeigen"
+
 msgid "Accepted official notices may not be edited."
 msgstr ""
 "Angenommene amtliche Publikationen können nicht mehr bearbeitet werden."

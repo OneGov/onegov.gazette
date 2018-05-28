@@ -62,6 +62,7 @@ def view_notice(self, request):
         'preview': _action(_("Preview"), 'preview', 'secondary', '_blank'),
         'reject': _action(_("Reject"), 'reject', 'alert right'),
         'submit': _action(_("Submit"), 'submit', 'primary'),
+        'view': _action(_("View"), 'view', 'secondary', '_blank'),
     }
 
     actions = []
@@ -71,12 +72,15 @@ def view_notice(self, request):
             actions.append(action['edit'])
             actions.append(action['delete'])
             actions.append(action['attachments'])  # mockup: was publisher
+        if publisher:
+            actions.append(action['view'])
     elif self.state == 'submitted':
         if publisher:
             actions.append(action['accept'])
             actions.append(action['edit'])
             actions.append(action['reject'])
             actions.append(action['attachments'])
+            actions.append(action['view'])
         if admin:
             actions.append(action['delete'])
     elif self.state == 'imported':
@@ -84,17 +88,23 @@ def view_notice(self, request):
             actions.append(action['accept'])
             actions.append(action['edit_un'])
             actions.append(action['delete'])
+        if publisher:
+            actions.append(action['view'])
     elif self.state == 'accepted':
         actions.append(action['copy'])
         if admin:
             actions.append(action['edit_un'])
             actions.append(action['attachments'])
             actions.append(action['delete'])
+
+        if publisher:
+            actions.append(action['view'])
     elif self.state == 'published':
         actions.append(action['copy'])
         if admin:
             actions.append(action['edit_un'])
             actions.append(action['attachments'])
+        actions.append(action['view'])
 
     actions.append(action['preview'])
 
