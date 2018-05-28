@@ -18,7 +18,8 @@ def view_published_press_release(self, request):
     """ View the published press release. """
 
     if not self.state == 'published':
-        raise HTTPForbidden()
+        if not request.is_private(self):
+            raise HTTPForbidden()
 
     layout = Layout(self, request)
 
@@ -38,7 +39,8 @@ def view_published_press_release_pdf(self, request):
     """ View the published press release as PDF. """
 
     if not self.state == 'published':
-        raise HTTPForbidden()
+        if not request.is_private(self):
+            raise HTTPForbidden()
 
     pdf = Pdf.from_press_release(self, request)
     filename = normalize_for_url(self.title)

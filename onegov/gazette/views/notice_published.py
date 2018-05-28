@@ -19,7 +19,8 @@ def view_published_notice(self, request):
     """ View the published notice. """
 
     if not self.state == 'published' or self.expired:
-        raise HTTPForbidden()
+        if not request.is_private(self):
+            raise HTTPForbidden()
 
     layout = Layout(self, request)
 
@@ -60,7 +61,8 @@ def view_published_notice_pdf(self, request):
     """ View the published notice as PDF. """
 
     if not self.state == 'published' or self.expired:
-        raise HTTPForbidden()
+        if not request.is_private(self):
+            raise HTTPForbidden()
 
     pdf = Pdf.from_notice(self, request)
 
