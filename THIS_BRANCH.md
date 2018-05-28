@@ -10,17 +10,13 @@
 ## Import & Exports: Issues, Organizations, Categories
 
 - Commits
-
   - 4f2eb2da611b26abab845f1ecaf584b72e149d20
   - b3526237a99f92afc9d656b52fb5558c6a02eb30
   - b3526237a99f92afc9d656b52fb5558c6a02eb30
   - 23b476d0d0c08b5e6c405a07346e77236a9f24a5
   - 4f9b335793a2c4e5b68164b265c1c95b39024bed
-
 - What needs to be done
-
   - Write tests
-
   - Import/Export the external ID of organizations
 
 ## Frontpage
@@ -43,7 +39,6 @@
   - f683149a5477483613e4d4e04a2640e3fb7c0d10
   - b6551be3d9541129baf02d113166e0a4c90c392c
   - be5c6d1b090648b249651f0adbe0992469ef9f6c
-
 - What needs to be done
   - Tests
   - Honour principal.show_archive/frontend (possibly raise NotFound in path.py or redirect if disabled)
@@ -123,4 +118,11 @@
 - What needs to be done
     - Rework importer and converters
     - Rework import view and/or add CLI interface
+    - Tests
+
+## Expiry Dates
+
+- Commits
+    - 7a817105c65df9566300b51d8932c72a6ed7ce77
+- What needs to be done
     - Tests
