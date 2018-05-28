@@ -160,7 +160,6 @@ class Pdf(PdfBase):
             page_fn=page_fn_footer,
             page_fn_later=page_fn_header_and_footer
         )
-        pdf.h1(notice.title)
 
         pdf.spacer()
         pdf.notice(notice, layout)
