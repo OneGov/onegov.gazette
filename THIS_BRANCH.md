@@ -5,6 +5,8 @@
 - Commits
   - d592ba35d721b109713d697666cf5831890563a1
   - 4058bfdf830826df72609ea39529e18525c6c845
+  - 86d5feeb2384a9388ce78e8cc29218cff638ebde
+  - 6cd8ce350fab69ccf4530fd033f43f39ffa576d7
 - What needs to be done
   - Make it dynamic/translated or/and use onegov.page
   - Remove/rename principal.show_archive (--> show_frontend?)
@@ -46,6 +48,7 @@
 
 - Commits
   - 96a9344684e1d7289d819998d23cc5017fa3aebd
+  - 2e594df462bd8aed29f7230231d5f4b34e4fd9f1
 - What needs to be done
   - Probably create the PDF as attachment
   - Sign it
@@ -71,6 +74,9 @@
 
 - Commits
   - 43a934db4784de51da7100a9ccedbb214d02cbc0
+  - 691900eabeccd88579cdf51fde01da4993725953
+  - 7f65c0892aba6820bcc6da648a90429dfe8fb6dd
+  - 6cd8ce350fab69ccf4530fd033f43f39ffa576d7
 - What needs to be done
   - Rework the whole thing?
   - Tests
