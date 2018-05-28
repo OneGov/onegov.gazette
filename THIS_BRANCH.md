@@ -1,17 +1,5 @@
 # Features
 
-## Import & Exports: Issues, Organizations, Categories
-
-- Commits
-  - 4f2eb2da611b26abab845f1ecaf584b72e149d20
-  - b3526237a99f92afc9d656b52fb5558c6a02eb30
-  - b3526237a99f92afc9d656b52fb5558c6a02eb30
-  - 23b476d0d0c08b5e6c405a07346e77236a9f24a5
-  - 4f9b335793a2c4e5b68164b265c1c95b39024bed
-- What needs to be done
-  - Write tests
-  - Import/Export the external ID of organizations
-
 ## Frontpage
 
 - Commits
