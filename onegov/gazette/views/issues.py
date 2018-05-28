@@ -4,7 +4,6 @@ from io import BytesIO
 from morepath import redirect
 from morepath.request import Response
 from onegov.core.security import Private
-from onegov.core.security import Secret
 from onegov.gazette import _
 from onegov.gazette import GazetteApp
 from onegov.gazette.collections import IssueCollection
@@ -233,7 +232,7 @@ def publish_issue(self, request, form):
 @GazetteApp.view(
     model=IssueCollection,
     name='export',
-    permission=Secret
+    permission=Private
 )
 def export_issue(self, request):
     """ Export all issues as XLSX. The exported file can be re-imported
