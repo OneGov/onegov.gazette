@@ -172,6 +172,9 @@ msgstr "Rechnungsadresse"
 msgid "Issue(s)"
 msgstr "Ausgabe(n)"
 
+msgid "Expiry Date"
+msgstr "Ablaufdatum"
+
 msgid "Text"
 msgstr "Text"
 

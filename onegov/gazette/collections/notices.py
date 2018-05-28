@@ -8,6 +8,8 @@ from onegov.gazette.models.notice import GazetteNoticeChange
 from onegov.notice import OfficialNoticeCollection
 from onegov.user import User
 from onegov.user import UserGroup
+from sedate import utcnow
+from sqlalchemy import and_
 from sqlalchemy import func
 from sqlalchemy import or_
 from sqlalchemy import String
@@ -430,9 +432,17 @@ class PublishedNoticeCollection(GazetteNoticeCollection):
         )
 
     def query(self):
-        """ Returns a filtered and sorted query  """
+        """ Returns a filtered and sorted query.  """
         query = super(PublishedNoticeCollection, self).query()
-
+        query = query.filter(
+            or_(
+                self.model_class.expiry_date.is_(None),
+                and_(
+                    self.model_class.expiry_date.isnot(None),
+                    self.model_class.expiry_date > utcnow(),
+                )
+            )
+        )
         if self.import_source == 'unblank':
             query = query.filter(self.model_class.source.isnot(None))
         if self.import_source == 'blank':

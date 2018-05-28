@@ -19,6 +19,7 @@ from wtforms import TextAreaField
 from wtforms.fields.html5 import DateField
 from wtforms.validators import InputRequired
 from wtforms.validators import Length
+from wtforms.validators import Optional
 
 
 class NoticeForm(Form):
@@ -85,6 +86,13 @@ class NoticeForm(Form):
         limit=5
     )
 
+    expiry_date = DateField(
+        label=_("Expiry Date"),
+        validators=[
+            Optional()
+        ]
+    )
+
     text = QuillField(
         label=_("Text"),
         tags=('strong', 'ol', 'ul'),
@@ -131,7 +139,12 @@ class NoticeForm(Form):
     def author_date_utc(self):
         if self.author_date.data:
             return standardize_date(as_datetime(self.author_date.data), 'UTC')
-            self.author_date.data
+        return None
+
+    @property
+    def expiry_date_utc(self):
+        if self.expiry_date.data:
+            return standardize_date(as_datetime(self.expiry_date.data), 'UTC')
         return None
 
     def on_request(self):
@@ -200,6 +213,7 @@ class NoticeForm(Form):
         model.at_cost = self.at_cost.data == 'yes'
         model.billing_address = self.billing_address.data
         model.issues = self.issues.data
+        model.expiry_date = self.expiry_date_utc
         if self.print_only:
             model.print_only = self.print_only.data == 'True'
             # mockup: was model.print_only = self.print_only.data
@@ -217,6 +231,7 @@ class NoticeForm(Form):
         self.at_cost.data = 'yes' if model.at_cost else 'no'
         self.billing_address.data = model.billing_address or ''
         self.issues.data = list(model.issues.keys())
+        self.expiry_date.data = model.expiry_date
         if self.print_only:
             self.print_only.data = True if model.print_only else False
 
@@ -278,5 +293,6 @@ class UnrestrictedNoticeForm(NoticeForm):
         model.at_cost = self.at_cost.data
         if model.state != 'published':
             model.issues = self.issues.data
+        model.expiry_date = self.expiry_date_utc
 
         model.apply_meta(self.request.session)

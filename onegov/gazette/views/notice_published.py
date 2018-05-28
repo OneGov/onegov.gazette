@@ -18,7 +18,7 @@ from webob.exc import HTTPForbidden
 def view_published_notice(self, request):
     """ View the published notice. """
 
-    if not self.state == 'published':
+    if not self.state == 'published' or self.expired:
         raise HTTPForbidden()
 
     layout = Layout(self, request)
@@ -39,7 +39,7 @@ def view_published_notice(self, request):
 def view_published_notices_embed(self, request):
     """ Show the the published notice embeddable. """
 
-    if not self.state == 'published':
+    if not self.state == 'published' or self.expired:
         raise HTTPForbidden()
 
     layout = Layout(self, request)
@@ -59,7 +59,7 @@ def view_published_notices_embed(self, request):
 def view_published_notice_pdf(self, request):
     """ View the published notice as PDF. """
 
-    if not self.state == 'published':
+    if not self.state == 'published' or self.expired:
         raise HTTPForbidden()
 
     pdf = Pdf.from_notice(self, request)
