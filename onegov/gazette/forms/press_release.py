@@ -11,6 +11,7 @@ from wtforms import HiddenField
 from wtforms import StringField
 from wtforms.validators import InputRequired
 from wtforms.validators import Length
+from wtforms.validators import Optional
 
 
 class PressReleaseForm(Form):
@@ -54,6 +55,13 @@ class PressReleaseForm(Form):
         ]
     )
 
+    blocking_period = DateTimeLocalField(
+        label=_("Blocking period"),
+        validators=[
+            Optional()
+        ]
+    )
+
     timezone = HiddenField()
 
     def on_request(self):
@@ -88,10 +96,15 @@ class PressReleaseForm(Form):
         model.organization_id = self.organization.data
         model.text = self.text.data
         model.issue_date = self.issue_date.data
-        # Convert the deadline from the local timezone to UTC
+        model.blocking_period = self.blocking_period.data
+        # Convert the datetimes from the local timezone to UTC
         if model.issue_date:
             model.issue_date = standardize_date(
                 model.issue_date, self.timezone.data
+            )
+        if model.blocking_period:
+            model.blocking_period = standardize_date(
+                model.blocking_period, self.timezone.data
             )
         model.apply_meta(self.request.session)
 
@@ -100,8 +113,13 @@ class PressReleaseForm(Form):
         self.organization.data = model.organization_id
         self.text.data = model.text
         self.issue_date.data = model.first_issue
+        self.blocking_period.data = model.blocking_period
         # Convert the deadline from UTC to the local timezone
         if self.issue_date.data:
             self.issue_date.data = to_timezone(
                 self.issue_date.data, self.timezone.data
+            ).replace(tzinfo=None)
+        if self.blocking_period.data:
+            self.blocking_period.data = to_timezone(
+                self.blocking_period.data, self.timezone.data
             ).replace(tzinfo=None)

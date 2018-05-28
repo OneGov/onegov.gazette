@@ -14,7 +14,7 @@ class PressReleaseCollection(GazetteNoticeCollection):
         return PressRelease
 
     def add(self, title, text, organization_id, user, issue_date, timezone,
-            **kwargs):
+            blocking_period, **kwargs):
         """ Add a new press release.
 
         A unique, URL-friendly name is created automatically for this press
@@ -34,6 +34,10 @@ class PressReleaseCollection(GazetteNoticeCollection):
             **kwargs
         )
         press_release.issue_date = standardize_date(issue_date, timezone)
+        if blocking_period:
+            press_release.blocking_period = standardize_date(
+                blocking_period, timezone
+            )
         press_release.user = user
         press_release.group = user.group if user else None
         press_release.organization_id = organization_id

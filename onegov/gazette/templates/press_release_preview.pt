@@ -8,14 +8,14 @@
     <tal:block metal:fill-slot="authentication"></tal:block>
     <tal:block metal:fill-slot="before-content"></tal:block>
     <tal:block metal:fill-slot="content">
-        <div>
-            <span class="blank-label">${press_release.organization}</span>
-            <span class="blank-label">${layout.format_date(press_release.issue_date, 'datetime')}</span>
-        </div>
         <div class="clearfix hide-for-print">
             <a i18n:translate class="button secondary small action-close right" onclick="var w = window.self;w.open('','_self','');w.close();return false;" href="#">Close</a>
             <a i18n:translate class="button secondary small action-publish right" href="${export}">PDF</a>
             <a i18n:translate class="button small action-print right" onclick="window.print();return false;" href="#">Print</a>
+        </div>
+        <div>
+            <span class="blank-label">${press_release.organization}</span>
+            <span class="blank-label">${layout.format_date(press_release.issue_date, 'datetime')}</span>
         </div>
         <div class="preview">
             <h2>${press_release.title}</h2>

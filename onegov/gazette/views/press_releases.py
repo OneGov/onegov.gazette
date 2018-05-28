@@ -36,7 +36,8 @@ def create_press_release(self, request, form):
             organization_id=form.organization.data,
             user=get_user(request),
             issue_date=form.issue_date.data,
-            timezone=request.app.principal.time_zone
+            blocking_period=form.blocking_period.data,
+            timezone=form.timezone.data
         )
         return redirect(request.link(press_release))
 

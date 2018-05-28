@@ -20,12 +20,14 @@
                     </tal:block>
                 </div>
 
-                <div class="panel callout" tal:condition="press_release.state == 'rejected'">
+                <div class="panel callout radius" tal:condition="press_release.state == 'rejected'">
                     <p>
                         <span i18n:translate>This press release has been rejected.</span>
                         <span i18n:translate>Comment</span>: <strong>${press_release.rejected_comment}</strong>
                     </p>
                 </div>
+
+                <div metal:use-macro="layout.macros['blocked_press_release_callout']"></div>
 
                 <div class="row">
                     <div class="small-12 medium-7 columns">
@@ -41,6 +43,9 @@
 
                             <dt i18n:translate>Issue date</dt>
                             <dd>${layout.format_date(press_release.issue_date, 'datetime')}</dd>
+
+                            <dt i18n:translate>Blocking period</dt>
+                            <dd>${layout.format_date(press_release.blocking_period, 'datetime')}</dd>
 
                             <dt i18n:translate>Organization</dt>
                             <dd>${press_release.organization}</dd>

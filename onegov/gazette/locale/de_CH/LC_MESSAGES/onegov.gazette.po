@@ -208,6 +208,9 @@ msgstr "- keine -"
 msgid "Issue date"
 msgstr "Ausgabedatum"
 
+msgid "Blocking period"
+msgstr "Sperrfrist"
+
 msgid "Role"
 msgstr "Rolle"
 
@@ -343,6 +346,9 @@ msgstr "Aktuelle Seite"
 
 msgid "Next deadline"
 msgstr "Nächster Eingabeschluss"
+
+msgid "This press release is blocked until ${blocking_date}."
+msgstr "Dieses Medienmitteilung ist bis zum ${blocking_date} gesperrt."
 
 msgid "Dear Sir or Madam,"
 msgstr "Sehr geehrte Dame, sehr geehrter Herr"
