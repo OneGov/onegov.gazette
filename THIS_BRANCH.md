@@ -1,12 +1,5 @@
 # Features
 
-## Fixes
-
-- Commits
-  - 0bb81ad1d8a3985109a3dbf48c20de99c2508580
-  - aa0b3a9b85485324b24fd88836fdb5c1f6a053fa
-  - cd19a41b8eb2f51483364ce1a201631983889f2b
-
 ## Import & Exports: Issues, Organizations, Categories
 
 - Commits
