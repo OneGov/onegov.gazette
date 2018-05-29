@@ -86,7 +86,7 @@ def view_press_release(self, request):
             actions.append(action['publish'])
         actions.append(action['copy'])
         if admin:
-            actions.append(action['edit_un'])
+            actions.append(action['edit'])
             actions.append(action['attachments'])
             actions.append(action['delete'])
         if publisher:
@@ -94,7 +94,7 @@ def view_press_release(self, request):
     elif self.state == 'published':
         actions.append(action['copy'])
         if admin:
-            actions.append(action['edit_un'])
+            actions.append(action['edit'])
             actions.append(action['attachments'])
         actions.append(action['view'])
 
@@ -166,17 +166,6 @@ def edit_press_release(self, request, form):
         user_ids, group_ids = get_user_and_group(request)
         if not ((self.group_id in group_ids) or (self.user_id in user_ids)):
             raise HTTPForbidden()
-
-    if self.state == 'accepted' or self.state == 'published':
-        return {
-            'layout': layout,
-            'title': self.title,
-            'subtitle': _("Edit Press Release"),
-            'callout': _(
-                "Accepted press releases may not be edited."
-            ),
-            'show_form': False
-        }
 
     if self.invalid_organization:
         request.message(
