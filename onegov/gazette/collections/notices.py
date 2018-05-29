@@ -379,7 +379,7 @@ class PublishedNoticeCollection(GazetteNoticeCollection):
     def for_dates(self, from_date, to_date):
         """ Returns a new instance of the collection with the given dates. """
 
-        result = super(PublishedNoticeCollection, self).for_order(
+        result = super(PublishedNoticeCollection, self).for_dates(
             from_date, to_date
         )
         result.import_source = self.import_source

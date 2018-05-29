@@ -54,10 +54,21 @@ def view_principal(self, request):
     next_issue = next_issue.order_by(None).order_by(Issue.date.desc())
     next_issue = next_issue.first()
 
+    previous_issue = issues.query().filter(Issue.date < current_issue.date)
+    previous_issue = previous_issue.order_by(None).order_by(Issue.date.desc())
+    previous_issue = previous_issue.first()
+
+    current_notices = PublishedNoticeCollection(request.session)
+    current_notices = current_notices.for_dates(
+        previous_issue.date + timedelta(days=1),
+        current_issue.date
+    )
+
     return {
         'layout': layout,
         'archive': request.link(self, name='archive'),
         'search': request.link(PublishedNoticeCollection(request.session)),
+        'current_notices': request.link(current_notices),
         'press_releases': request.link(
             PublishedPressReleaseCollection(request.session)
         ),

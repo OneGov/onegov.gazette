@@ -25,7 +25,7 @@
                     </p>
                     <p tal:condition="current_issue.pdf">
                         Die aktuelle Ausgabe als <a  href="${request.link(current_issue.pdf)}">PDF</a>.<br>
-                        Alle Inserate der aktuellen Ausgabe in der <a href="${search}">Recherche</a>.
+                        Alle Inserate der aktuellen Ausgabe in der <a href="${current_notices}">Recherche</a>.
                     </p>
                 </div>
             </div>
