@@ -7,6 +7,7 @@
   - 4058bfdf830826df72609ea39529e18525c6c845
   - 86d5feeb2384a9388ce78e8cc29218cff638ebde
   - 6cd8ce350fab69ccf4530fd033f43f39ffa576d7
+  - 7ba9fc9c0c1700e5f70f38024f1f2ac5c8edec3a
 - What needs to be done
   - Make it dynamic/translated or/and use onegov.page
   - Remove/rename principal.show_archive (--> show_frontend?)
@@ -22,6 +23,7 @@
   - f683149a5477483613e4d4e04a2640e3fb7c0d10
   - b6551be3d9541129baf02d113166e0a4c90c392c
   - be5c6d1b090648b249651f0adbe0992469ef9f6c
+  - 7ba9fc9c0c1700e5f70f38024f1f2ac5c8edec3a
 - What needs to be done
   - Tests
   - Honour principal.show_archive/frontend (possibly raise NotFound in path.py or redirect if disabled)
