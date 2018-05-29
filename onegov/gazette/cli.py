@@ -5,6 +5,7 @@ import transaction
 
 from datetime import timedelta
 from dateutil import parser
+from json import loads
 from onegov.core.cli import command_group
 from onegov.core.cli import pass_group_context
 from onegov.core.crypto import random_password
@@ -13,11 +14,13 @@ from onegov.core.csv import CSVFile
 from onegov.core.templates import render_template
 from onegov.gazette import _
 from onegov.gazette.collections import CategoryCollection
+from onegov.gazette.collections import GazetteNoticeCollection
 from onegov.gazette.collections import IssueCollection
 from onegov.gazette.collections import OrganizationCollection
 from onegov.gazette.collections import PublishedNoticeCollection
 from onegov.gazette.collections import SubscriptionCollection
 from onegov.gazette.layout import MailLayout
+from onegov.gazette.models import GazetteNotice
 from onegov.gazette.models import GazetteSubscription
 from onegov.gazette.models import IssueName
 from onegov.user import User
@@ -318,6 +321,114 @@ def import_issues(ctx, file, clear, dry_run, locale, timezone):
             transaction.abort()
 
     return _import_issues
+
+
+@cli.command(name='import-notices')
+@click.argument('file', type=click.File('rb'))
+@click.option('--clear/--no-clear', default=False)
+@click.option('--dry-run/--no-dry-run', default=False)
+@click.option('--locale', default='de_CH')
+@click.option('--timezone', default=None)
+@pass_group_context
+def import_notices(ctx, file, clear, dry_run, locale, timezone):
+    """ Imports issues. For example:
+
+        onegov-gazette --select '/onegov_gazette/zug' import-notices data.xlsx
+
+    """
+
+    def _import_notices(request, app):
+        request.locale = locale
+        headers = {
+            'name': request.translate(_("Name")),
+            'state': request.translate(_("State")),
+            'source': request.translate(_("Source")),
+            'title': request.translate(_("Title")),
+            'text': request.translate(_("Text")),
+            'author_date': request.translate(_("Author Place")),
+            'author_name': request.translate(_("Author Date")),
+            'author_place': request.translate(_("Author Name")),
+            'issues': request.translate(_("Issues")),
+            'expiry_date': request.translate(_("Expiry Date")),
+            'category_id': request.translate(_("Category")),
+            'organization_id': request.translate(_("Organization")),
+            'print_only': request.translate(_("Print only")),
+            'at_cost': request.translate(_("Liable to pay costs")),
+            'billing_address': request.translate(_("Billing address")),
+        }
+
+        session = app.session()
+        notices = GazetteNoticeCollection(session)
+
+        if clear:
+            click.secho("Deleting notices", fg='yellow')
+            for category in notices.query():
+                session.delete(category)
+
+        csvfile = convert_xls_to_csv(
+            file, sheet_name=request.translate(_("Official Notices"))
+        )
+        csv = CSVFile(csvfile, expected_headers=headers.values())
+        lines = list(csv.lines)
+        columns = {
+            key: csv.as_valid_identifier(value)
+            for key, value in headers.items()
+        }
+
+        count = 0
+        for line in lines:
+            count += 1
+            name = getattr(line, columns['name'])
+            state = getattr(line, columns['state'])
+            source = getattr(line, columns['source']) or None
+            title = getattr(line, columns['title'])
+            text = getattr(line, columns['text'])
+            author_date = getattr(line, columns['author_date']) or None
+            if author_date:
+                author_date = standardize_date(
+                    parser.parse(author_date),
+                    timezone or request.app.principal.time_zone
+                )
+            author_name = getattr(line, columns['author_name'])
+            author_place = getattr(line, columns['author_place'])
+            issues = loads(getattr(line, columns['issues']))
+            expiry_date = getattr(line, columns['expiry_date']) or None
+            if expiry_date:
+                expiry_date = standardize_date(
+                    parser.parse(expiry_date),
+                    timezone or request.app.principal.time_zone
+                )
+            category_id = getattr(line, columns['category_id'])
+            organization_id = getattr(line, columns['organization_id'])
+            print_only = bool(int(getattr(line, columns['print_only'])))
+            at_cost = bool(int(getattr(line, columns['at_cost'])))
+            billing_address = getattr(line, columns['billing_address'])
+            notice = GazetteNotice(
+                name=name,
+                state=state,
+                source=source,
+                title=title,
+                text=text,
+                author_date=author_date,
+                author_name=author_name,
+                author_place=author_place,
+                issues=issues,
+                expiry_date=expiry_date,
+                category_id=category_id,
+                organization_id=organization_id,
+                print_only=print_only,
+                at_cost=at_cost,
+                billing_address=billing_address
+            )
+            notice.apply_meta(session)
+            session.add(notice)
+
+        click.secho("{} notice(s) imported".format(count), fg='green')
+
+        if dry_run:
+            transaction.abort()
+
+    return _import_notices
 
 
 @cli.command(name='process-subscriptions')

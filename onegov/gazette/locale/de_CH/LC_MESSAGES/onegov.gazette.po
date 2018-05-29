@@ -44,6 +44,45 @@ msgstr "Datum"
 msgid "Deadline"
 msgstr "Eingabeschluss"
 
+msgid "State"
+msgstr "Status"
+
+msgid "Source"
+msgstr "Quelle"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Author Place"
+msgstr "Absender Ort"
+
+msgid "Author Date"
+msgstr "Absender Datum"
+
+msgid "Author Name"
+msgstr "Absender Name"
+
+msgid "Issue(s)"
+msgstr "Ausgabe(n)"
+
+msgid "Expiry Date"
+msgstr "Ablaufdatum"
+
+msgid "Category"
+msgstr "Rubrik"
+
+msgid "Organization"
+msgstr "Organisation"
+
+msgid "Print only"
+msgstr "Stopp Internet"
+
+msgid "Liable to pay costs"
+msgstr "Kostenpflichtig"
+
+msgid "Billing address"
+msgstr "Rechnungsadresse"
+
 msgid "Editors"
 msgstr "Redaktoren"
 
@@ -55,6 +94,9 @@ msgstr "Rubriken"
 
 msgid "Issues"
 msgstr "Ausgaben"
+
+msgid "Official Notices"
+msgstr "Amtliche Publikationen"
 
 msgid "New official notices"
 msgstr "Neue amtliche Publikationen"
@@ -72,9 +114,6 @@ msgstr "Nr. ${issue_number}, ${issue_date} / ${notice_number}"
 #, python-format
 msgid "No. ${issue_number}, ${issue_date}"
 msgstr "Nr. ${issue_number}, ${issue_date}"
-
-msgid "Official Notices"
-msgstr "Amtliche Publikationen"
 
 msgid "Press Releases"
 msgstr "Medienmitteilungen"
@@ -145,9 +184,6 @@ msgstr "Bemerkung"
 msgid "Canton"
 msgstr "Kanton"
 
-msgid "Category"
-msgstr "Rubrik"
-
 msgid "Clear"
 msgstr "Löschen"
 
@@ -156,27 +192,6 @@ msgstr "Annehmen"
 
 msgid "Title (maximum 60 characters)"
 msgstr "Titel (höchstens 60 Zeichen)"
-
-msgid "Organization"
-msgstr "Organisation"
-
-msgid "Print only"
-msgstr "Stopp Internet"
-
-msgid "Liable to pay costs"
-msgstr "Kostenpflichtig"
-
-msgid "Billing address"
-msgstr "Rechnungsadresse"
-
-msgid "Issue(s)"
-msgstr "Ausgabe(n)"
-
-msgid "Expiry Date"
-msgstr "Ablaufdatum"
-
-msgid "Text"
-msgstr "Text"
 
 msgid "Boilerplates"
 msgstr "Textbausteine"
@@ -403,9 +418,6 @@ msgstr "Passwort festlegen"
 
 msgid "This official notice has been rejected."
 msgstr "Diese amtliche Publikation wurde zurückgewiesen."
-
-msgid "State"
-msgstr "Status"
 
 msgid "Changes"
 msgstr "Änderungen"

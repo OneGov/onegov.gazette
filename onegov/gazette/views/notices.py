@@ -1,4 +1,6 @@
 from datetime import datetime
+from io import BytesIO
+from json import dumps
 from morepath import redirect
 from morepath.request import Response
 from onegov.core.security import Personal
@@ -14,6 +16,8 @@ from onegov.gazette.models import GazetteNotice
 from onegov.gazette.pdf import Pdf
 from onegov.gazette.views import get_user
 from onegov.gazette.views import get_user_and_group
+from sedate import to_timezone
+from xlsxwriter import Workbook
 
 
 @GazetteApp.form(
@@ -257,3 +261,89 @@ def view_notices_update(self, request, form):
         'button_text': _("Update"),
         'cancel': layout.dashboard_or_notices_link
     }
+
+
+@GazetteApp.view(
+    model=GazetteNoticeCollection,
+    name='export',
+    permission=Private
+)
+def view_notices_export(self, request):
+    """ Export all notices as XLSX. The exported file can be re-imported
+    using the import-notices command line command.
+
+    """
+
+    output = BytesIO()
+    workbook = Workbook(output, {
+        'default_date_format': 'dd.mm.yy'
+    })
+    datetime_format = workbook.add_format({'num_format': 'dd.mm.yy hh:mm'})
+
+    worksheet = workbook.add_worksheet()
+    worksheet.name = request.translate(_("Official Notices"))
+    worksheet.write_row(0, 0, (
+        request.translate(_("Name")),
+        request.translate(_("State")),
+        request.translate(_("Source")),
+        request.translate(_("Title")),
+        request.translate(_("Text")),
+        request.translate(_("Author Place")),
+        request.translate(_("Author Date")),
+        request.translate(_("Author Name")),
+        request.translate(_("Issues")),
+        request.translate(_("Expiry Date")),
+        request.translate(_("Category")),
+        request.translate(_("Organization")),
+        request.translate(_("Print only")),
+        request.translate(_("Liable to pay costs")),
+        request.translate(_("Billing address"))
+    ))
+
+    timezone = request.app.principal.time_zone
+    for index, notice in enumerate(self.for_state(None).query()):
+
+        worksheet.write(index + 1, 0, notice.name)
+        worksheet.write(index + 1, 1, notice.state)
+        worksheet.write(index + 1, 2, notice.source)
+        worksheet.write(index + 1, 3, notice.title)
+        worksheet.write(index + 1, 4, notice.text)
+        if notice.author_date:
+            worksheet.write_datetime(
+                index + 1, 5,
+                to_timezone(notice.author_date, timezone).replace(tzinfo=None),
+                datetime_format
+            )
+        else:
+            worksheet.write(index + 1, 5, None)
+        worksheet.write(index + 1, 6, notice.author_name)
+        worksheet.write(index + 1, 7, notice.author_place)
+        worksheet.write(index + 1, 8, dumps(dict(notice.issues)))
+        if notice.expiry_date:
+            worksheet.write_datetime(
+                index + 1, 5,
+                to_timezone(notice.expiry_date, timezone).replace(tzinfo=None),
+                datetime_format
+            )
+        else:
+            worksheet.write(index + 1, 9, None)
+        worksheet.write(index + 1, 10, notice.category_id)
+        worksheet.write(index + 1, 11, notice.organization_id)
+        worksheet.write(index + 1, 12, True if notice.print_only else False)
+        worksheet.write(index + 1, 13, True if notice.at_cost else False)
+        worksheet.write(index + 1, 14, notice.billing_address)
+
+    workbook.close()
+    output.seek(0)
+
+    response = Response()
+    response.content_type = (
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response.content_disposition = 'inline; filename={}-{}.xlsx'.format(
+        request.translate(_("Official Notices")).lower(),
+        datetime.utcnow().strftime('%Y%m%d%H%M')
+    )
+    response.body = output.read()
+
+    return response
