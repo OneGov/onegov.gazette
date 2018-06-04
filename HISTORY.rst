@@ -7,6 +7,9 @@ Changelog
 - Resizes chosen responsively.
   [msom]
 
+- Removes fastclick.
+  [msom]
+
 1.12.16 (2018-05-14)
 ~~~~~~~~~~~~~~~~~~~~
 
