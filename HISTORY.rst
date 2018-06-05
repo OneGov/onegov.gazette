@@ -1,5 +1,9 @@
 Changelog
 ---------
+
+- Fixes quill editor does not focus on click.
+  [msom]
+
 1.13.17 (2018-05-15)
 ~~~~~~~~~~~~~~~~~~~~
 
