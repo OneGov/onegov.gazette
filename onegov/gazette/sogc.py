@@ -393,6 +393,7 @@ class SogcImporter(object):
                 headers={'X-AUTH-TOKEN': self.token}
             )
             response.raise_for_status()
+            response.encoding = 'utf-8'
 
             root = etree.fromstring(response.text.encode('utf-8'))
             publications = {
@@ -420,6 +421,7 @@ class SogcImporter(object):
             headers={'X-AUTH-TOKEN': self.token}
         )
         response.raise_for_status()
+        response.encoding = 'utf-8'
 
         root = etree.fromstring(response.text.encode('utf-8'))
         subrubric = root.find('meta/subRubric').text
