@@ -62,8 +62,8 @@ msgstr "Absender Datum"
 msgid "Author Name"
 msgstr "Absender Name"
 
-msgid "Issue(s)"
-msgstr "Ausgabe(n)"
+msgid "Issues"
+msgstr "Ausgaben"
 
 msgid "Expiry Date"
 msgstr "Ablaufdatum"
@@ -91,9 +91,6 @@ msgstr "Organisationen"
 
 msgid "Categories"
 msgstr "Rubriken"
-
-msgid "Issues"
-msgstr "Ausgaben"
 
 msgid "Official Notices"
 msgstr "Amtliche Publikationen"
@@ -192,6 +189,9 @@ msgstr "Annehmen"
 
 msgid "Title (maximum 60 characters)"
 msgstr "Titel (höchstens 60 Zeichen)"
+
+msgid "Issue(s)"
+msgstr "Ausgabe(n)"
 
 msgid "Boilerplates"
 msgstr "Textbausteine"
@@ -799,7 +799,7 @@ msgid "Confirm your subscription"
 msgstr "Abonnement bestätigen"
 
 msgid "Subscribe"
-msgstr "Abbonnieren"
+msgstr "Abonnieren"
 
 msgid "Confirm"
 msgstr "Bestätigen"
@@ -842,9 +842,6 @@ msgstr "Medienmitteilung bearbeiten"
 
 msgid "Delete Press Release"
 msgstr "Medienmitteilung löschen"
-
-msgid "Accepted press releases may not be edited."
-msgstr "Angenommene Medienmitteilung können nicht mehr bearbeitet werden."
 
 msgid ""
 "The press release has an invalid organization. Please re-select the "
