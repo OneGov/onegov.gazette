@@ -183,4 +183,21 @@
     </p>
 </metal:notice_text>
 
+<metal:press_release_content define-macro="press_release_content" i18n:domain="onegov.gazette">
+    <h2>${press_release.title}</h2>
+    <div><tal:block tal:content="structure press_release.text"></tal:block></div>
+    <div tal:condition="press_release.contact" class="press-release-contact">
+        <h3 i18n:translate>Contact</h3>
+        <a href="mailto:#">${press_release.contact}</a>
+    </div>
+    <div tal:condition="press_release.files" class="press-release-contact">
+        <h3 i18n:translate>Media</h3>
+        <ul>
+            <li tal:repeat="file press_release.files">
+                <a href="${request.link(file)}" i18n:translate>${file.name}</a>
+            </li>
+        </ul>
+    </div>
+</metal:press_release_content>
+
 </body>

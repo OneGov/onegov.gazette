@@ -47,6 +47,9 @@
                             <dt i18n:translate>Blocking period</dt>
                             <dd>${layout.format_date(press_release.blocking_period, 'datetime')}</dd>
 
+                            <dt i18n:translate>Contact</dt>
+                            <dd>${press_release.contact or ''}</dd>
+
                             <dt i18n:translate>Organization</dt>
                             <dd>${press_release.organization}</dd>
 

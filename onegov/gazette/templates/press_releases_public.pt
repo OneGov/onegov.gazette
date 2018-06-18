@@ -15,11 +15,7 @@
                     <span class="blank-label">${layout.format_date(press_release.issue_date, 'datetime')}</span>
                 </div>
                 <div class="preview">
-                    <h2>${press_release.title}</h2>
-                    <div><tal:block tal:content="structure press_release.text"></tal:block></div>
-                    <div tal:condition="press_release.files">
-                        <p tal:repeat="file press_release.files"><a href="${request.link(file)}" i18n:translate>${file.name}</a></p>
-                    </div>
+                    <div metal:use-macro="layout.macros['press_release_content']"></div>
                 </div>
             </div>
             <div class="pagination-centered">
