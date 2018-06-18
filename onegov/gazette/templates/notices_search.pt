@@ -107,7 +107,7 @@
             <p i18n:translate>No official notices.</p>
         </div>
         <tal:block tal:condition="notices">
-            <div tal:repeat="notice notices">
+            <div tal:repeat="notice notices" class="notice-published">
                 <hr>
                 <div>
                     <span class="blank-label">${notice.organization}</span>

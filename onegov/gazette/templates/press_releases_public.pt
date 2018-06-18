@@ -8,7 +8,7 @@
             <p i18n:translate>No press releases.</p>
         </div>
         <tal:block tal:condition="press_releases">
-            <div tal:repeat="press_release press_releases">
+            <div tal:repeat="press_release press_releases" class="press-release-published">
                 <hr>
                 <div>
                     <span class="blank-label">${press_release.organization}</span>
