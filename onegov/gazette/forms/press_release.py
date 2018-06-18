@@ -1,4 +1,5 @@
 from onegov.form import Form
+from onegov.form.fields import MultiCheckboxField
 from onegov.gazette import _
 from onegov.gazette.collections import OrganizationCollection
 from onegov.gazette.fields import DateTimeLocalField
@@ -90,7 +91,6 @@ class PressReleaseForm(Form):
             OrganizationCollection(session).as_options()
         )
 
-        # mockup: added
         try:
             group = get_user(self.request).group
             if group:
@@ -137,3 +137,14 @@ class PressReleaseForm(Form):
             self.blocking_period.data = to_timezone(
                 self.blocking_period.data, self.timezone.data
             ).replace(tzinfo=None)
+
+
+class PublishPressReleaseForm(Form):
+
+    platforms = MultiCheckboxField(
+        label=_("Platforms"),
+        choices=[
+            ('twitter', 'Twitter'),
+            ('facebook', 'Facebook'),
+        ],
+    )

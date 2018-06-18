@@ -7,6 +7,7 @@ from onegov.gazette.forms.notice import NoticeForm
 from onegov.gazette.forms.notice import UnrestrictedNoticeForm
 from onegov.gazette.forms.organization import OrganizationForm
 from onegov.gazette.forms.press_release import PressReleaseForm
+from onegov.gazette.forms.press_release import PublishPressReleaseForm
 from onegov.gazette.forms.subscription import SubscriptionConfirmationForm
 from onegov.gazette.forms.subscription import SubscriptionForm
 from onegov.gazette.forms.user import UserForm
@@ -20,6 +21,7 @@ __all__ = [
     'NoticeForm',
     'OrganizationForm',
     'PressReleaseForm',
+    'PublishPressReleaseForm',
     'RejectForm',
     'SubscriptionConfirmationForm',
     'SubscriptionForm',

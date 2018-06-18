@@ -5,6 +5,7 @@ from onegov.gazette import _
 from onegov.gazette import GazetteApp
 from onegov.gazette.forms import EmptyForm
 from onegov.gazette.forms import RejectForm
+from onegov.gazette.forms import PublishPressReleaseForm
 from onegov.gazette.layout import Layout
 from onegov.gazette.models import PressRelease
 from onegov.gazette.views import get_user_and_group
@@ -174,7 +175,7 @@ def reject_press_release(self, request, form):
     name='publish',
     template='form.pt',
     permission=Private,
-    form=EmptyForm
+    form=PublishPressReleaseForm
 )
 def publish_press_release(self, request, form):
     """ Publish a press release.
