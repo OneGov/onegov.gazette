@@ -863,17 +863,13 @@ table.changes {
 
 
 /*
-    tbd
+    Demo specific styles
 */
-.press-release-published {
-
-}
-
 .notice-published {
 
     .blank-label {
-        color: #8a8a8a;
         border-color: #8a8a8a;
+        color: #8a8a8a;
         padding: 10px;
     }
 
@@ -884,8 +880,9 @@ table.changes {
 }
 
 .search-filters {
-    padding-bottom: 10px;
     margin-bottom: 20px;
+    padding-bottom: 10px;
+
     .button {
         background: $primary-color;
         color: #fff;
@@ -899,6 +896,7 @@ table.changes {
         color: #fff;
         padding: 10px 20px;
     }
+
     .button:hover {
         color: #fff
     }
@@ -906,4 +904,12 @@ table.changes {
 
 .header {
     min-height: 100px;
+}
+
+.press-release-ellipsed {
+    p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
