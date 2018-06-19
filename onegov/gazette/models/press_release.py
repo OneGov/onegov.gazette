@@ -46,3 +46,6 @@ class PressRelease(GazetteNoticeBase):
 
     #: The contact responsible for the press release content
     contact = meta_property('contact')
+
+    #: The press conference related to this press release
+    conference = meta_property('conference')

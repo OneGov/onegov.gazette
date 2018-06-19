@@ -75,6 +75,18 @@ class PressReleaseForm(Form):
         ]
     )
 
+    conference = SelectField(
+        label=_("Press conference"),
+        choices=[
+            ('', "-"),
+            ('Pressekonferenz A (22.6.2018)', 'Pressekonferenz A (22.6.2018)'),
+            ('Pressekonferenz B (25.6.2018)', 'Pressekonferenz B (25.6.2018)'),
+        ],
+        validators=[
+            Optional()
+        ]
+    )
+
     timezone = HiddenField()
 
     def on_request(self):
@@ -110,6 +122,7 @@ class PressReleaseForm(Form):
         model.issue_date = self.issue_date.data
         model.blocking_period = self.blocking_period.data
         model.contact = self.contact.data
+        model.conference = self.conference.data
         # Convert the datetimes from the local timezone to UTC
         if model.issue_date:
             model.issue_date = standardize_date(
@@ -128,6 +141,7 @@ class PressReleaseForm(Form):
         self.issue_date.data = model.first_issue
         self.blocking_period.data = model.blocking_period
         self.contact.data = model.contact
+        self.conference.data = model.conference
         # Convert the deadline from UTC to the local timezone
         if self.issue_date.data:
             self.issue_date.data = to_timezone(

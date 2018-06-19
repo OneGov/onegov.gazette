@@ -186,6 +186,21 @@
 <metal:press_release_content define-macro="press_release_content" i18n:domain="onegov.gazette">
     <h2>${press_release.title}</h2>
     <div><tal:block tal:content="structure press_release.text"></tal:block></div>
+    <div tal:condition="press_release.conference" class="press-release-contact">
+        <h3 i18n:translate>Press conference</h3>
+        <tal:block tal:condition="'22.6' in press_release.conference">
+            Freitag 22. Juni 2018, 10:00 – 11:00<br>
+            Staatskanzlei des Kantons St.Gallen<br>
+            Regierungsgebäude, Sitzungszimmer 215av<br>
+            9001 St.Gallen
+        </tal:block>
+        <tal:block tal:condition="'25.6' in press_release.conference">
+            Montag 25. Juni 2018, 10:00, 10:00 – 10:30<br>
+            Staatskanzlei des Kantons St.Gallen<br>
+            Regierungsgebäude, Sitzungszimmer 215av<br>
+            9001 St.Gallen
+        </tal:block>
+    </div>
     <div tal:condition="press_release.contact" class="press-release-contact">
         <h3 i18n:translate>Contact</h3>
         ${press_release.contact}
