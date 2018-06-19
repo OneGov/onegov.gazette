@@ -13,6 +13,9 @@ Changelog
 - Fixes quill editor does not focus on click.
   [msom]
 
+- Add compatibility with wtforms 2.2.
+  [msom]
+
 1.12.16 (2018-05-14)
 ~~~~~~~~~~~~~~~~~~~~
 
