@@ -4,6 +4,9 @@ Changelog
 - Adds compatibility with latest onegov.core release.
   [href]
 
+- Resizes chosen responsively.
+  [msom]
+
 1.12.16 (2018-05-14)
 ~~~~~~~~~~~~~~~~~~~~
 
