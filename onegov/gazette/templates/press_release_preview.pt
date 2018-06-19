@@ -16,6 +16,7 @@
         <div>
             <span class="blank-label">${press_release.organization}</span>
             <span class="blank-label">${layout.format_date(press_release.issue_date, 'datetime')}</span>
+            <span class="blank-label" tal:condition="press_release.blocking_period"><tal:block i18n:translate>Blocking period</tal:block>: ${layout.format_date(press_release.blocking_period, 'datetime')}</span>
         </div>
         <div class="preview">
             <div metal:use-macro="layout.macros['press_release_content']"></div>
