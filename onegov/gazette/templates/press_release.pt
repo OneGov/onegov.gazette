@@ -41,7 +41,7 @@
                             <dt i18n:translate>State</dt>
                             <dd i18n:translate>${press_release.state}</dd>
 
-                            <dt i18n:translate>Issue date</dt>
+                            <dt i18n:translate>Publication date</dt>
                             <dd>${layout.format_date(press_release.issue_date, 'datetime')}</dd>
 
                             <dt i18n:translate>Blocking period</dt>

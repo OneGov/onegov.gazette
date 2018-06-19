@@ -50,7 +50,7 @@ class PressReleaseForm(Form):
     )
 
     issue_date = DateTimeLocalField(
-        label=_("Issue date"),
+        label=_("Publication date"),
         validators=[
             InputRequired()
         ]
