@@ -188,10 +188,20 @@
     <div><tal:block tal:content="structure press_release.text"></tal:block></div>
     <div tal:condition="press_release.contact" class="press-release-contact">
         <h3 i18n:translate>Contact</h3>
-        <a href="mailto:#">${press_release.contact}</a>
+        ${press_release.contact}
+        <tal:block tal:condition="'Maria' in press_release.contact">
+            <br>Mediensprecherin
+            <br><a href="mailto:maria.bernasconi@sg.ch">maria.bernasconi@sg.ch</a>
+            <br>+41 71 xxx xx xx
+        </tal:block>
+        <tal:block tal:condition="'Hans' in press_release.contact">
+            <br>Mediensprecher
+            <br><a href="mailto:hans.muster@sg.ch">hans.muster@sg.ch</a>
+            <br>+41 71 yyy yy yy
+        </tal:block>
     </div>
     <div tal:condition="press_release.files" class="press-release-contact">
-        <h3 i18n:translate>Media</h3>
+        <h3 i18n:translate>Attachments</h3>
         <ul>
             <li tal:repeat="file press_release.files">
                 <a href="${request.link(file)}" i18n:translate>${file.name}</a>

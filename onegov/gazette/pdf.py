@@ -221,13 +221,18 @@ class Pdf(PdfBase):
         result.seek(0)
         return result
 
-    def press_release(self, press_release, layout):
+    def press_release(self, press_release, request, layout):
         """ Adds an press release. """
 
         meta = '{} | {}'.format(
             press_release.organization,
             layout.format_date(press_release.issue_date, 'datetime')
         )
+        if press_release.blocking_period:
+            meta += ' | {}: {}'.format(
+                request.translate(_("Blocking period")),
+                layout.format_date(press_release.issue_date, 'datetime')
+            )
         self.p_markup(f'<i>{meta}</i>', style=self.style.meta)
         self.story[-1].keepWithNext = True
         self.p(press_release.title, style=self.style.h_notice)
@@ -251,7 +256,7 @@ class Pdf(PdfBase):
         )
         pdf.init_a4_portrait()
         pdf.spacer()
-        pdf.press_release(press_release, layout)
+        pdf.press_release(press_release, request, layout)
         pdf.generate()
         result.seek(0)
         return result
