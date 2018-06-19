@@ -668,7 +668,7 @@ msgstr ""
 "darauffolgenden Ausgaben neu veröffentlicht werden."
 
 msgid "Edit Official Notice"
-msgstr "Amtliche Publikatio bearbeiten"
+msgstr "Amtliche Publikation bearbeiten"
 
 msgid "The fields marked with an asterisk * are mandatory fields."
 msgstr "Die mit einem Stern * gekennzeichneten Felder sind Pflichtfelder."
