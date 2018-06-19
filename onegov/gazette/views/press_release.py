@@ -194,8 +194,7 @@ def edit_press_release(self, request, form):
             "The fields marked with an asterisk * are mandatory fields."
         ),
         'button_text': _("Save"),
-        'cancel': request.link(self),
-        'current_issue': layout.current_issue
+        'cancel': request.link(self)
     }
 
 
