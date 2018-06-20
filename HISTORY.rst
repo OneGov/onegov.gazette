@@ -1,5 +1,7 @@
 Changelog
 ---------
+1.14.1 (2018-06-20)
+~~~~~~~~~~~~~~~~~~~~
 
 - Fixes print only getting set by default.
   [msom]
