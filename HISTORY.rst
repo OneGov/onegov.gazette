@@ -1,5 +1,7 @@
 Changelog
 ---------
+1.14.2 (2018-06-20)
+~~~~~~~~~~~~~~~~~~~~
 
 - Adds a lead to press releases.
   [msom]
