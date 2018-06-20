@@ -44,8 +44,11 @@ class PressRelease(GazetteNoticeBase):
     def blocked(self):
         return self.blocking_period and self.blocking_period > utcnow()
 
-    #: The contact responsible for the press release content
+    #: The contact responsible for the press release content.
     contact = meta_property('contact')
 
-    #: The press conference related to this press release
+    #: The press conference related to this press release.
     conference = meta_property('conference')
+
+    #: The lead.
+    lead = meta_property('lead')

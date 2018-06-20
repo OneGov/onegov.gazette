@@ -237,6 +237,8 @@ class Pdf(PdfBase):
         self.story[-1].keepWithNext = True
         self.p(press_release.title, style=self.style.h_notice)
         self.story[-1].keepWithNext = True
+        self.p(press_release.lead)
+        self.story[-1].keepWithNext = True
         self.mini_html(press_release.text)
         for file in press_release.files:
             self.story[-1].keepWithNext = True

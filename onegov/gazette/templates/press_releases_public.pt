@@ -14,9 +14,9 @@
                     <span class="blank-label">${press_release.organization}</span>
                     <span class="blank-label">${layout.format_date(press_release.issue_date, 'datetime')}</span>
                 </div>
-                <div class="preview press-release-ellipsed">
+                <div class="preview">
                     <h2><a href="${request.link(press_release, 'view')}">${press_release.title}</a></h2>
-                    <div><tal:block tal:content="structure press_release.text"></tal:block></div>
+                    <div><p>${press_release.lead}</p></div>
                 </div>
             </div>
             <div class="pagination-centered">

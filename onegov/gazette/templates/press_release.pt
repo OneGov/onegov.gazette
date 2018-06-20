@@ -32,6 +32,7 @@
                 <div class="row">
                     <div class="small-12 medium-7 columns">
                         <h2>${press_release.title}</h2>
+                        <div><p>${press_release.lead}</p></div>
                         <div>
                             <tal:block tal:content="structure press_release.text"></tal:block>
                         </div>

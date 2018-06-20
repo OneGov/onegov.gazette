@@ -185,6 +185,7 @@
 
 <metal:press_release_content define-macro="press_release_content" i18n:domain="onegov.gazette">
     <h2>${press_release.title}</h2>
+    <div><p>${press_release.lead}</p></div>
     <div><tal:block tal:content="structure press_release.text"></tal:block></div>
     <div tal:condition="press_release.conference" class="press-release-contact">
         <h3 i18n:translate>Press conference</h3>

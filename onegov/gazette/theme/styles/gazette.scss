@@ -905,11 +905,3 @@ table.changes {
 .header {
     min-height: 100px;
 }
-
-.press-release-ellipsed {
-    p {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-}

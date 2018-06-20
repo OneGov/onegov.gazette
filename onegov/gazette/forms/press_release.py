@@ -10,6 +10,7 @@ from sedate import standardize_date
 from sedate import to_timezone
 from wtforms import HiddenField
 from wtforms import StringField
+from wtforms import TextAreaField
 from wtforms.validators import InputRequired
 from wtforms.validators import Length
 from wtforms.validators import Optional
@@ -39,6 +40,15 @@ class PressReleaseForm(Form):
         validators=[
             InputRequired()
         ]
+    )
+
+    lead = TextAreaField(
+        label=_("Lead (maximum 140 characters)"),
+        validators=[
+            InputRequired(),
+            Length(max=140)
+        ],
+        render_kw={'maxlength': 140},
     )
 
     text = QuillField(
@@ -118,6 +128,7 @@ class PressReleaseForm(Form):
     def update_model(self, model):
         model.title = self.title.data
         model.organization_id = self.organization.data
+        model.lead = self.lead.data
         model.text = self.text.data
         model.issue_date = self.issue_date.data
         model.blocking_period = self.blocking_period.data
@@ -137,6 +148,7 @@ class PressReleaseForm(Form):
     def apply_model(self, model):
         self.title.data = model.title
         self.organization.data = model.organization_id
+        self.lead.data = model.lead
         self.text.data = model.text
         self.issue_date.data = model.first_issue
         self.blocking_period.data = model.blocking_period

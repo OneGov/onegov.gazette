@@ -32,12 +32,15 @@ def create_press_release(self, request, form):
     if form.submitted(request):
         press_release = self.add(
             title=form.title.data,
+            lead=form.lead.data,
             text=form.text.data,
             organization_id=form.organization.data,
             user=get_user(request),
             issue_date=form.issue_date.data,
             blocking_period=form.blocking_period.data,
-            timezone=form.timezone.data
+            timezone=form.timezone.data,
+            contact=form.contact.data,
+            conference=form.conference.data
         )
         return redirect(request.link(press_release))
 
