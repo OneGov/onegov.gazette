@@ -13,6 +13,9 @@ Changelog
 1.14.0 (2018-06-19)
 ~~~~~~~~~~~~~~~~~~~~
 
+- Adds many experiemental features.
+  [msom]
+
 - Fixes quill editor does not focus on click.
   [msom]
 
