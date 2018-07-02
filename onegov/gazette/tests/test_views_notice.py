@@ -1,4 +1,5 @@
 from freezegun import freeze_time
+from io import BytesIO
 from onegov.gazette.models import GazetteNotice
 from onegov.gazette.tests.common import accept_notice
 from onegov.gazette.tests.common import edit_notice
@@ -6,6 +7,7 @@ from onegov.gazette.tests.common import login_users
 from onegov.gazette.tests.common import publish_issue
 from onegov.gazette.tests.common import reject_notice
 from onegov.gazette.tests.common import submit_notice
+from PyPDF2 import PdfFileReader
 
 
 def test_view_notice(gazette_app):
@@ -298,6 +300,33 @@ def test_view_notice_preview(gazette_app):
     assert "Nr. 45, 10.11.2017" not in view
     assert "in Arbeit" not in view
     assert "erstellt" not in view
+
+
+def test_view_notice_pdf_preview(gazette_app):
+    admin, editor_1, editor_2, editor_3, publisher = login_users(gazette_app)
+
+    with freeze_time("2017-11-01 11:00"):
+        manage = editor_1.get('/notices/drafted/new-notice')
+        manage.form['title'] = 'Titel'
+        manage.form['organization'] = '200'
+        manage.form['category'] = '11'
+        manage.form['issues'] = ['2017-44', '2017-45']
+        manage.form['text'] = "1. Oktober 2017"
+        manage.form['author_place'] = 'Govikon'
+        manage.form['author_name'] = 'State Chancellerist'
+        manage.form['author_date'] = '2019-01-01'
+        manage.form.submit()
+
+    response = editor_1.get('/notice/titel/preview-pdf')
+    assert response.headers['Content-Type'] == 'application/pdf'
+    assert response.headers['Content-Disposition'] == \
+        'inline; filename=amtsblatt-govikon-titel.pdf'
+
+    reader = PdfFileReader(BytesIO(response.body))
+    assert [page.extractText() for page in reader.pages] == [
+        '© 2018 Govikon\n1\nxxx\nTitel\n1. Oktober 2017\n'
+        'Govikon, 1. Januar 2019\nState Chancellerist\n'
+    ]
 
 
 def test_view_notice_delete(gazette_app):
