@@ -1,5 +1,7 @@
 Changelog
 ---------
+1.16.6 (2018-09-24)
+~~~~~~~~~~~~~~~~~~~~
 
 - Fixes recursion error.
   [msom]
