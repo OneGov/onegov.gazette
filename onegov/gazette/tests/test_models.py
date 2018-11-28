@@ -28,6 +28,7 @@ class DummyApp(object):
     def __init__(self, session):
         self._session = session
         self.principal = DummyPrincipal()
+        self.logo_for_pdf = None
 
     def session(self):
         return self._session
@@ -425,6 +426,7 @@ def test_principal():
     assert principal.name == 'Govikon'
     assert principal.color == '#aabbcc'
     assert principal.logo == 'logo.svg'
+    assert principal.logo_for_pdf == ''
     assert principal.canton is None
     assert principal.on_accept == {}
     assert principal.publishing is False
@@ -436,6 +438,7 @@ def test_principal():
         canton: 'tg'
         color: '#aabbcc'
         logo: 'logo.svg'
+        logo_for_pdf: 'logo-bw.svg'
         on_accept:
             mail_to: 'printer@govikon.org'
             mail_from: 'publisher@govikon.org'
@@ -452,6 +455,7 @@ def test_principal():
     assert principal.name == 'Govikon'
     assert principal.color == '#aabbcc'
     assert principal.logo == 'logo.svg'
+    assert principal.logo_for_pdf == 'logo-bw.svg'
     assert principal.canton == 'tg'
     assert principal.on_accept == {
         'mail_to': 'printer@govikon.org',
